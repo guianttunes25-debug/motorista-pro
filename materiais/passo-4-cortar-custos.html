@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Passo 4 — Como Cortar Custos | Motorista Pro</title>
+  <style>
+    :root{--verde:#1fca73;--azul:#2698ff;--text:#1a2638;--muted:#6b7e97;--border:#d1dce9;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:"Segoe UI",Arial,sans-serif;background:#f8fafc;color:var(--text);font-size:14px;line-height:1.6;}
+    .page{max-width:800px;margin:0 auto;padding:2rem 1.5rem;}
+    header{background:linear-gradient(135deg,#061126,#0c1c38);color:#fff;border-radius:12px;padding:1.4rem;margin-bottom:1.5rem;text-align:center;}
+    header .badge{display:inline-block;background:rgba(38,152,255,.22);border:1px solid rgba(38,152,255,.55);border-radius:999px;padding:.25rem .8rem;font-size:.76rem;font-weight:700;color:#61bcff;margin-bottom:.6rem;}
+    header h1{font-size:1.4rem;font-weight:900;margin-bottom:.3rem;}
+    header p{color:#8aaac8;font-size:.9rem;}
+    .section{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.2rem;margin-bottom:1rem;}
+    h2{font-size:.95rem;font-weight:800;margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem;}
+    .num{width:26px;height:26px;min-width:26px;border-radius:999px;background:linear-gradient(135deg,var(--azul),#61bcff);color:#fff;font-weight:900;font-size:.8rem;display:inline-grid;place-items:center;}
+    p{margin-bottom:.65rem;}
+    .custo-card{border:1px solid var(--border);border-radius:10px;padding:.9rem;margin:.6rem 0;}
+    .custo-card h3{font-size:.9rem;font-weight:800;margin-bottom:.3rem;color:var(--text);}
+    .custo-card p{font-size:.85rem;color:var(--muted);margin:0;}
+    .custo-card .saving{font-size:.8rem;font-weight:700;color:var(--verde);margin-top:.4rem;}
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;}
+    @media(max-width:600px){.grid3{grid-template-columns:1fr;}}
+    .tip{background:#f0fdf4;border-left:3px solid var(--verde);padding:.65rem .9rem;border-radius:0 8px 8px 0;font-size:.85rem;color:#1a4a2e;margin:.7rem 0;}
+    .warn{background:#fffbeb;border-left:3px solid #f59e0b;padding:.65rem .9rem;border-radius:0 8px 8px 0;font-size:.85rem;color:#78350f;margin:.7rem 0;}
+    table{width:100%;border-collapse:collapse;font-size:.85rem;margin:.8rem 0;}
+    th,td{padding:.5rem .6rem;border:1px solid var(--border);}
+    thead tr{background:#f0f4f9;}
+    th{font-weight:700;color:var(--muted);font-size:.76rem;text-transform:uppercase;}
+    input[type=number]{width:100%;padding:.4rem .6rem;border:1px solid var(--border);border-radius:6px;font-size:.9rem;}
+    .result{font-weight:800;color:var(--verde);}
+    button{background:var(--verde);color:#042014;border:none;border-radius:8px;padding:.55rem 1.1rem;font-weight:700;cursor:pointer;font-size:.86rem;}
+    footer{text-align:center;color:var(--muted);font-size:.76rem;margin-top:2rem;padding-top:1rem;border-top:1px solid var(--border);}
+    @media print{button{display:none;}.page{padding:0;}}
+  </style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="badge">Passo 4 de 7 — Plano Intermediario</div>
+    <h1>Como Identificar e Cortar os 3 Principais Custos</h1>
+    <p>Pequenas reducoes nos custos certos valem mais do que rodar mais horas.</p>
+  </header>
+
+  <div class="section">
+    <h2><span class="num">1</span> Os 3 custos que mais comem sua margem</h2>
+    <div class="grid3">
+      <div class="custo-card">
+        <h3>Combustivel</h3>
+        <p>Representa 40% a 60% do custo total de quem roda de carro.</p>
+        <div class="saving">Potencial de reducao: 10% a 20%</div>
+      </div>
+      <div class="custo-card">
+        <h3>Taxa da plataforma</h3>
+        <p>Entre 20% e 30% de cada corrida vai para o app. Mas da para compensar escolhendo melhor.</p>
+        <div class="saving">Estrategia: escolher corridas de maior valor</div>
+      </div>
+      <div class="custo-card">
+        <h3>Tempo improdutivo</h3>
+        <p>Horas esperando sem corrida sao custo indireto (combustivel ligado, desgaste).</p>
+        <div class="saving">Estrategia: identificar horarios de pico</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2><span class="num">2</span> Como reduzir o custo de combustivel na pratica</h2>
+    <p>Acoes simples com resultado imediato:</p>
+    <ul style="list-style:none;display:grid;gap:.5rem;margin:.5rem 0;">
+      <li style="display:flex;gap:.5rem;">✅ <span>Calibrar os pneus toda semana — pneu murcho aumenta consumo em ate 10%</span></li>
+      <li style="display:flex;gap:.5rem;">✅ <span>Evitar aceleracoes bruscas — dirigir suave reduz consumo em 15%</span></li>
+      <li style="display:flex;gap:.5rem;">✅ <span>Desligar o motor em esperas longas acima de 3 minutos</span></li>
+      <li style="display:flex;gap:.5rem;">✅ <span>Abastecer em postos com precos menores (use app de comparacao)</span></li>
+      <li style="display:flex;gap:.5rem;">✅ <span>Fazer revisao preventiva: filtro de ar sujo aumenta consumo</span></li>
+    </ul>
+    <div class="tip">Com economia de apenas R$0,50 por litro e 100 litros por mes, voce poupa R$50,00 por mes — sem trabalhar mais.</div>
+  </div>
+
+  <div class="section">
+    <h2><span class="num">3</span> Como escolher corridas mais lucrativas</h2>
+    <p>Nem toda corrida vale a pena. Use esta formula antes de aceitar:</p>
+    <div style="background:#f5f8ff;border:1px solid #c7d9f7;border-radius:8px;padding:1rem;margin:.8rem 0;font-size:.9rem;">
+      <strong>Lucro por km = (Valor da corrida &minus; Custo do combustivel) &divide; Distancia (km)</strong><br/><br/>
+      <em>Exemplo: R$18 &minus; R$4 = R$14 &divide; 8 km = R$1,75/km</em><br/>
+      Meta recomendada: acima de R$ 1,50/km a corrida vale a pena.
+    </div>
+    <div class="warn">Corridas curtas com valor baixo muitas vezes custam mais do que rendem. Avalie antes de aceitar.</div>
+  </div>
+
+  <div class="section">
+    <h2><span class="num">4</span> Calculadora de reducao de custo mensal</h2>
+    <table>
+      <thead><tr><th>Custo</th><th>Valor atual (R$)</th><th>Valor apos reducao (R$)</th><th>Economia mensal</th></tr></thead>
+      <tbody>
+        <tr><td>Combustivel</td><td><input type="number" id="c1a" placeholder="0" oninput="calcEcon()"/></td><td><input type="number" id="c1b" placeholder="0" oninput="calcEcon()"/></td><td class="result" id="e1">R$ 0,00</td></tr>
+        <tr><td>Manutencao</td><td><input type="number" id="c2a" placeholder="0" oninput="calcEcon()"/></td><td><input type="number" id="c2b" placeholder="0" oninput="calcEcon()"/></td><td class="result" id="e2">R$ 0,00</td></tr>
+        <tr><td>Alimentacao</td><td><input type="number" id="c3a" placeholder="0" oninput="calcEcon()"/></td><td><input type="number" id="c3b" placeholder="0" oninput="calcEcon()"/></td><td class="result" id="e3">R$ 0,00</td></tr>
+        <tr style="background:#f0fdf4;font-weight:700;"><td colspan="3">Total de economia mensal</td><td class="result" id="etotal">R$ 0,00</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="text-align:center;margin-top:1.2rem;">
+    <button onclick="window.print()">Imprimir / Salvar PDF</button>
+  </div>
+  <footer>Motorista Pro: Controle Total + Renda Inteligente — Material exclusivo para alunos.</footer>
+</div>
+<script>
+  function fmt(v){return 'R$ '+v.toFixed(2).replace('.',',');}
+  function calcEcon(){
+    let total=0;
+    [[1],[2],[3]].forEach(([i])=>{
+      const a=parseFloat(document.getElementById('c'+i+'a').value)||0;
+      const b=parseFloat(document.getElementById('c'+i+'b').value)||0;
+      const e=Math.max(0,a-b);
+      document.getElementById('e'+i).textContent=fmt(e);
+      total+=e;
+    });
+    document.getElementById('etotal').textContent=fmt(total);
+  }
+</script>
+</body>
+</html>

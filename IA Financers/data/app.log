@@ -1,0 +1,22 @@
+2026-04-29 01:00:39 [INFO] applog: logger instalado — arquivo: C:\projetos\IA Financers\data\app.log (rotativo, 5x2MB)
+2026-04-29 01:00:39 [INFO] stdout: log: C:\projetos\IA Financers\data\app.log
+2026-04-29 01:00:39 [WARNING] teste: hello world
+2026-04-29 01:00:39 [INFO] stdout: teste de print()
+2026-04-29 01:00:39 [ERROR] stderr: OK
+2026-04-29 01:00:39 [INFO] stdout: ---tail do log:
+2026-04-29 01:00:39 [INFO] stdout: 2026-04-29 01:00:39 [INFO] applog: logger instalado — arquivo: C:\projetos\IA Financers\data\app.log (rotativo, 5x2MB)
+2026-04-29 01:00:39 [INFO] stdout: 2026-04-29 01:00:39 [INFO] stdout: log: C:\projetos\IA Financers\data\app.log
+2026-04-29 01:00:39 [INFO] stdout: 2026-04-29 01:00:39 [WARNING] teste: hello world
+2026-04-29 01:00:39 [INFO] stdout: 2026-04-29 01:00:39 [INFO] stdout: teste de print()
+2026-04-29 01:00:39 [INFO] stdout: 2026-04-29 01:00:39 [ERROR] stderr: OK
+2026-04-29 01:00:39 [INFO] stdout: 2026-04-29 01:00:39 [INFO] stdout: ---tail do log:
+2026-04-29 03:49:14 [INFO] applog: logger instalado — arquivo: C:\projetos\IA Financers\data\app.log (rotativo, 5x2MB)
+2026-04-29 03:49:15 [INFO] stdout:   main.load_config → ✅
+2026-04-29 03:49:15 [INFO] stdout:   ui.dashboard.Dashboard → ✅
+2026-04-29 03:49:15 [INFO] stdout: 📋 TESTE 5: Validar build dist/
+2026-04-29 03:49:15 [INFO] stdout:   dist config exists → ✅
+2026-04-29 03:49:15 [INFO] stdout:   dist mode: simulation (deve ser simulation) → ✅
+2026-04-29 03:49:15 [INFO] stdout:   EXE exists: 16.7 MB → ✅
+2026-04-29 03:49:15 [INFO] stdout: ✅✅✅ Testes de validação COMPLETOS!
+2026-04-29 03:50:14 [INFO] applog: logger instalado — arquivo: C:\projetos\IA Financers\data\app.log (rotativo, 5x2MB)
+2026-04-29 03:50:15 [INFO] stdout: ✅ main() função disponível

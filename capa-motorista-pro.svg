@@ -1,0 +1,159 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+  <defs>
+    <!-- Fundo gradiente azul escuro -->
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#040a17"/>
+      <stop offset="55%" stop-color="#061126"/>
+      <stop offset="100%" stop-color="#0a1a3a"/>
+    </linearGradient>
+    <!-- Brilho verde superior esquerdo -->
+    <radialGradient id="glow-green" cx="20%" cy="20%" r="55%">
+      <stop offset="0%" stop-color="#1fca73" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#1fca73" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Brilho azul inferior direito -->
+    <radialGradient id="glow-blue" cx="85%" cy="80%" r="50%">
+      <stop offset="0%" stop-color="#2698ff" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#2698ff" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Gradiente do badge verde -->
+    <linearGradient id="badge-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1fca73"/>
+      <stop offset="100%" stop-color="#38db87"/>
+    </linearGradient>
+    <!-- Gradiente da linha decorativa -->
+    <linearGradient id="line-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1fca73" stop-opacity="0"/>
+      <stop offset="30%" stop-color="#1fca73"/>
+      <stop offset="70%" stop-color="#2698ff"/>
+      <stop offset="100%" stop-color="#2698ff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="glow-text">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Fundo -->
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <rect width="1280" height="720" fill="url(#glow-green)"/>
+  <rect width="1280" height="720" fill="url(#glow-blue)"/>
+
+  <!-- Grade de pontos decorativa (esquerda) -->
+  <g opacity="0.13" fill="#7baad4">
+    <circle cx="60"  cy="80"  r="2.2"/><circle cx="100" cy="80"  r="2.2"/><circle cx="140" cy="80"  r="2.2"/>
+    <circle cx="60"  cy="120" r="2.2"/><circle cx="100" cy="120" r="2.2"/><circle cx="140" cy="120" r="2.2"/>
+    <circle cx="60"  cy="160" r="2.2"/><circle cx="100" cy="160" r="2.2"/><circle cx="140" cy="160" r="2.2"/>
+    <circle cx="60"  cy="200" r="2.2"/><circle cx="100" cy="200" r="2.2"/><circle cx="140" cy="200" r="2.2"/>
+    <circle cx="60"  cy="240" r="2.2"/><circle cx="100" cy="240" r="2.2"/><circle cx="140" cy="240" r="2.2"/>
+  </g>
+  <!-- Grade de pontos decorativa (direita) -->
+  <g opacity="0.10" fill="#7baad4">
+    <circle cx="1140" cy="500" r="2.2"/><circle cx="1180" cy="500" r="2.2"/><circle cx="1220" cy="500" r="2.2"/>
+    <circle cx="1140" cy="540" r="2.2"/><circle cx="1180" cy="540" r="2.2"/><circle cx="1220" cy="540" r="2.2"/>
+    <circle cx="1140" cy="580" r="2.2"/><circle cx="1180" cy="580" r="2.2"/><circle cx="1220" cy="580" r="2.2"/>
+    <circle cx="1140" cy="620" r="2.2"/><circle cx="1180" cy="620" r="2.2"/><circle cx="1220" cy="620" r="2.2"/>
+    <circle cx="1140" cy="660" r="2.2"/><circle cx="1180" cy="660" r="2.2"/><circle cx="1220" cy="660" r="2.2"/>
+  </g>
+
+  <!-- Painel de card financeiro (lado direito) -->
+  <g opacity="0.9">
+    <!-- Card principal -->
+    <rect x="760" y="120" width="420" height="460" rx="24" fill="#0c1c38" stroke="#294167" stroke-width="1.5"/>
+
+    <!-- Header do card -->
+    <rect x="760" y="120" width="420" height="68" rx="24" fill="#0f2245"/>
+    <rect x="760" y="164" width="420" height="24" fill="#0f2245"/>
+    <text x="800" y="162" font-family="Segoe UI, Arial, sans-serif" font-size="17" font-weight="700" fill="#f4f7ff">Controle Financeiro</text>
+    <circle cx="1148" cy="155" r="11" fill="#1fca73" opacity="0.9"/>
+
+    <!-- Linha divisória -->
+    <line x1="780" y1="200" x2="1160" y2="200" stroke="#1e3355" stroke-width="1"/>
+
+    <!-- Métricas -->
+    <text x="800" y="238" font-family="Segoe UI, Arial, sans-serif" font-size="13" fill="#8aaac8">Receita do mes</text>
+    <text x="800" y="268" font-family="Segoe UI, Arial, sans-serif" font-size="28" font-weight="800" fill="#f4f7ff">R$ 4.820</text>
+    <rect x="800" y="280" width="70" height="22" rx="11" fill="rgba(31,202,115,0.18)"/>
+    <text x="810" y="295" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#1fca73">+ 12,4%</text>
+
+    <!-- Mini barras de gráfico -->
+    <rect x="800" y="370" width="28" height="60" rx="6" fill="#1a3a6a"/>
+    <rect x="838" y="345" width="28" height="85" rx="6" fill="#1a3a6a"/>
+    <rect x="876" y="330" width="28" height="100" rx="6" fill="#1fca73" opacity="0.9"/>
+    <rect x="914" y="355" width="28" height="75" rx="6" fill="#1a3a6a"/>
+    <rect x="952" y="340" width="28" height="90" rx="6" fill="#1a3a6a"/>
+    <rect x="990" y="318" width="28" height="112" rx="6" fill="#2698ff" opacity="0.85"/>
+    <rect x="1028" y="335" width="28" height="95" rx="6" fill="#1a3a6a"/>
+
+    <!-- Legenda do grafico -->
+    <text x="800" y="450" font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#5a7da0">Jan</text>
+    <text x="838" y="450" font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#5a7da0">Fev</text>
+    <text x="876" y="450" font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#1fca73">Mar</text>
+    <text x="914" y="450" font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#5a7da0">Abr</text>
+    <text x="952" y="450" font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#5a7da0">Mai</text>
+    <text x="988" y="450" font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#2698ff">Jun</text>
+    <text x="1026" y="450" font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#5a7da0">Jul</text>
+
+    <!-- Linha divisória inferior -->
+    <line x1="780" y1="466" x2="1160" y2="466" stroke="#1e3355" stroke-width="1"/>
+
+    <!-- Resumo custos x lucro -->
+    <text x="800" y="497" font-family="Segoe UI, Arial, sans-serif" font-size="13" fill="#8aaac8">Custos</text>
+    <text x="800" y="520" font-family="Segoe UI, Arial, sans-serif" font-size="17" font-weight="700" fill="#f4f7ff">R$ 1.340</text>
+    <text x="990" y="497" font-family="Segoe UI, Arial, sans-serif" font-size="13" fill="#8aaac8">Lucro real</text>
+    <text x="990" y="520" font-family="Segoe UI, Arial, sans-serif" font-size="17" font-weight="700" fill="#1fca73">R$ 3.480</text>
+
+    <!-- Barra de progresso lucro -->
+    <rect x="800" y="534" width="360" height="8" rx="4" fill="#1a3a6a"/>
+    <rect x="800" y="534" width="255" height="8" rx="4" fill="url(#badge-grad)"/>
+  </g>
+
+  <!-- Ícone de carro estilizado (esquerda, decorativo) -->
+  <g transform="translate(100, 380)" opacity="0.12" fill="#2698ff">
+    <rect x="0" y="40" width="200" height="70" rx="18"/>
+    <rect x="30" y="10" width="140" height="55" rx="14"/>
+    <circle cx="42" cy="118" r="20"/>
+    <circle cx="158" cy="118" r="20"/>
+  </g>
+
+  <!-- Linha decorativa central -->
+  <rect x="100" y="340" width="600" height="1.5" rx="1" fill="url(#line-grad)" opacity="0.55"/>
+
+  <!-- Badge "Curso Digital" -->
+  <rect x="100" y="120" width="200" height="34" rx="17" fill="rgba(31,202,115,0.14)" stroke="rgba(31,202,115,0.5)" stroke-width="1.2"/>
+  <circle cx="122" cy="137" r="6" fill="#1fca73"/>
+  <text x="136" y="142" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" fill="#d7ffe9">Curso Digital</text>
+
+  <!-- Título principal -->
+  <text x="100" y="230" font-family="Segoe UI, Arial, sans-serif" font-size="58" font-weight="900" fill="#ffffff" filter="url(#glow-text)" letter-spacing="-1">Motorista</text>
+  <text x="100" y="300" font-family="Segoe UI, Arial, sans-serif" font-size="58" font-weight="900" fill="#ffffff" letter-spacing="-1">Pro</text>
+
+  <!-- Subtitulo em verde -->
+  <text x="100" y="358" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700" fill="#1fca73" letter-spacing="0.5">Controle Total + Renda Inteligente</text>
+
+  <!-- Descrição -->
+  <text x="100" y="408" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#b8c4dd">Organize seus ganhos, controle seus custos</text>
+  <text x="100" y="430" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#b8c4dd">e tome decisoes melhores no dia a dia.</text>
+
+  <!-- Pills de benefício -->
+  <rect x="100" y="460" width="152" height="32" rx="16" fill="rgba(38,152,255,0.15)" stroke="rgba(38,152,255,0.5)" stroke-width="1.2"/>
+  <text x="120" y="481" font-family="Segoe UI, Arial, sans-serif" font-size="13" fill="#cfe2ff">Curso completo</text>
+
+  <rect x="264" y="460" width="135" height="32" rx="16" fill="rgba(31,202,115,0.15)" stroke="rgba(31,202,115,0.5)" stroke-width="1.2"/>
+  <text x="283" y="481" font-family="Segoe UI, Arial, sans-serif" font-size="13" fill="#d7ffe9">Planilha smart</text>
+
+  <rect x="411" y="460" width="148" height="32" rx="16" fill="rgba(38,152,255,0.15)" stroke="rgba(38,152,255,0.5)" stroke-width="1.2"/>
+  <text x="429" y="481" font-family="Segoe UI, Arial, sans-serif" font-size="13" fill="#cfe2ff">Garantia 7 dias</text>
+
+  <!-- Linha decorativa inferior -->
+  <rect x="100" y="660" width="500" height="2" rx="1" fill="url(#line-grad)" opacity="0.4"/>
+
+  <!-- Rodapé URL -->
+  <text x="100" y="695" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#4a6a92">nomadis.herospark.co</text>
+
+  <!-- Borda decorativa do frame -->
+  <rect x="4" y="4" width="1272" height="712" rx="16" fill="none" stroke="rgba(75,110,160,0.3)" stroke-width="1.5"/>
+</svg>

@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Passo 5 — Metas Semanais | Motorista Pro</title>
+  <style>
+    :root{--verde:#1fca73;--azul:#2698ff;--text:#1a2638;--muted:#6b7e97;--border:#d1dce9;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:"Segoe UI",Arial,sans-serif;background:#f8fafc;color:var(--text);font-size:14px;line-height:1.6;}
+    .page{max-width:800px;margin:0 auto;padding:2rem 1.5rem;}
+    header{background:linear-gradient(135deg,#061126,#0c1c38);color:#fff;border-radius:12px;padding:1.4rem;margin-bottom:1.5rem;text-align:center;}
+    header .badge{display:inline-block;background:rgba(38,152,255,.22);border:1px solid rgba(38,152,255,.55);border-radius:999px;padding:.25rem .8rem;font-size:.76rem;font-weight:700;color:#61bcff;margin-bottom:.6rem;}
+    header h1{font-size:1.4rem;font-weight:900;margin-bottom:.3rem;}
+    header p{color:#8aaac8;font-size:.9rem;}
+    .card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.2rem;margin-bottom:1rem;}
+    h2{font-size:.95rem;font-weight:800;margin-bottom:.8rem;}
+    label{display:block;font-size:.8rem;font-weight:600;color:var(--muted);margin-bottom:.25rem;margin-top:.6rem;}
+    input[type=number]{width:100%;padding:.45rem .65rem;border:1px solid var(--border);border-radius:7px;font-size:.92rem;}
+    .result-row{display:flex;gap:1rem;flex-wrap:wrap;margin:.8rem 0;}
+    .res{flex:1;min-width:130px;background:#f5f8ff;border:1px solid #c7d9f7;border-radius:8px;padding:.7rem;text-align:center;}
+    .res .label{font-size:.73rem;color:var(--muted);font-weight:600;text-transform:uppercase;}
+    .res .val{font-size:1.15rem;font-weight:800;color:var(--azul);margin-top:.15rem;}
+    .res.green .val{color:var(--verde);}
+    table{width:100%;border-collapse:collapse;font-size:.85rem;margin:.6rem 0;}
+    th,td{padding:.5rem .6rem;border:1px solid var(--border);text-align:center;}
+    thead tr{background:#f0f4f9;}
+    th{font-weight:700;color:var(--muted);font-size:.76rem;text-transform:uppercase;}
+    td input{width:100%;border:none;background:transparent;text-align:center;font-size:.88rem;padding:.2rem;}
+    td input:focus{outline:1px solid var(--azul);border-radius:4px;}
+    .tip{background:#f0fdf4;border-left:3px solid var(--verde);padding:.65rem .9rem;border-radius:0 8px 8px 0;font-size:.85rem;color:#1a4a2e;margin:.7rem 0;}
+    .progress-wrap{background:#e5f0ff;border-radius:999px;height:12px;margin:.5rem 0;}
+    .progress-fill{background:linear-gradient(90deg,var(--verde),var(--azul));height:12px;border-radius:999px;transition:width 300ms;}
+    button{background:var(--verde);color:#042014;border:none;border-radius:8px;padding:.55rem 1.1rem;font-weight:700;cursor:pointer;font-size:.86rem;}
+    footer{text-align:center;color:var(--muted);font-size:.76rem;margin-top:2rem;padding-top:1rem;border-top:1px solid var(--border);}
+    @media print{button{display:none;}.page{padding:0;}}
+  </style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="badge">Passo 5 de 7 — Plano Intermediario</div>
+    <h1>Como Definir Metas Semanais Realistas</h1>
+    <p>Meta sem base real e frustracao garantida. Aqui voce aprende a calcular a sua.</p>
+  </header>
+
+  <div class="card">
+    <h2>Calculadora de Meta Semanal</h2>
+    <label>Quanto precisa pagar de contas fixas no mes (aluguel, alimentacao, etc.)? (R$)</label>
+    <input type="number" id="contas" placeholder="Ex: 1800" oninput="calcMeta()"/>
+    <label>Quanto quer guardar ou investir por mes? (R$)</label>
+    <input type="number" id="poupar" placeholder="Ex: 300" oninput="calcMeta()"/>
+    <label>Custo estimado de combustivel e despesas de trabalho por mes (R$)</label>
+    <input type="number" id="custo-op" placeholder="Ex: 600" oninput="calcMeta()"/>
+    <label>Quantos dias por semana voce trabalha?</label>
+    <input type="number" id="dias" placeholder="Ex: 5" min="1" max="7" oninput="calcMeta()"/>
+
+    <div class="result-row" style="margin-top:1rem;">
+      <div class="res"><div class="label">Meta mensal necessaria</div><div class="val" id="r-mensal">R$ 0</div></div>
+      <div class="res green"><div class="label">Meta semanal</div><div class="val" id="r-semanal">R$ 0</div></div>
+      <div class="res"><div class="label">Meta diaria</div><div class="val" id="r-diario">R$ 0</div></div>
+      <div class="res"><div class="label">Meta por hora (8h/dia)</div><div class="val" id="r-hora">R$ 0</div></div>
+    </div>
+    <div class="tip" id="tip-meta">Preencha os campos acima para ver sua meta personalizada.</div>
+  </div>
+
+  <div class="card">
+    <h2>Acompanhamento Semanal — Preencha cada dia</h2>
+    <table>
+      <thead><tr><th>Dia</th><th>Meta do dia (R$)</th><th>Realizado (R$)</th><th>Diferenca</th><th>% atingido</th></tr></thead>
+      <tbody id="dias-tabela"></tbody>
+      <tfoot>
+        <tr style="background:#f0fdf4;font-weight:700;">
+          <td>SEMANA</td>
+          <td id="t-meta">R$ 0,00</td>
+          <td id="t-real">R$ 0,00</td>
+          <td id="t-diff">R$ 0,00</td>
+          <td id="t-pct">0%</td>
+        </tr>
+      </tfoot>
+    </table>
+    <div class="progress-wrap"><div class="progress-fill" id="prog-week" style="width:0%"></div></div>
+    <div id="prog-label" style="text-align:center;font-size:.8rem;color:var(--muted);">0% da meta semanal atingida</div>
+  </div>
+
+  <div style="text-align:center;margin-top:1.2rem;">
+    <button onclick="window.print()">Imprimir / Salvar PDF</button>
+  </div>
+  <footer>Motorista Pro: Controle Total + Renda Inteligente — Material exclusivo para alunos.</footer>
+</div>
+<script>
+  const dias=['Segunda','Terca','Quarta','Quinta','Sexta','Sabado','Domingo'];
+  function fmt(v){return 'R$ '+v.toFixed(2).replace('.',',');}
+  function calcMeta(){
+    const contas=parseFloat(document.getElementById('contas').value)||0;
+    const poupar=parseFloat(document.getElementById('poupar').value)||0;
+    const custo=parseFloat(document.getElementById('custo-op').value)||0;
+    const diasTrab=parseInt(document.getElementById('dias').value)||5;
+    const mensal=contas+poupar+custo;
+    const semanal=mensal/4.3;
+    const diario=semanal/diasTrab;
+    const hora=diario/8;
+    document.getElementById('r-mensal').textContent=fmt(mensal);
+    document.getElementById('r-semanal').textContent=fmt(semanal);
+    document.getElementById('r-diario').textContent=fmt(diario);
+    document.getElementById('r-hora').textContent=fmt(hora);
+    const tip=document.getElementById('tip-meta');
+    if(mensal>0){tip.textContent='Para cobrir suas despesas e guardar R$'+poupar.toFixed(0)+', voce precisa faturar pelo menos '+fmt(diario)+' por dia trabalhado.';}
+    renderDias(diario,diasTrab);
+  }
+  function renderDias(diario,qtd){
+    const tbody=document.getElementById('dias-tabela');
+    tbody.innerHTML=dias.slice(0,qtd).map((d,i)=>`
+      <tr>
+        <td>${d}</td>
+        <td>${fmt(diario)}</td>
+        <td><input type="number" placeholder="0,00" step="0.01" oninput="updateTotais(${diario},${qtd})"/></td>
+        <td id="d-diff-${i}">—</td>
+        <td id="d-pct-${i}">—</td>
+      </tr>`).join('');
+  }
+  function updateTotais(diario,qtd){
+    const rows=document.querySelectorAll('#dias-tabela tr');
+    let tReal=0,tMeta=diario*qtd;
+    rows.forEach((r,i)=>{
+      const inp=r.querySelector('input');
+      if(!inp)return;
+      const val=parseFloat(inp.value)||0;
+      tReal+=val;
+      const diff=val-diario;
+      const pct=diario>0?(val/diario*100):0;
+      document.getElementById('d-diff-'+i).textContent=fmt(diff);
+      document.getElementById('d-diff-'+i).style.color=diff>=0?'var(--verde)':'#e55';
+      document.getElementById('d-pct-'+i).textContent=pct.toFixed(0)+'%';
+    });
+    document.getElementById('t-meta').textContent=fmt(tMeta);
+    document.getElementById('t-real').textContent=fmt(tReal);
+    const td=tReal-tMeta;
+    const el=document.getElementById('t-diff');
+    el.textContent=fmt(td); el.style.color=td>=0?'var(--verde)':'#e55';
+    const pctSem=tMeta>0?(tReal/tMeta*100):0;
+    document.getElementById('t-pct').textContent=pctSem.toFixed(0)+'%';
+    document.getElementById('prog-week').style.width=Math.min(100,pctSem)+'%';
+    document.getElementById('prog-label').textContent=pctSem.toFixed(0)+'% da meta semanal atingida';
+  }
+  renderDias(0,5);
+</script>
+</body>
+</html>

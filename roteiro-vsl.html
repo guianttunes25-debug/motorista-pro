@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Roteiro VSL — Motorista Pro | Script de Video de Vendas</title>
+  <style>
+    :root{--verde:#1fca73;--azul:#2698ff;--red:#f05050;--text:#1a2638;--muted:#6b7e97;--border:#d1dce9;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:"Segoe UI",Arial,sans-serif;background:#f8fafc;color:var(--text);font-size:14px;line-height:1.7;}
+    .page{max-width:860px;margin:0 auto;padding:2rem 1.5rem;}
+    header{background:linear-gradient(135deg,#061126,#0c1c38);color:#fff;border-radius:12px;padding:1.6rem;margin-bottom:1.5rem;text-align:center;}
+    header h1{font-size:1.5rem;font-weight:900;margin-bottom:.4rem;}
+    header p{color:#8aaac8;font-size:.9rem;}
+    .meta{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem;margin-bottom:1.5rem;}
+    @media(max-width:600px){.meta{grid-template-columns:repeat(2,1fr);}}
+    .meta-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:.75rem;text-align:center;}
+    .meta-card .ml{font-size:.68rem;font-weight:700;color:var(--muted);text-transform:uppercase;}
+    .meta-card .mv{font-size:1.1rem;font-weight:900;color:var(--azul);}
+    .scene{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.3rem;margin-bottom:1.1rem;border-left:4px solid var(--border);}
+    .scene.hook{border-left-color:var(--red);}
+    .scene.problema{border-left-color:#f59e0b;}
+    .scene.solucao{border-left-color:var(--azul);}
+    .scene.prova{border-left-color:#8b5cf6;}
+    .scene.oferta{border-left-color:var(--verde);}
+    .scene.garantia{border-left-color:#06b6d4;}
+    .scene.cta{border-left-color:var(--verde);}
+    .scene-header{display:flex;align-items:center;gap:.75rem;margin-bottom:.9rem;flex-wrap:wrap;}
+    .scene-num{width:30px;height:30px;min-width:30px;border-radius:999px;font-weight:900;font-size:.82rem;display:grid;place-items:center;color:#fff;}
+    .scene-num.hook{background:var(--red);} .scene-num.problema{background:#f59e0b;} .scene-num.solucao{background:var(--azul);}
+    .scene-num.prova{background:#8b5cf6;} .scene-num.oferta{background:var(--verde);color:#042014;} .scene-num.garantia{background:#06b6d4;}
+    .scene-num.cta{background:var(--verde);color:#042014;}
+    .scene-title{font-weight:800;font-size:.95rem;flex:1;}
+    .timing{background:#f0f4f9;border-radius:999px;padding:.18rem .65rem;font-size:.72rem;font-weight:700;color:var(--muted);}
+    .direction{background:#fffbeb;border:1px solid #fde68a;border-radius:7px;padding:.55rem .8rem;font-size:.8rem;color:#78350f;margin-bottom:.7rem;font-style:italic;}
+    .direction strong{color:#92400e;font-style:normal;}
+    .script{font-size:.92rem;line-height:1.85;color:var(--text);}
+    .script p{margin-bottom:.65rem;}
+    .script strong{color:#1a2638;}
+    .emphasis{color:var(--azul);font-weight:800;}
+    .emotion{color:var(--red);font-weight:700;}
+    .money{color:var(--verde);font-weight:800;}
+    .pause{display:inline-block;background:#f0f4f9;border-radius:4px;padding:.05rem .35rem;font-size:.72rem;font-weight:700;color:var(--muted);margin:0 .15rem;vertical-align:middle;}
+    table{width:100%;border-collapse:collapse;font-size:.85rem;margin:1rem 0;}
+    th,td{padding:.5rem .6rem;border:1px solid var(--border);}
+    thead tr{background:#f0f4f9;}
+    th{font-weight:700;color:var(--muted);font-size:.73rem;text-transform:uppercase;}
+    .tip-box{background:#f0fdf4;border:1px solid #a7f3d0;border-radius:10px;padding:1rem;margin-bottom:1rem;}
+    .tip-box h3{font-size:.85rem;font-weight:800;color:#065f46;margin-bottom:.5rem;}
+    .tip-box ul{list-style:none;display:grid;gap:.4rem;}
+    .tip-box ul li::before{content:"✓ ";color:var(--verde);font-weight:800;}
+    .warn-box{background:#fff1f1;border:1px solid #fecaca;border-radius:10px;padding:1rem;margin-bottom:1rem;}
+    .warn-box h3{font-size:.85rem;font-weight:800;color:#991b1b;margin-bottom:.5rem;}
+    button{background:var(--verde);color:#042014;border:none;border-radius:8px;padding:.55rem 1.1rem;font-weight:700;cursor:pointer;font-size:.85rem;}
+    footer{text-align:center;color:var(--muted);font-size:.74rem;margin-top:2rem;padding-top:.8rem;border-top:1px solid var(--border);}
+    @media print{button,header .meta{page-break-inside:avoid;}.scene{break-inside:avoid;}.page{padding:0;}}
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <h1>Roteiro VSL — Motorista Pro: Controle Total + Renda Inteligente</h1>
+    <p>Video de Vendas (VSL) — Script completo com marcacoes de tempo, emocao e direcao de locucao</p>
+  </header>
+
+  <div class="meta">
+    <div class="meta-card"><div class="ml">Duracao total</div><div class="mv">~7 min</div></div>
+    <div class="meta-card"><div class="ml">Publico-alvo</div><div class="mv">Motoristas</div></div>
+    <div class="meta-card"><div class="ml">Tom de voz</div><div class="mv">Direto / Empático</div></div>
+    <div class="meta-card"><div class="ml">Formato</div><div class="mv">VSL + Slides</div></div>
+  </div>
+
+  <!-- Instrucoes de gravacao -->
+  <div class="tip-box">
+    <h3>Instrucoes antes de gravar</h3>
+    <ul>
+      <li>Grave em ambiente silencioso. Feche janelas e desligue ventiladores.</li>
+      <li>Fale devagar: cerca de 120 a 140 palavras por minuto. Nao corra.</li>
+      <li>Sorria levemente ao falar — isso muda o tom de voz mesmo sem aparecer na camera.</li>
+      <li>Nas marcacoes <span class="pause">PAUSA</span> pare 1 a 2 segundos antes de continuar.</li>
+      <li>Nas marcacoes <em>[ENFASE]</em> aumente levemente o volume e a intensidade.</li>
+      <li>Grave em segmentos por cena. Fica mais facil regravar se errar.</li>
+    </ul>
+  </div>
+
+  <div class="warn-box">
+    <h3>Erros comuns a evitar</h3>
+    <ul style="list-style:none;display:grid;gap:.35rem;">
+      <li>❌ Nao fale "como eu disse antes" ou "como voce sabe" — cada cena e independente.</li>
+      <li>❌ Nao leia com voz monotona. Mude o ritmo a cada paragrafo.</li>
+      <li>❌ Nao mencione concorrentes pelo nome.</li>
+      <li>❌ Nao prometa resultados especificos em reais — use "pode ganhar mais" em vez de "vai ganhar R$X".</li>
+    </ul>
+  </div>
+
+  <!-- CENA 1: HOOK -->
+  <div class="scene hook">
+    <div class="scene-header">
+      <div class="scene-num hook">1</div>
+      <div class="scene-title">HOOK — Ganchar a atencao em 10 segundos</div>
+      <span class="timing">0:00 — 0:35</span>
+    </div>
+    <div class="direction"><strong>Visual sugerido:</strong> Tela preta. Texto aparece palavra por palavra em branco. Sem musica nos primeiros 5 segundos. Som ambiente baixo de carro ligado ao fundo.</div>
+    <div class="script">
+      <p><strong>"Voce saiu pra trabalhar hoje, rodou o dia inteiro..."</strong> <span class="pause">PAUSA</span></p>
+      <p><strong>"...e no final do dia nao sabe se ganhou ou se teve prejuizo."</strong></p>
+      <p><span class="pause">PAUSA LONGA</span></p>
+      <p class="emotion"><strong>"Se isso soa familiar, esse video foi feito pra voce."</strong></p>
+      <p>Nos proximos minutos, eu vou te mostrar por que isso acontece e como voce pode mudar isso ainda essa semana. <span class="pause">PAUSA</span> Fica comigo.</p>
+    </div>
+  </div>
+
+  <!-- CENA 2: PROBLEMA -->
+  <div class="scene problema">
+    <div class="scene-header">
+      <div class="scene-num problema">2</div>
+      <div class="scene-title">PROBLEMA — Identificar a dor com precisao</div>
+      <span class="timing">0:35 — 2:10</span>
+    </div>
+    <div class="direction"><strong>Visual sugerido:</strong> Slides com texto + icones. Fundo escuro. Cor vermelha para os numeros de custo. Ritmo de fala mais devagar aqui — deix ar a dor "pousar".</div>
+    <div class="script">
+      <p>A maioria dos motoristas e entregadores do Brasil cai na mesma armadilha.</p>
+      <p>Voce olha o saldo no app <span class="pause">PAUSA</span> ve um numero que parece bom, <span class="pause">PAUSA</span> e pensa "hoje foi um bom dia".</p>
+      <p>Mas esse numero que voce ve <span class="emphasis">nao e o seu lucro</span>. <span class="pause">PAUSA</span></p>
+      <p>Desse valor, voce ainda precisa tirar o combustivel. <span class="pause">PAUSA</span> A manutencao do carro ou da moto. <span class="pause">PAUSA</span> A alimentacao durante o turno. <span class="pause">PAUSA</span> O desgaste do veiculo. <span class="pause">PAUSA</span> E as taxas da plataforma.</p>
+      <p>Quando voce soma tudo isso... <span class="pause">PAUSA LONGA</span> muita gente descobre que trabalhou o dia inteiro pra ficar no zero a zero — ou pior, no negativo.</p>
+      <p>E o problema nao e que voce trabalha pouco. Voce trabalha muito. <span class="pause">PAUSA</span></p>
+      <p class="emotion"><strong>[ENFASE] O problema e que sem controle, voce esta trabalhando pra pagar os seus custos, nao pra construir a sua vida.</strong></p>
+      <p>Eu vi isso acontecer com centenas de motoristas. <span class="pause">PAUSA</span> Pessoas esforçadas, dedicadas, que nao tinham nenhuma ferramenta pra entender onde estava indo o dinheiro delas.</p>
+    </div>
+  </div>
+
+  <!-- CENA 3: AGITAR -->
+  <div class="scene problema">
+    <div class="scene-header">
+      <div class="scene-num problema">3</div>
+      <div class="scene-title">AGITAR — Mostrar o custo de nao agir</div>
+      <span class="timing">2:10 — 2:55</span>
+    </div>
+    <div class="direction"><strong>Visual sugerido:</strong> Numeros em vermelho aparecendo na tela. Musica de fundo levemente tensa, bem baixa. Fale com ritmo mais urgente aqui.</div>
+    <div class="script">
+      <p>Pensa comigo. <span class="pause">PAUSA</span></p>
+      <p>Se voce trabalha 22 dias por mes e perde apenas <span class="emotion">R$ 15 por dia</span> por falta de controle... <span class="pause">PAUSA</span></p>
+      <p>Isso sao <span class="emotion">R$ 330 por mes</span> que evaporam sem voce perceber. <span class="pause">PAUSA</span></p>
+      <p>Em um ano: <span class="pause">PAUSA</span> <span class="emotion">quase R$ 4.000 perdidos.</span></p>
+      <p><span class="pause">PAUSA LONGA</span></p>
+      <p>Nao porque voce e descuidado. Mas porque ninguem te ensinou a controlar direito.</p>
+      <p class="emotion"><strong>[ENFASE] E isso vai continuar acontecendo enquanto voce nao tiver um sistema.</strong></p>
+    </div>
+  </div>
+
+  <!-- CENA 4: SOLUCAO -->
+  <div class="scene solucao">
+    <div class="scene-header">
+      <div class="scene-num solucao">4</div>
+      <div class="scene-title">SOLUCAO — Apresentar o produto</div>
+      <span class="timing">2:55 — 4:00</span>
+    </div>
+    <div class="direction"><strong>Visual sugerido:</strong> Transicao suave. Fundo muda para azul escuro com elementos verdes. Logotipo "Motorista Pro" aparece. Musica mais leve e positiva entra. Fale com energia otimista aqui.</div>
+    <div class="script">
+      <p>Foi por isso que criamos o <span class="emphasis">Motorista Pro: Controle Total e Renda Inteligente</span>.</p>
+      <p>Nao e um curso chato de financas. <span class="pause">PAUSA</span> Nao e teoria de livro que nao funciona na pratica. <span class="pause">PAUSA</span></p>
+      <p>E um sistema passo a passo feito <span class="emphasis">especificamente pra quem trabalha com aplicativo</span> — motorista de Uber, 99, entregador de iFood, Rappi, motoboy. <span class="pause">PAUSA</span></p>
+      <p>Com o Motorista Pro, voce vai saber exatamente quanto ganhou, quanto gastou, e quanto sobrou — <span class="emphasis">todos os dias</span>.</p>
+      <p>Voce vai parar de trabalhar no escuro e comecar a tomar decisoes inteligentes. <span class="pause">PAUSA</span></p>
+      <p>Quando trabalhar mais. <span class="pause">PAUSA</span> Quando parar. <span class="pause">PAUSA</span> Quais corridas valem a pena aceitar. <span class="pause">PAUSA</span> E quanto precisa poupar por dia pra ter uma reserva de emergencia.</p>
+      <p><span class="emphasis">Tudo isso de forma simples, sem planilha complicada, sem precisa ser contador.</span></p>
+    </div>
+  </div>
+
+  <!-- CENA 5: O QUE INCLUI -->
+  <div class="scene oferta">
+    <div class="scene-header">
+      <div class="scene-num oferta">5</div>
+      <div class="scene-title">ENTREGA — O que voce recebe</div>
+      <span class="timing">4:00 — 5:10</span>
+    </div>
+    <div class="direction"><strong>Visual sugerido:</strong> Lista aparece item por item com icone de check verde. Fale cada item com clareza, deixando um momento de pausa entre cada um para o espectador processar.</div>
+    <div class="script">
+      <p>Quando voce se torna aluno do Motorista Pro, voce recebe acesso imediato a tudo isso:</p>
+      <p><span class="money">✓ Aulas em video curtas e diretas</span> — modulos gravados para assistir no celular, no seu ritmo, quando quiser. <span class="pause">PAUSA</span></p>
+      <p><span class="money">✓ Planilha de controle financeiro</span> — pronta para usar no Google Sheets, sem precisar instalar nada, ja com os calculos prontos pra voce. <span class="pause">PAUSA</span></p>
+      <p><span class="money">✓ Guias passo a passo em PDF</span> — documentos que voce imprime ou salva no celular e usa no dia a dia. <span class="pause">PAUSA</span></p>
+      <p><span class="money">✓ Calculadoras interativas</span> — voce digita os seus numeros e elas calculam tudo: custo por corrida, ponto de equilibrio, reserva de emergencia. <span class="pause">PAUSA</span></p>
+      <p><span class="money">✓ Acesso vitalicio</span> — paga uma vez e acessa para sempre, incluindo atualizacoes futuras. <span class="pause">PAUSA</span></p>
+      <p>E voce acessa tudo isso pela area de membros, pelo celular ou computador, logo apos o pagamento.</p>
+    </div>
+  </div>
+
+  <!-- CENA 6: PROVA SOCIAL -->
+  <div class="scene prova">
+    <div class="scene-header">
+      <div class="scene-num prova">6</div>
+      <div class="scene-title">PROVA SOCIAL — Criar credibilidade</div>
+      <span class="timing">5:10 — 5:45</span>
+    </div>
+    <div class="direction"><strong>Visual sugerido:</strong> Prints de depoimentos (podem ser mockups) ou apenas texto em cards. Fale em tom mais suave, como se estivesse contando uma historia.</div>
+    <div class="script">
+      <p>Motoristas que aplicaram esse metodo relatam que passaram a ter clareza sobre os ganhos reais pela primeira vez.</p>
+      <p>Um motorista de Uber me contou que descobriu que estava ganhando <span class="emotion">R$ 12 por hora</span> depois de descontar combustivel e desgaste. <span class="pause">PAUSA</span> Com o controle, ele reorganizou os horarios e aumentou isso pra mais do dobro, trabalhando os mesmos dias.</p>
+      <p>Uma entregadora de moto percebeu que aceitava corridas longas achando que eram melhores, mas quando calculou o custo por km, as corridas curtas eram mais lucrativas.</p>
+      <p class="emphasis"><strong>A diferenca nao e trabalhar mais. E trabalhar com informacao.</strong></p>
+    </div>
+  </div>
+
+  <!-- CENA 7: OFERTA E PRECO -->
+  <div class="scene oferta">
+    <div class="scene-header">
+      <div class="scene-num oferta">7</div>
+      <div class="scene-title">OFERTA — Revelar preco com ancoragem</div>
+      <span class="timing">5:45 — 6:30</span>
+    </div>
+    <div class="direction"><strong>Visual sugerido:</strong> Tres cards de planos lado a lado. Preco antigo riscado, preco novo em verde grande. Fale o preco antigo com voz normal, o preco novo com energia e satisfacao.</div>
+    <div class="script">
+      <p>Agora, o mais importante: o investimento.</p>
+      <p>Pensa no valor de recuperar so <span class="money">R$ 15 por dia</span> que voce perde por falta de controle. <span class="pause">PAUSA</span> Em dois dias de trabalho, voce ja pagou esse curso.</p>
+      <p>O acesso ao Motorista Pro esta disponivel em tres opcoes:</p>
+      <p>O <strong>Plano Basico</strong>, com os 5 passos essenciais e a planilha de controle, por apenas <span class="money">R$ 27,90</span>. Pagamento unico, sem mensalidade.</p>
+      <p>O <strong>Plano Intermediario</strong>, que inclui tudo do basico mais o dashboard automatico e o checklist diario completo, por <span class="money">R$ 47,90</span>.</p>
+      <p>E o <strong>Plano Premium</strong>, com todo o conteudo, mais o planejamento de 3 meses, a calculadora de reserva e o bonus exclusivo de ponto de equilibrio, por <span class="money">R$ 67,90</span>.</p>
+      <p><span class="pause">PAUSA</span></p>
+      <p class="emphasis"><strong>[ENFASE] Pagamento unico. Acesso vitalicio. Sem renovacao, sem surpresa.</strong></p>
+    </div>
+  </div>
+
+  <!-- CENA 8: GARANTIA -->
+  <div class="scene garantia">
+    <div class="scene-header">
+      <div class="scene-num garantia">8</div>
+      <div class="scene-title">GARANTIA — Remover o risco</div>
+      <span class="timing">6:30 — 6:50</span>
+    </div>
+    <div class="direction"><strong>Visual sugerido:</strong> Icone de escudo ou selo "7 dias" em destaque. Tom de voz tranquilo e seguro. Fale devagar aqui.</div>
+    <div class="script">
+      <p>E pra voce nao ter nenhum risco, o Motorista Pro vem com <span class="emphasis">garantia incondicional de 7 dias</span>.</p>
+      <p>Se por qualquer motivo voce achar que nao e pra voce, e so mandar uma mensagem e eu devolvo 100% do seu dinheiro. <span class="pause">PAUSA</span> Sem burocracia, sem pergunta.</p>
+      <p>Ou seja: o risco e todo meu, nao seu.</p>
+    </div>
+  </div>
+
+  <!-- CENA 9: CTA FINAL -->
+  <div class="scene cta">
+    <div class="scene-header">
+      <div class="scene-num cta">9</div>
+      <div class="scene-title">CTA — Chamada para acao urgente</div>
+      <span class="timing">6:50 — 7:15</span>
+    </div>
+    <div class="direction"><strong>Visual sugerido:</strong> Botao de compra pulsando em verde. Seta apontando para baixo. Fale com energia maxima aqui — esta e a cena mais importante do video.</div>
+    <div class="script">
+      <p class="emotion"><strong>[ENFASE MAXIMA] Clica no botao aqui embaixo agora.</strong></p>
+      <p>Escolhe o plano que faz mais sentido pra voce. <span class="pause">PAUSA</span></p>
+      <p>O acesso e imediato. Em minutos voce ja esta na area de membros, com tudo na mao pra comecar hoje.</p>
+      <p>Amanha voce pode continuar sem controle, sem saber quanto realmente ganha, assistindo o dinheiro desaparecer...</p>
+      <p>Ou voce pode clicar agora e comecar a mudar isso de verdade. <span class="pause">PAUSA</span></p>
+      <p class="money"><strong>A escolha e sua. O botao esta ai embaixo.</strong></p>
+      <p><span class="pause">PAUSA LONGA</span></p>
+      <p><em>Te vejo do outro lado.</em></p>
+    </div>
+  </div>
+
+  <!-- Estrutura de tempo -->
+  <div class="scene" style="border-left-color:#8b5cf6;">
+    <div class="scene-header">
+      <div class="scene-title" style="font-size:1rem;">Resumo de tempo total</div>
+    </div>
+    <table>
+      <thead><tr><th>#</th><th>Cena</th><th>Inicio</th><th>Fim</th><th>Duracao</th><th>Objetivo</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Hook</td><td>0:00</td><td>0:35</td><td>35s</td><td>Capturar atencao imediata</td></tr>
+        <tr><td>2</td><td>Problema</td><td>0:35</td><td>2:10</td><td>1m35s</td><td>Criar identificacao com a dor</td></tr>
+        <tr><td>3</td><td>Agitar</td><td>2:10</td><td>2:55</td><td>45s</td><td>Mostrar o custo de nao agir</td></tr>
+        <tr><td>4</td><td>Solucao</td><td>2:55</td><td>4:00</td><td>1m05s</td><td>Apresentar o produto com clareza</td></tr>
+        <tr><td>5</td><td>Entrega</td><td>4:00</td><td>5:10</td><td>1m10s</td><td>Listar o que esta incluido</td></tr>
+        <tr><td>6</td><td>Prova social</td><td>5:10</td><td>5:45</td><td>35s</td><td>Credibilidade com exemplos reais</td></tr>
+        <tr><td>7</td><td>Oferta</td><td>5:45</td><td>6:30</td><td>45s</td><td>Revelar preco com ancoragem</td></tr>
+        <tr><td>8</td><td>Garantia</td><td>6:30</td><td>6:50</td><td>20s</td><td>Eliminar o risco de compra</td></tr>
+        <tr><td>9</td><td>CTA final</td><td>6:50</td><td>7:15</td><td>25s</td><td>Impulsionar a acao imediata</td></tr>
+        <tr style="background:#f0fdf4;font-weight:700;"><td colspan="4">TOTAL</td><td>~7 min</td><td>Duracao ideal para VSL de infoproduto</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Slides sugeridos -->
+  <div class="tip-box">
+    <h3>Slides sugeridos por cena (para usar no OBS, Canva ou PowerPoint)</h3>
+    <ul>
+      <li>Cena 1: Texto branco no fundo preto — "Voce rodou o dia inteiro... e nao sabe se lucrou?"</li>
+      <li>Cena 2: Icone de carro + lista de custos em vermelho aparecendo um por um</li>
+      <li>Cena 3: Calculadora mostrando R$330/mes e R$3.960/ano em vermelho</li>
+      <li>Cena 4: Logo Motorista Pro com slogan + capa do produto (use capa-motorista-pro.svg)</li>
+      <li>Cena 5: Lista de checkmarks verdes aparecendo item por item</li>
+      <li>Cena 6: Cards de depoimento com foto de avatar + texto curto</li>
+      <li>Cena 7: Tres cards de planos com preco antigo riscado e preco verde em destaque</li>
+      <li>Cena 8: Icone de escudo + "Garantia 7 dias — 100% do dinheiro de volta"</li>
+      <li>Cena 9: Botao verde grande pulsando + seta para baixo</li>
+    </ul>
+  </div>
+
+  <!-- Ferramentas para gravar -->
+  <div class="tip-box">
+    <h3>Como gravar sem aparecer na camera (recomendado)</h3>
+    <ul>
+      <li>Use o <strong>OBS Studio</strong> (gratuito) para gravar os slides + audio do microfone ao mesmo tempo</li>
+      <li>Ou grave so o audio com o <strong>Audacity</strong> (gratuito) e junte com os slides no <strong>CapCut</strong></li>
+      <li>Microfone de lapela do celular ja funciona bem — posicione a 15 cm da boca</li>
+      <li>Grave em quarto ou banheiro pequeno para ter menos eco</li>
+      <li>Leia o roteiro uma vez em voz alta antes de gravar para encontrar palavras complicadas</li>
+    </ul>
+  </div>
+
+  <div style="text-align:center;margin-top:1.5rem;">
+    <button onclick="window.print()">Imprimir roteiro / Salvar como PDF</button>
+  </div>
+  <footer>Motorista Pro: Controle Total + Renda Inteligente — Roteiro exclusivo para uso do produtor.</footer>
+</div>
+</body>
+</html>

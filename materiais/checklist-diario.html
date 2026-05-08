@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Checklist Diario do Motorista | Motorista Pro</title>
+  <style>
+    :root{--verde:#1fca73;--azul:#2698ff;--text:#1a2638;--muted:#6b7e97;--border:#d1dce9;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:"Segoe UI",Arial,sans-serif;background:#f8fafc;color:var(--text);font-size:14px;line-height:1.6;}
+    .page{max-width:740px;margin:0 auto;padding:2rem 1.5rem;}
+    header{background:linear-gradient(135deg,#061126,#0c1c38);color:#fff;border-radius:12px;padding:1.4rem;margin-bottom:1.5rem;text-align:center;}
+    header .badge{display:inline-block;background:rgba(31,202,115,.22);border:1px solid rgba(31,202,115,.5);border-radius:999px;padding:.22rem .75rem;font-size:.74rem;font-weight:700;color:#1fca73;margin-bottom:.55rem;}
+    header h1{font-size:1.35rem;font-weight:900;margin-bottom:.25rem;}
+    header p{color:#8aaac8;font-size:.88rem;}
+    .section{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.1rem;margin-bottom:.9rem;}
+    .sec-title{font-size:.88rem;font-weight:800;margin-bottom:.7rem;display:flex;align-items:center;gap:.5rem;}
+    .phase-badge{background:linear-gradient(135deg,var(--verde),#38db87);color:#042014;border-radius:999px;padding:.18rem .6rem;font-size:.7rem;font-weight:800;}
+    .phase-badge.azul{background:linear-gradient(135deg,var(--azul),#61bcff);color:#fff;}
+    .phase-badge.laranja{background:linear-gradient(135deg,#f59e0b,#fbbf24);color:#422006;}
+    .item{display:flex;align-items:flex-start;gap:.7rem;padding:.5rem 0;border-bottom:1px solid #f0f4f9;}
+    .item:last-child{border-bottom:none;}
+    .cb{width:22px;height:22px;min-width:22px;border:2px solid var(--border);border-radius:5px;cursor:pointer;display:grid;place-items:center;transition:all 180ms;margin-top:.1rem;font-size:.9rem;}
+    .cb.done{background:var(--verde);border-color:var(--verde);color:#042014;font-weight:900;}
+    .item-text strong{display:block;font-size:.88rem;}
+    .item-text span{font-size:.8rem;color:var(--muted);}
+    .progress-wrap{background:#e5f0ff;border-radius:999px;height:10px;}
+    .progress-fill{background:linear-gradient(90deg,var(--verde),var(--azul));height:10px;border-radius:999px;transition:width 300ms;}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin-bottom:1rem;}
+    .stat{background:#fff;border:1px solid var(--border);border-radius:8px;padding:.7rem;text-align:center;}
+    .stat .sl{font-size:.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;}
+    .stat .sv{font-size:1.15rem;font-weight:800;color:var(--azul);}
+    footer{text-align:center;color:var(--muted);font-size:.74rem;margin-top:2rem;padding-top:.8rem;border-top:1px solid var(--border);}
+    button{background:var(--verde);color:#042014;border:none;border-radius:8px;padding:.5rem 1rem;font-weight:700;cursor:pointer;font-size:.84rem;}
+    @media print{button{display:none;}.page{padding:0;}}
+  </style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="badge">Checklist Diario — Plano Intermediario</div>
+    <h1>Checklist Completo do Motorista Pro</h1>
+    <p>Tudo que um motorista organizado verifica antes, durante e apos o turno.</p>
+  </header>
+
+  <div class="stats">
+    <div class="stat"><div class="sl">Concluidos</div><div class="sv" id="s-done">0</div></div>
+    <div class="stat"><div class="sl">Pendentes</div><div class="sv" id="s-pend" style="color:#f59e0b;">0</div></div>
+    <div class="stat"><div class="sl">% do dia</div><div class="sv" id="s-pct">0%</div></div>
+  </div>
+  <div class="progress-wrap" style="margin-bottom:1.2rem;"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+
+  <!-- Antes de sair -->
+  <div class="section">
+    <div class="sec-title"><span class="phase-badge">Antes de sair</span></div>
+    <div class="item"><div class="cb" onclick="toggle(this)"></div><div class="item-text"><strong>Checar nivel de combustivel</strong><span>Calcule se tem para o turno completo. Abastecer durante o pico custa tempo.</span></div></div>
+    <div class="item"><div class="cb" onclick="toggle(this)"></div><div class="item-text"><strong>Verificar pneus</strong><span>Pneu murcho aumenta consumo e risco de acidente. 30 segundos de avaliacao visual.</span></div></div>
+    <div class="item"><div class="cb" onclick="toggle(this)"></div><div class="item-text"><strong>Celular carregado e suporte firme</strong><span>Celular sem bateria = zero corridas. GPS precisa de sinal e tela visivel.</span></div></div>
+    <div class="item"><div class="cb" onclick="toggle(this)"></div><div class="item-text"><strong>Documentos em dia</strong><span>CNH, CRLV, seguro. Multa por documentacao vencida pode custar semanas de lucro.</span></div></div>
+    <div class="item"><div class="cb" onclick="toggle(this)"></div><div class="item-text"><strong>Definir meta do dia</strong><span>Quanto precisa faturar hoje para cobrir custos + lucro desejado?</span></div></div>
+  </div>
+
+  <!-- Durante -->
+  <div class="section">
+    <div class="sec-title"><span class="phase-badge azul">Durante o turno</span></div>
+    <div class="item"><div class="cb" onclick="toggle(this)"></div><div class="item-text"><strong>Anotar cada corrida</strong><span>Valor, plataforma e custo estimado. Nao deixe para o final do dia.</span></div></div>
+    <div class="item"><div class="cb" onclick="toggle(this)"></div><div class="item-text"><strong>Verificar progresso da meta (a cada 2h)</strong><span>Quanto ja fez? Quanto ainda precisa para atingir a meta do dia?</span></div></div>
+    <div class="item"><div class="cb" onclick="toggle(this)"></div><div class="item-text"><strong>Fazer pausa para comer</strong><span>Motorista com fome comete erros e aceita corridas ruins por pressa.</span></div></div>
+    <div class="item"><div class="cb" onclick="toggle(this)"></div><div class="item-text"><strong>Checar temperatura do motor</strong><span>Parada emergencial faz voce perder horas de pico. Prevencao vale mais.</span></div></div>
+  </div>
+
+  <!-- Financeiro -->
+  <div class="section">
+    <div class="sec-title"><span class="phase-badge laranja">Ao encerrar — Financeiro</span></div>
+    <div class="item"><div class="cb" onclick="toggle(this)"></div><div class="item-text"><strong>Fechar registro do dia</strong><span>Some todas as entradas e calcule o lucro real. Nao pule esta etapa.</span></div></div>
+    <div class="item"><div class="cb" onclick="toggle(this)"></div><div class="item-text"><strong>Registrar abastecimento do dia</strong><span>Litros colocados + valor pago. Isso alimenta o calculo de custo por km.</span></div></div>
+    <div class="item"><div class="cb" onclick="toggle(this)"></div><div class="item-text"><strong>Comparar com meta do dia</strong><span>Bateu? Ficou abaixo? Por que? Uma linha de reflexao ja ajuda a melhorar amanha.</span></div></div>
+    <div class="item"><div class="cb" onclick="toggle(this)"></div><div class="item-text"><strong>Atualizar planilha semanal</strong><span>Copie o lucro de hoje para a planilha de metas semanais (Passo 5).</span></div></div>
+  </div>
+
+  <div style="display:flex;gap:.5rem;justify-content:center;margin-top:1.2rem;">
+    <button onclick="resetAll()">Reiniciar checklist</button>
+    <button onclick="window.print()" style="background:#0c1c38;color:#fff;">Imprimir / PDF</button>
+  </div>
+  <footer>Motorista Pro: Controle Total + Renda Inteligente — Material exclusivo para alunos.</footer>
+</div>
+<script>
+  function toggle(el){
+    el.classList.toggle('done');
+    el.textContent=el.classList.contains('done')?'✓':'';
+    update();
+  }
+  function update(){
+    const all=document.querySelectorAll('.cb');
+    const done=document.querySelectorAll('.cb.done').length;
+    document.getElementById('s-done').textContent=done;
+    document.getElementById('s-pend').textContent=all.length-done;
+    const pct=(done/all.length*100);
+    document.getElementById('s-pct').textContent=pct.toFixed(0)+'%';
+    document.getElementById('prog').style.width=pct+'%';
+  }
+  function resetAll(){
+    document.querySelectorAll('.cb').forEach(e=>{e.classList.remove('done');e.textContent='';});
+    update();
+  }
+  update();
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+{
+  "exchange": "binance",
+  "symbol": "BTC/USDT",
+  "timeframe": "1m",
+  "mode": "simulation",
+  "use_testnet": true,
+  "api_key": "",
+  "api_secret": "",
+
+  "broker": {
+    "type": "binance",
+    "exchange_id": "binance",
+    "api_key": "",
+    "api_secret": "",
+    "password": "",
+    "use_testnet": true,
+    "paper": true,
+    "feed": "iex"
+  },
+
+  "initial_balance_usdt": 1000.0,
+  "trade_size_pct": 10.0,
+  "max_daily_loss_pct": 2.0,
+  "max_position_pct": 25.0,
+  "max_volatility_pct": 3.0,
+
+  "rsi_period": 14,
+  "rsi_buy": 30,
+  "rsi_sell": 70,
+  "sma_fast": 9,
+  "sma_slow": 21,
+  "macd_fast": 12,
+  "macd_slow": 26,
+  "macd_signal": 9,
+
+  "score_buy_threshold": 2,
+  "score_sell_threshold": -2,
+
+  "news_enabled": true,
+  "cryptopanic_token": "",
+  "news_currencies": "BTC,ETH",
+
+  "poll_interval_seconds": 5,
+
+  "agent": {
+    "enabled": true,
+    "extreme_vol_pct": 2.5,
+    "calm_vol_pct": 0.10,
+    "trend_strength_min_pct": 0.03,
+    "min_setup_quality": 50,
+    "cooldown_seconds": 30,
+    "stop_loss_pct": 0.4,
+    "take_profit_pct": 0.8,
+    "trailing_enabled": true,
+    "trailing_activation_pct": 0.2,
+    "trailing_distance_pct": 0.15
+  },
+
+  "learning": {
+    "enabled": true,
+    "min_trades_to_adjust": 3,
+    "review_every_n_trades": 1,
+    "max_quality_mult": 1.30,
+    "min_quality_mult": 0.50
+  },
+
+  "update_manifest_url": "",
+  "auto_check_update": true,
+  "require_live_confirmation": true
+}

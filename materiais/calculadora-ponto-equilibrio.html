@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Bonus Premium — Calculadora Ponto de Equilibrio | Motorista Pro</title>
+  <style>
+    :root{--verde:#1fca73;--azul:#2698ff;--red:#f05050;--text:#1a2638;--muted:#6b7e97;--border:#d1dce9;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:"Segoe UI",Arial,sans-serif;background:#f8fafc;color:var(--text);font-size:14px;line-height:1.6;}
+    .page{max-width:800px;margin:0 auto;padding:2rem 1.5rem;}
+    header{background:linear-gradient(135deg,#061126,#0c1c38);color:#fff;border-radius:12px;padding:1.4rem;margin-bottom:1.4rem;text-align:center;}
+    header .badge{display:inline-block;background:rgba(240,80,80,.22);border:1px solid rgba(240,80,80,.55);border-radius:999px;padding:.22rem .75rem;font-size:.73rem;font-weight:700;color:#ff8a8a;margin-bottom:.55rem;}
+    header h1{font-size:1.35rem;font-weight:900;margin-bottom:.25rem;}
+    header p{color:#8aaac8;font-size:.87rem;}
+    .card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.2rem;margin-bottom:1rem;}
+    h2{font-size:.92rem;font-weight:800;margin-bottom:.8rem;}
+    label{display:block;font-size:.78rem;font-weight:600;color:var(--muted);margin-bottom:.2rem;margin-top:.6rem;}
+    input[type=number]{width:100%;padding:.42rem .6rem;border:1px solid var(--border);border-radius:7px;font-size:.92rem;}
+    .result-hero{background:linear-gradient(135deg,#061126,#0c1c38);border-radius:12px;padding:1.4rem;text-align:center;margin:1rem 0;color:#fff;}
+    .result-hero .label{font-size:.78rem;font-weight:700;color:#8aaac8;text-transform:uppercase;margin-bottom:.3rem;}
+    .result-hero .val{font-size:2.2rem;font-weight:900;color:var(--verde);}
+    .result-hero .sub{font-size:.85rem;color:#8aaac8;margin-top:.3rem;}
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin:.8rem 0;}
+    @media(max-width:550px){.grid3{grid-template-columns:1fr;}}
+    .mini-res{border-radius:10px;padding:.8rem;text-align:center;}
+    .mini-res.green{background:#f0fdf4;border:1px solid #a7f3d0;}
+    .mini-res.blue{background:#f0f6ff;border:1px solid #bfdbfe;}
+    .mini-res.red{background:#fff1f1;border:1px solid #fecaca;}
+    .mini-res .ml{font-size:.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;}
+    .mini-res .mv{font-size:1.1rem;font-weight:900;}
+    .mini-res.green .mv{color:var(--verde);} .mini-res.blue .mv{color:var(--azul);} .mini-res.red .mv{color:var(--red);}
+    .status-bar{border-radius:10px;padding:1rem;margin:1rem 0;text-align:center;font-weight:800;font-size:.95rem;}
+    .status-bar.ok{background:#f0fdf4;border:2px solid var(--verde);color:#065f46;}
+    .status-bar.warn{background:#fffbeb;border:2px solid #f59e0b;color:#92400e;}
+    .status-bar.bad{background:#fff1f1;border:2px solid var(--red);color:#991b1b;}
+    /* Bar chart */
+    .chart{display:flex;align-items:flex-end;gap:8px;height:100px;padding:.5rem 0;}
+    .bar-g{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;}
+    .bar-fill{width:100%;border-radius:6px 6px 0 0;transition:height 400ms;}
+    .bar-bl{font-size:.7rem;font-weight:700;color:var(--muted);}
+    .bar-vl{font-size:.7rem;font-weight:700;}
+    .tip{background:#f0fdf4;border-left:3px solid var(--verde);padding:.65rem .9rem;border-radius:0 8px 8px 0;font-size:.85rem;color:#1a4a2e;margin:.7rem 0;}
+    button{background:var(--verde);color:#042014;border:none;border-radius:8px;padding:.52rem 1rem;font-weight:700;cursor:pointer;font-size:.84rem;}
+    footer{text-align:center;color:var(--muted);font-size:.73rem;margin-top:2rem;padding-top:.8rem;border-top:1px solid var(--border);}
+    @media print{button{display:none;}.page{padding:0;}}
+  </style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="badge">Bonus Exclusivo — Plano Premium</div>
+    <h1>Calculadora do Ponto de Equilibrio</h1>
+    <p>Descubra o minimo que precisa ganhar por dia para nao ter prejuizo — e quanto falta para lucrar de verdade.</p>
+  </header>
+
+  <div class="card">
+    <h2>1. Insira seus custos</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;">
+      <div>
+        <label>Combustivel mensal (R$)</label>
+        <input type="number" id="c-comb" placeholder="Ex: 500" oninput="calc()"/>
+        <label>Manutencao mensal media (R$)</label>
+        <input type="number" id="c-manut" placeholder="Ex: 150" oninput="calc()"/>
+        <label>Alimentacao durante o trabalho (R$)</label>
+        <input type="number" id="c-alim" placeholder="Ex: 120" oninput="calc()"/>
+      </div>
+      <div>
+        <label>Outros custos fixos mensais (R$)</label>
+        <input type="number" id="c-outros" placeholder="Ex: 80" oninput="calc()"/>
+        <label>Dias trabalhados por mes</label>
+        <input type="number" id="dias-mes" placeholder="Ex: 22" min="1" max="31" oninput="calc()"/>
+        <label>Horas trabalhadas por dia</label>
+        <input type="number" id="horas-dia" placeholder="Ex: 8" min="1" max="16" oninput="calc()"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="result-hero" id="hero-result">
+    <div class="label">Seu ponto de equilibrio</div>
+    <div class="val" id="pe-val">R$ 0,00</div>
+    <div class="sub" id="pe-sub">Preencha os campos acima</div>
+  </div>
+
+  <div class="grid3">
+    <div class="mini-res blue"><div class="ml">Custo total mes</div><div class="mv" id="m-custo-mes">R$ 0</div></div>
+    <div class="mini-res green"><div class="ml">Minimo por hora</div><div class="mv" id="m-hora">R$ 0</div></div>
+    <div class="mini-res red"><div class="ml">Minimo por corrida (est.)</div><div class="mv" id="m-corrida">R$ 0</div></div>
+  </div>
+
+  <div class="card">
+    <h2>2. Quanto voce realmente fatura hoje?</h2>
+    <label>Faturamento bruto atual por dia (media) (R$)</label>
+    <input type="number" id="fat-atual" placeholder="Ex: 180" oninput="calc()"/>
+    <div class="status-bar" id="status-bar" style="display:none"></div>
+    <div class="tip" id="tip-acao" style="display:none"></div>
+  </div>
+
+  <div class="card">
+    <h2>3. Cenarios de faturamento</h2>
+    <div class="chart" id="chart"></div>
+  </div>
+
+  <div style="text-align:center;margin-top:1.2rem;">
+    <button onclick="window.print()">Imprimir / Salvar PDF</button>
+  </div>
+  <footer>Motorista Pro: Controle Total + Renda Inteligente — Material exclusivo para alunos.</footer>
+</div>
+<script>
+  function fmt(v){return 'R$ '+v.toFixed(2).replace('.',',');}
+  function calc(){
+    const comb=parseFloat(document.getElementById('c-comb').value)||0;
+    const manut=parseFloat(document.getElementById('c-manut').value)||0;
+    const alim=parseFloat(document.getElementById('c-alim').value)||0;
+    const outros=parseFloat(document.getElementById('c-outros').value)||0;
+    const dias=parseFloat(document.getElementById('dias-mes').value)||22;
+    const horas=parseFloat(document.getElementById('horas-dia').value)||8;
+    const fatAtual=parseFloat(document.getElementById('fat-atual').value)||0;
+    const custoMes=comb+manut+alim+outros;
+    const custoDia=custoMes/dias;
+    const custoHora=custoDia/horas;
+    const corridas=Math.ceil(horas/0.5); // estimate 30min per ride
+    const custoCorrida=custoDia/corridas;
+    document.getElementById('m-custo-mes').textContent=fmt(custoMes);
+    document.getElementById('m-hora').textContent=fmt(custoHora);
+    document.getElementById('m-corrida').textContent=fmt(custoCorrida);
+    document.getElementById('pe-val').textContent=fmt(custoDia);
+    document.getElementById('pe-sub').textContent='Voce precisa faturar pelo menos '+fmt(custoDia)+' por dia para cobrir todos os custos.';
+    // Status
+    const sb=document.getElementById('status-bar');
+    const tip=document.getElementById('tip-acao');
+    if(fatAtual>0){
+      sb.style.display='block'; tip.style.display='block';
+      const lucro=fatAtual-custoDia;
+      if(lucro>=custoDia*0.3){
+        sb.className='status-bar ok';
+        sb.textContent='ZONA DE LUCRO: voce esta ganhando '+fmt(lucro)+' acima do ponto de equilibrio por dia.';
+        tip.textContent='Seu negocio esta saudavel. Foque em manter a consistencia e ja comece a guardar parte do lucro para a reserva de emergencia.';
+      } else if(lucro>0){
+        sb.className='status-bar warn';
+        sb.textContent='ZONA DE ALERTA: voce esta no positivo, mas com margem pequena de '+fmt(lucro)+'/dia.';
+        tip.textContent='Revise os custos do Passo 4. Reduzir apenas R$20 nos custos diarios pode representar R$440 a mais de lucro no mes.';
+      } else {
+        sb.className='status-bar bad';
+        sb.textContent='ZONA DE PREJUIZO: voce esta perdendo '+fmt(Math.abs(lucro))+' por dia sem perceber.';
+        tip.textContent='Atencao! Seu faturamento atual nao cobre nem os custos de operacao. Revise os custos urgente ou aumente as horas nos horarios de pico.';
+      }
+    } else {sb.style.display='none';tip.style.display='none';}
+    // Chart
+    buildChart(custoDia);
+  }
+  function buildChart(pe){
+    const chart=document.getElementById('chart');
+    const scenarios=[
+      {label:'Muito baixo',val:pe*0.5,color:'#f05050'},
+      {label:'Abaixo',val:pe*0.8,color:'#f59e0b'},
+      {label:'Equilibrio',val:pe,color:'#2698ff'},
+      {label:'Lucro +20%',val:pe*1.2,color:'#1fca73'},
+      {label:'Lucro +50%',val:pe*1.5,color:'#0ea05d'},
+    ];
+    const max=scenarios[scenarios.length-1].val||1;
+    chart.innerHTML=scenarios.map(s=>`
+      <div class="bar-g">
+        <div class="bar-vl" style="color:${s.color}">${pe>0?'R$'+s.val.toFixed(0):''}</div>
+        <div class="bar-fill" style="height:${(s.val/max*70)+8}px;background:${s.color}"></div>
+        <div class="bar-bl">${s.label}</div>
+      </div>`).join('');
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Passo 3 — Rotina de 5 Minutos | Motorista Pro</title>
+  <style>
+    :root{--verde:#1fca73;--azul:#2698ff;--text:#1a2638;--muted:#6b7e97;--border:#d1dce9;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:"Segoe UI",Arial,sans-serif;background:#f8fafc;color:var(--text);font-size:14px;line-height:1.6;}
+    .page{max-width:760px;margin:0 auto;padding:2rem 1.5rem;}
+    header{background:linear-gradient(135deg,#061126,#0c1c38);color:#fff;border-radius:12px;padding:1.4rem;margin-bottom:1.5rem;text-align:center;}
+    header .badge{display:inline-block;background:rgba(31,202,115,.22);border:1px solid rgba(31,202,115,.55);border-radius:999px;padding:.25rem .8rem;font-size:.76rem;font-weight:700;color:#1fca73;margin-bottom:.6rem;}
+    header h1{font-size:1.4rem;font-weight:900;margin-bottom:.3rem;}
+    header p{color:#8aaac8;font-size:.9rem;}
+    .block{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.2rem;margin-bottom:1rem;}
+    .block-title{font-size:.95rem;font-weight:800;margin-bottom:.9rem;display:flex;align-items:center;gap:.5rem;}
+    .time-badge{background:linear-gradient(135deg,var(--verde),#38db87);color:#042014;border-radius:999px;padding:.2rem .65rem;font-size:.72rem;font-weight:800;}
+    .check-item{display:flex;align-items:flex-start;gap:.75rem;padding:.55rem 0;border-bottom:1px solid #f0f4f9;}
+    .check-item:last-child{border-bottom:none;}
+    .check-box{width:22px;height:22px;min-width:22px;border:2px solid var(--border);border-radius:5px;cursor:pointer;display:grid;place-items:center;transition:all 180ms;margin-top:.1rem;}
+    .check-box.done{background:var(--verde);border-color:var(--verde);color:#042014;font-weight:900;}
+    .check-text{flex:1;}
+    .check-text strong{display:block;font-size:.9rem;}
+    .check-text span{font-size:.82rem;color:var(--muted);}
+    .tip{background:#f0fdf4;border-left:3px solid var(--verde);padding:.6rem .9rem;border-radius:0 8px 8px 0;font-size:.85rem;color:#1a4a2e;margin:.8rem 0;}
+    .progress-bar-wrap{background:#e5f0ff;border-radius:999px;height:10px;margin:.8rem 0;}
+    .progress-bar{background:linear-gradient(90deg,var(--verde),var(--azul));height:10px;border-radius:999px;transition:width 300ms;}
+    footer{text-align:center;color:var(--muted);font-size:.76rem;margin-top:2rem;padding-top:1rem;border-top:1px solid var(--border);}
+    button{background:var(--verde);color:#042014;border:none;border-radius:8px;padding:.55rem 1.1rem;font-weight:700;cursor:pointer;font-size:.86rem;}
+    @media print{button,.progress-bar-wrap{display:none;}.page{padding:0;}}
+  </style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="badge">Passo 3 de 7 — Plano Basico</div>
+    <h1>Rotina de 5 Minutos por Dia</h1>
+    <p>O habito que separa quem tem controle de quem vive no aperto.</p>
+  </header>
+
+  <div class="block">
+    <div class="block-title">Progresso do dia <span id="prog-text" style="margin-left:auto;font-size:.8rem;color:var(--muted);">0 / 10 concluidos</span></div>
+    <div class="progress-bar-wrap"><div class="progress-bar" id="prog-bar" style="width:0%"></div></div>
+  </div>
+
+  <!-- Antes de sair -->
+  <div class="block">
+    <div class="block-title"><span class="time-badge">Antes de sair</span> 2 minutos</div>
+    <div class="check-item"><div class="check-box" onclick="toggle(this)"></div><div class="check-text"><strong>Verificar saldo do combustivel</strong><span>Calcule se tem combustivel para o turno ou se precisa abastecer antes.</span></div></div>
+    <div class="check-item"><div class="check-box" onclick="toggle(this)"></div><div class="check-text"><strong>Abrir o registro do dia</strong><span>Deixe a planilha ou caderno aberto e pronto para anotar a primeira corrida.</span></div></div>
+    <div class="check-item"><div class="check-box" onclick="toggle(this)"></div><div class="check-text"><strong>Definir meta minima do dia</strong><span>Quanto precisa faturar hoje para cobrir seus custos fixos? Escreva esse numero.</span></div></div>
+  </div>
+
+  <!-- Durante o turno -->
+  <div class="block">
+    <div class="block-title"><span class="time-badge" style="background:linear-gradient(135deg,var(--azul),#61bcff);color:#061227;">Durante o turno</span> A cada 2 horas</div>
+    <div class="check-item"><div class="check-box" onclick="toggle(this)"></div><div class="check-text"><strong>Anotar corridas realizadas</strong><span>Valor recebido + custo estimado de combustivel de cada corrida.</span></div></div>
+    <div class="check-item"><div class="check-box" onclick="toggle(this)"></div><div class="check-text"><strong>Verificar se esta atingindo a meta</strong><span>Some o que ja ganhou e veja quantos % da meta do dia voce ja bateu.</span></div></div>
+    <div class="check-item"><div class="check-box" onclick="toggle(this)"></div><div class="check-text"><strong>Avaliar se vale a pena continuar</strong><span>Se ja atingiu a meta e esta cansado, parar pode ser a decisao mais lucrativa.</span></div></div>
+  </div>
+
+  <!-- Ao encerrar -->
+  <div class="block">
+    <div class="block-title"><span class="time-badge" style="background:linear-gradient(135deg,#f59e0b,#fbbf24);color:#422006;">Ao encerrar</span> 3 minutos</div>
+    <div class="check-item"><div class="check-box" onclick="toggle(this)"></div><div class="check-text"><strong>Fechar o registro do dia</strong><span>Some todas as entradas e todos os custos para calcular o lucro real de hoje.</span></div></div>
+    <div class="check-item"><div class="check-box" onclick="toggle(this)"></div><div class="check-text"><strong>Registrar o abastecimento</strong><span>Se abasteceu hoje, anote o valor total e quantos litros colocou.</span></div></div>
+    <div class="check-item"><div class="check-box" onclick="toggle(this)"></div><div class="check-text"><strong>Comparar com a meta do dia</strong><span>Bateu a meta? Ficou abaixo? Anote o resultado para acompanhar a semana.</span></div></div>
+    <div class="check-item"><div class="check-box" onclick="toggle(this)"></div><div class="check-text"><strong>Definir ajuste para amanha</strong><span>O que pode fazer diferente amanha para melhorar o resultado?</span></div></div>
+  </div>
+
+  <div class="tip">Nao precisa de app especial. Um caderno pequeno ou esta pagina impressa ja e suficiente para comecar. O habito importa mais que a ferramenta.</div>
+
+  <div style="text-align:center;margin-top:1.2rem;" class="no-print">
+    <button onclick="resetAll()">Reiniciar checklist</button>
+    <button onclick="window.print()" style="background:#0c1c38;color:#fff;margin-left:.5rem;">Imprimir / PDF</button>
+  </div>
+
+  <footer>Motorista Pro: Controle Total + Renda Inteligente — Material exclusivo para alunos.</footer>
+</div>
+<script>
+  function toggle(el){
+    el.classList.toggle('done');
+    el.textContent = el.classList.contains('done') ? '✓' : '';
+    updateProgress();
+  }
+  function updateProgress(){
+    const all = document.querySelectorAll('.check-box');
+    const done = document.querySelectorAll('.check-box.done').length;
+    document.getElementById('prog-text').textContent = done + ' / ' + all.length + ' concluidos';
+    document.getElementById('prog-bar').style.width = (done/all.length*100) + '%';
+  }
+  function resetAll(){
+    document.querySelectorAll('.check-box').forEach(el=>{ el.classList.remove('done'); el.textContent=''; });
+    updateProgress();
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Passo 7 — Reserva de Emergencia | Motorista Pro</title>
+  <style>
+    :root{--verde:#1fca73;--azul:#2698ff;--text:#1a2638;--muted:#6b7e97;--border:#d1dce9;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:"Segoe UI",Arial,sans-serif;background:#f8fafc;color:var(--text);font-size:14px;line-height:1.6;}
+    .page{max-width:780px;margin:0 auto;padding:2rem 1.5rem;}
+    header{background:linear-gradient(135deg,#061126,#0c1c38);color:#fff;border-radius:12px;padding:1.4rem;margin-bottom:1.4rem;text-align:center;}
+    header .badge{display:inline-block;background:rgba(31,202,115,.22);border:1px solid rgba(31,202,115,.5);border-radius:999px;padding:.22rem .75rem;font-size:.73rem;font-weight:700;color:#1fca73;margin-bottom:.55rem;}
+    header h1{font-size:1.35rem;font-weight:900;margin-bottom:.25rem;}
+    header p{color:#8aaac8;font-size:.87rem;}
+    .card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.2rem;margin-bottom:1rem;}
+    h2{font-size:.92rem;font-weight:800;margin-bottom:.8rem;}
+    label{display:block;font-size:.78rem;font-weight:600;color:var(--muted);margin-bottom:.2rem;margin-top:.6rem;}
+    input[type=number]{width:100%;padding:.42rem .6rem;border:1px solid var(--border);border-radius:7px;font-size:.92rem;}
+    .result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin:.8rem 0;}
+    @media(max-width:550px){.result-grid{grid-template-columns:1fr;}}
+    .res{border-radius:10px;padding:.9rem;text-align:center;}
+    .res.green{background:#f0fdf4;border:1px solid #a7f3d0;}
+    .res.blue{background:#f0f6ff;border:1px solid #bfdbfe;}
+    .res.gold{background:#fffbeb;border:1px solid #fde68a;}
+    .res .rl{font-size:.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:.2rem;}
+    .res .rv{font-size:1.2rem;font-weight:900;}
+    .res.green .rv{color:var(--verde);}
+    .res.blue .rv{color:var(--azul);}
+    .res.gold .rv{color:#b45309;}
+    .progress-wrap{background:#e5f0ff;border-radius:999px;height:14px;margin:.7rem 0;}
+    .progress-fill{background:linear-gradient(90deg,var(--verde),var(--azul));height:14px;border-radius:999px;transition:width 400ms;}
+    .progress-label{text-align:center;font-size:.8rem;font-weight:700;color:var(--azul);margin-bottom:.3rem;}
+    .tip{background:#f0fdf4;border-left:3px solid var(--verde);padding:.65rem .9rem;border-radius:0 8px 8px 0;font-size:.85rem;color:#1a4a2e;margin:.7rem 0;}
+    table{width:100%;border-collapse:collapse;font-size:.85rem;margin:.6rem 0;}
+    th,td{padding:.5rem .6rem;border:1px solid var(--border);}
+    thead tr{background:#f0f4f9;}
+    th{font-weight:700;color:var(--muted);font-size:.74rem;text-transform:uppercase;}
+    button{background:var(--verde);color:#042014;border:none;border-radius:8px;padding:.52rem 1rem;font-weight:700;cursor:pointer;font-size:.84rem;}
+    footer{text-align:center;color:var(--muted);font-size:.73rem;margin-top:2rem;padding-top:.8rem;border-top:1px solid var(--border);}
+    @media print{button{display:none;}.page{padding:0;}}
+  </style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="badge">Passo 7 de 7 — Plano Premium</div>
+    <h1>Calculadora de Reserva de Emergencia</h1>
+    <p>Motorista autonomo precisa de reserva. Aqui voce calcula exatamente quanto e como chegar la.</p>
+  </header>
+
+  <div class="card">
+    <h2>Por que motorista autonomo precisa de reserva?</h2>
+    <p style="font-size:.88rem;color:var(--muted);">Sem carteira assinada, nao ha FGTS, seguro-desemprego ou 13o. Uma semana no hospital, uma pane no carro, uma suspensao no app — e voce fica sem renda imediatamente. A reserva e o seu "salario dos meses ruins".</p>
+    <div class="tip">A recomendacao para autonomos e ter entre 4 e 6 meses de despesas guardados. Comece com a meta de 3 meses — ja resolve a maioria das emergencias.</div>
+  </div>
+
+  <div class="card">
+    <h2>Calcule sua Reserva Ideal</h2>
+    <label>Despesas mensais fixas (aluguel + alimentacao + contas) (R$)</label>
+    <input type="number" id="desp-fixa" placeholder="Ex: 1800" oninput="calcReserva()"/>
+    <label>Custo mensal de operacao do veiculo (combustivel + manutencao) (R$)</label>
+    <input type="number" id="desp-op" placeholder="Ex: 600" oninput="calcReserva()"/>
+    <label>Quanto ja tem guardado hoje? (R$)</label>
+    <input type="number" id="atual" placeholder="Ex: 0" oninput="calcReserva()"/>
+    <label>Quanto consegue guardar por mes? (R$)</label>
+    <input type="number" id="poupanca" placeholder="Ex: 200" oninput="calcReserva()"/>
+
+    <div class="result-grid">
+      <div class="res green"><div class="rl">Meta 3 meses</div><div class="rv" id="r-3m">R$ 0</div></div>
+      <div class="res blue"><div class="rl">Meta 6 meses</div><div class="rv" id="r-6m">R$ 0</div></div>
+      <div class="res gold"><div class="rl">Falta para 3 meses</div><div class="rv" id="r-falta">R$ 0</div></div>
+    </div>
+
+    <div class="progress-label" id="prog-label">0% da meta de 3 meses</div>
+    <div class="progress-wrap"><div class="progress-fill" id="prog-bar" style="width:0%"></div></div>
+  </div>
+
+  <div class="card">
+    <h2>Plano de Acumulacao</h2>
+    <table id="plan-table">
+      <thead><tr><th>Mes</th><th>Guardado no mes (R$)</th><th>Acumulado (R$)</th><th>% da meta (3 meses)</th></tr></thead>
+      <tbody id="plan-tbody"><tr><td colspan="4" style="text-align:center;color:var(--muted);">Preencha os campos acima para ver o plano</td></tr></tbody>
+    </table>
+  </div>
+
+  <div style="text-align:center;margin-top:1.2rem;">
+    <button onclick="window.print()">Imprimir / Salvar PDF</button>
+  </div>
+  <footer>Motorista Pro: Controle Total + Renda Inteligente — Material exclusivo para alunos.</footer>
+</div>
+<script>
+  function fmt(v){return 'R$ '+v.toFixed(2).replace('.',',');}
+  function calcReserva(){
+    const fixa=parseFloat(document.getElementById('desp-fixa').value)||0;
+    const op=parseFloat(document.getElementById('desp-op').value)||0;
+    const atual=parseFloat(document.getElementById('atual').value)||0;
+    const poupanca=parseFloat(document.getElementById('poupanca').value)||0;
+    const mensal=fixa+op;
+    const meta3=mensal*3;
+    const meta6=mensal*6;
+    const falta=Math.max(0,meta3-atual);
+    document.getElementById('r-3m').textContent=fmt(meta3);
+    document.getElementById('r-6m').textContent=fmt(meta6);
+    document.getElementById('r-falta').textContent=fmt(falta);
+    const pct=meta3>0?Math.min(100,atual/meta3*100):0;
+    document.getElementById('prog-bar').style.width=pct+'%';
+    document.getElementById('prog-label').textContent=pct.toFixed(0)+'% da meta de 3 meses atingida';
+    buildPlan(atual,poupanca,meta3);
+  }
+  function buildPlan(atual,poupanca,meta3){
+    const tbody=document.getElementById('plan-tbody');
+    if(poupanca<=0||meta3<=0){tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--muted);">Informe o valor mensal de poupanca</td></tr>';return;}
+    const rows=[];
+    let acc=atual;
+    for(let m=1;m<=12;m++){
+      acc+=poupanca;
+      const pct=meta3>0?(acc/meta3*100):0;
+      rows.push(`<tr${acc>=meta3?' style="background:#f0fdf4;"':''}><td>Mes ${m}</td><td>${fmt(poupanca)}</td><td>${fmt(acc)}</td><td style="font-weight:700;color:${acc>=meta3?'var(--verde)':'var(--azul);'}">${pct.toFixed(0)}%</td></tr>`);
+      if(acc>=meta3)break;
+    }
+    tbody.innerHTML=rows.join('');
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,1399 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Motorista Pro: Controle Total + Renda Inteligente</title>
+  <meta name="description" content="Controle financeiro para motoristas e entregadores com curso prático, planilhas e estrategias para decisoes melhores." />
+  <style>
+    :root {
+      --color-bg: #061126;
+      --color-bg-soft: #0c1c38;
+      --color-surface: #101f3b;
+      --color-text: #f4f7ff;
+      --color-text-muted: #b8c4dd;
+      --color-ink: #070b14;
+      --color-white: #ffffff;
+      --color-accent: #1fca73;
+      --color-accent-strong: #19ad62;
+      --color-border: #294167;
+      --color-basic: #2fbd76;
+      --color-mid: #2698ff;
+      --color-premium: #f05050;
+
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 22px;
+      --shadow-card: 0 20px 35px rgba(4, 10, 22, 0.33);
+      --shadow-focus: 0 0 0 3px rgba(31, 202, 115, 0.35);
+
+      --max-content: 1120px;
+      --font-main: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-main);
+      color: var(--color-text);
+      background:
+        radial-gradient(1200px 600px at 100% -10%, rgba(31, 202, 115, 0.12), transparent 58%),
+        radial-gradient(1200px 600px at -15% -5%, rgba(38, 152, 255, 0.15), transparent 55%),
+        linear-gradient(180deg, #040a17 0%, #061126 38%, #040a17 100%);
+      line-height: 1.55;
+    }
+
+    .container {
+      width: min(100% - 2rem, var(--max-content));
+      margin-inline: auto;
+    }
+
+    .section {
+      padding: 3.5rem 0;
+    }
+
+    .section-title {
+      font-size: clamp(1.6rem, 2.6vw, 2.3rem);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.8rem;
+    }
+
+    .section-subtitle {
+      color: var(--color-text-muted);
+      max-width: 62ch;
+      margin-bottom: 1.8rem;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      background-color: rgba(4, 10, 23, 0.84);
+      border-bottom: 1px solid rgba(95, 130, 180, 0.22);
+    }
+
+    .header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 68px;
+      gap: 1rem;
+    }
+
+    .brand {
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      font-size: 1rem;
+      color: var(--color-white);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .brand-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #2cf28d 0%, #1bba68 100%);
+      box-shadow: 0 0 15px rgba(31, 202, 115, 0.85);
+    }
+
+    .header-nav {
+      display: none;
+    }
+
+    .cta,
+    .plan-btn,
+    .final-cta,
+    .checkout-pay-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      border-radius: 999px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: transform 220ms ease, box-shadow 220ms ease, background-color 220ms ease, color 220ms ease;
+    }
+
+    .cta {
+      background: linear-gradient(135deg, var(--color-accent) 0%, #38db87 100%);
+      color: #042014;
+      padding: 0.9rem 1.3rem;
+      box-shadow: 0 16px 30px rgba(25, 173, 98, 0.28);
+    }
+
+    .cta:hover,
+    .plan-btn:hover,
+    .final-cta:hover,
+    .checkout-pay-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .cta:hover {
+      background: linear-gradient(135deg, var(--color-accent-strong) 0%, #2bca78 100%);
+      box-shadow: 0 18px 35px rgba(25, 173, 98, 0.35);
+    }
+
+    .cta:focus-visible,
+    .plan-btn:focus-visible,
+    .final-cta:focus-visible,
+    .checkout-pay-btn:focus-visible,
+    .footer-link:focus-visible {
+      outline: none;
+      box-shadow: var(--shadow-focus);
+    }
+
+    .hero {
+      position: relative;
+      overflow: clip;
+      padding: 4rem 0 3rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      gap: 1.8rem;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 1px solid rgba(45, 221, 136, 0.42);
+      background-color: rgba(8, 32, 63, 0.58);
+      border-radius: 999px;
+      padding: 0.45rem 0.78rem;
+      color: #d7ffe9;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero-title {
+      font-size: clamp(1.95rem, 6vw, 3rem);
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+      max-width: 18ch;
+      margin-bottom: 0.9rem;
+    }
+
+    .hero-subtitle {
+      color: var(--color-text-muted);
+      max-width: 50ch;
+      font-size: clamp(1rem, 2.5vw, 1.16rem);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-proof {
+      font-size: 0.92rem;
+      color: #d5f6e4;
+      margin-top: 0.8rem;
+    }
+
+    .hero-audience {
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .audience-chip {
+      border: 1px solid rgba(112, 146, 194, 0.45);
+      border-radius: 999px;
+      padding: 0.3rem 0.65rem;
+      font-size: 0.8rem;
+      color: #d8e4fa;
+      background: rgba(9, 24, 47, 0.7);
+    }
+
+    .hero-illustration {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(121, 164, 221, 0.26);
+      background: linear-gradient(165deg, rgba(9, 23, 45, 0.95), rgba(10, 34, 69, 0.88));
+      min-height: 270px;
+      padding: 1rem;
+      box-shadow: var(--shadow-card);
+      position: relative;
+      isolation: isolate;
+    }
+
+    .hero-illustration::before {
+      content: "";
+      position: absolute;
+      inset: 12% auto auto 10%;
+      width: 65%;
+      height: 45%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(31, 202, 115, 0.22), transparent 70%);
+      z-index: -1;
+    }
+
+    .illustration-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .mini-card {
+      border-radius: var(--radius-md);
+      padding: 0.85rem;
+      border: 1px solid rgba(115, 145, 194, 0.3);
+      background: rgba(7, 20, 40, 0.72);
+    }
+
+    .mini-card strong {
+      display: block;
+      font-size: 1.08rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .mini-card span {
+      color: var(--color-text-muted);
+      font-size: 0.85rem;
+    }
+
+    .problem-list,
+    .benefit-list,
+    .receive-list {
+      list-style: none;
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .problem-item,
+    .benefit-item,
+    .receive-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      background: linear-gradient(180deg, rgba(12, 27, 55, 0.9), rgba(8, 19, 40, 0.9));
+      border: 1px solid rgba(103, 132, 180, 0.26);
+    }
+
+    .item-icon {
+      width: 34px;
+      height: 34px;
+      min-width: 34px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 999px;
+      background: rgba(31, 202, 115, 0.16);
+      color: #8ef5bc;
+      border: 1px solid rgba(31, 202, 115, 0.4);
+      font-weight: 900;
+    }
+
+    .card-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .persona-grid {
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .persona-card {
+      border: 1px solid rgba(97, 129, 176, 0.3);
+      background: linear-gradient(180deg, rgba(10, 23, 46, 0.94), rgba(8, 19, 39, 0.95));
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      box-shadow: var(--shadow-card);
+    }
+
+    .persona-card h3 {
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .persona-card p {
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+    }
+
+    .solution-card {
+      border: 1px solid rgba(97, 129, 176, 0.3);
+      background: linear-gradient(180deg, rgba(10, 23, 46, 0.94), rgba(8, 19, 39, 0.95));
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      box-shadow: var(--shadow-card);
+    }
+
+    .solution-card h3 {
+      font-size: 1.12rem;
+      margin-bottom: 0.45rem;
+    }
+
+    .solution-card p {
+      color: var(--color-text-muted);
+    }
+
+    .pricing {
+      position: relative;
+    }
+
+    .pricing-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .plan-card {
+      position: relative;
+      border-radius: var(--radius-lg);
+      padding: 1.15rem;
+      border: 1px solid rgba(112, 141, 184, 0.35);
+      background: linear-gradient(180deg, rgba(11, 25, 48, 0.94), rgba(9, 19, 38, 0.95));
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .plan-card h3 {
+      font-size: 1.15rem;
+    }
+
+    .plan-desc {
+      color: var(--color-text-muted);
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .plan-step-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #7aa8d8;
+      margin-bottom: -0.3rem;
+    }
+
+    .pricing-urgency {
+      background: rgba(31,202,115,0.1);
+      border: 1px solid rgba(31,202,115,0.35);
+      border-radius: var(--radius-sm);
+      padding: 0.65rem 1rem;
+      color: #d4ffe6;
+      font-size: 0.92rem;
+      margin-bottom: 1.2rem;
+      text-align: center;
+    }
+
+    .plan-tag {
+      width: fit-content;
+      border-radius: 999px;
+      padding: 0.28rem 0.62rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #eff6ff;
+      background: rgba(56, 80, 126, 0.72);
+      border: 1px solid rgba(125, 155, 203, 0.45);
+    }
+
+    .plan-price {
+      font-size: 2rem;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      font-weight: 800;
+    }
+
+    .plan-price small {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      display: block;
+      margin-top: 0.38rem;
+    }
+
+    .plan-price-anchor {
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: #6a85a8;
+      text-decoration: line-through;
+      display: block;
+      margin-bottom: 0.15rem;
+    }
+
+    .plan-price-savings {
+      display: inline-block;
+      background: rgba(31,202,115,0.18);
+      border: 1px solid rgba(31,202,115,0.4);
+      border-radius: 999px;
+      color: #72f0ae;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 0.18rem 0.55rem;
+      margin-top: 0.4rem;
+    }
+
+    .plan-features {
+      list-style: none;
+      display: grid;
+      gap: 0.55rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .plan-features li {
+      color: #d9e5f8;
+      display: flex;
+      gap: 0.45rem;
+      align-items: flex-start;
+    }
+
+    .plan-features li::before {
+      content: "\2713";
+      color: #72f0ae;
+      font-weight: 700;
+      margin-top: 0.04rem;
+    }
+
+    .plan-btn {
+      width: 100%;
+      min-height: 45px;
+      font-size: 0.96rem;
+      color: #0c1b35;
+      background-color: #d6e4ff;
+    }
+
+    .plan-card.is-selected {
+      border-color: rgba(31, 202, 115, 0.88);
+      box-shadow: 0 0 0 2px rgba(31, 202, 115, 0.22), var(--shadow-card);
+    }
+
+    .plan-basic .plan-tag,
+    .plan-basic .plan-btn {
+      background-color: rgba(47, 189, 118, 0.2);
+      color: #d7ffe8;
+      border: 1px solid rgba(47, 189, 118, 0.45);
+    }
+
+    .plan-basic .plan-btn:hover {
+      background-color: rgba(47, 189, 118, 0.3);
+    }
+
+    .plan-mid {
+      border: 2px solid rgba(38, 152, 255, 0.8);
+      transform: translateY(0);
+      overflow: hidden;
+    }
+
+    .plan-mid::before {
+      content: "Mais vendido";
+      position: absolute;
+      top: 0.8rem;
+      right: -2.4rem;
+      transform: rotate(35deg);
+      background: linear-gradient(90deg, #1a6fd9, #2ea9ff);
+      color: #edf6ff;
+      padding: 0.25rem 2.8rem;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      box-shadow: 0 8px 20px rgba(10, 56, 120, 0.38);
+    }
+
+    .plan-mid .plan-tag {
+      background-color: rgba(38, 152, 255, 0.23);
+      border-color: rgba(81, 179, 255, 0.7);
+    }
+
+    .plan-mid .plan-btn {
+      background: linear-gradient(135deg, #2698ff 0%, #61bcff 100%);
+      color: #061227;
+      border: none;
+      box-shadow: 0 16px 28px rgba(38, 152, 255, 0.35);
+    }
+
+    .plan-mid .plan-btn:hover {
+      background: linear-gradient(135deg, #1f84e0 0%, #4aaffe 100%);
+    }
+
+    .plan-premium .plan-tag,
+    .plan-premium .plan-btn {
+      background-color: rgba(240, 80, 80, 0.19);
+      border: 1px solid rgba(240, 80, 80, 0.45);
+      color: #ffe6e6;
+    }
+
+    .plan-premium .plan-btn:hover {
+      background-color: rgba(240, 80, 80, 0.29);
+    }
+
+    .checkout-box {
+      margin-top: 1.2rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(107, 139, 187, 0.4);
+      background: linear-gradient(180deg, rgba(10, 24, 48, 0.96), rgba(8, 18, 37, 0.96));
+      padding: 1.2rem;
+      box-shadow: var(--shadow-card);
+    }
+
+    .checkout-box[hidden] {
+      display: none;
+    }
+
+    .checkout-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .checkout-plan {
+      font-size: 1.2rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .checkout-price {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #dfffea;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .checkout-list {
+      list-style: none;
+      display: grid;
+      gap: 0.45rem;
+      margin: 0.85rem 0 1rem;
+      color: #d8e5fb;
+    }
+
+    .checkout-list li::before {
+      content: "\2713 ";
+      color: #72f0ae;
+      font-weight: 700;
+    }
+
+    .checkout-terms {
+      display: flex;
+      gap: 0.6rem;
+      align-items: flex-start;
+      color: #c6d5ef;
+      font-size: 0.92rem;
+      margin-bottom: 1rem;
+    }
+
+    .checkout-terms input {
+      margin-top: 0.18rem;
+      accent-color: var(--color-accent);
+    }
+
+    .checkout-pay-btn {
+      width: 100%;
+      min-height: 47px;
+      background: linear-gradient(135deg, var(--color-accent) 0%, #36dc88 100%);
+      color: #052113;
+      font-size: 1rem;
+      box-shadow: 0 16px 30px rgba(25, 173, 98, 0.28);
+    }
+
+    .checkout-pay-btn[disabled] {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .checkout-note {
+      color: var(--color-text-muted);
+      font-size: 0.9rem;
+      margin-top: 0.8rem;
+    }
+
+    .social-proof {
+      display: grid;
+      gap: 0.8rem;
+      margin-top: 1.3rem;
+    }
+
+    .proof-item {
+      border-radius: var(--radius-md);
+      padding: 0.9rem;
+      border: 1px solid rgba(103, 132, 180, 0.26);
+      background: linear-gradient(180deg, rgba(12, 27, 55, 0.9), rgba(8, 19, 40, 0.9));
+      color: #dbe8fb;
+      font-size: 0.94rem;
+    }
+
+    .proof-item strong {
+      color: #f2f7ff;
+    }
+
+    .guarantee {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(31, 202, 115, 0.36);
+      background: linear-gradient(180deg, rgba(10, 29, 52, 0.92), rgba(8, 19, 38, 0.95));
+      padding: 1.4rem;
+      text-align: center;
+    }
+
+    .guarantee p {
+      font-size: clamp(1rem, 2.2vw, 1.1rem);
+      color: #e0ffef;
+    }
+
+    .final-box {
+      border: 1px solid rgba(112, 141, 184, 0.35);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(180deg, rgba(10, 24, 48, 0.95), rgba(9, 19, 38, 0.95));
+      padding: 1.7rem;
+      text-align: center;
+      box-shadow: var(--shadow-card);
+    }
+
+    .final-box p {
+      color: var(--color-text-muted);
+      margin-top: 0.55rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .final-cta {
+      background: linear-gradient(135deg, var(--color-accent) 0%, #36dc88 100%);
+      color: #052113;
+      font-size: 1.02rem;
+      padding: 0.95rem 1.6rem;
+      box-shadow: 0 16px 30px rgba(25, 173, 98, 0.32);
+    }
+
+    .legal-note {
+      background: rgba(5, 13, 27, 0.82);
+      border: 1px solid rgba(85, 110, 150, 0.35);
+      border-radius: var(--radius-md);
+      padding: 1.15rem;
+      color: #d3deef;
+    }
+
+    .legal-note ul {
+      list-style: none;
+      display: grid;
+      gap: 0.6rem;
+      margin-top: 0.8rem;
+    }
+
+    .legal-note li {
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .legal-note li::before {
+      content: "-";
+      position: absolute;
+      left: 0;
+      color: #92acca;
+    }
+
+    .journey-box {
+      margin-top: 1.5rem;
+      border: 1px solid rgba(31, 202, 115, 0.3);
+      border-radius: var(--radius-md);
+      padding: 1.2rem;
+      background: linear-gradient(180deg, rgba(8, 24, 47, 0.92), rgba(6, 17, 36, 0.95));
+    }
+
+    .journey-title {
+      font-size: 1.05rem;
+      margin-bottom: 1rem;
+      color: #e8f4ff;
+    }
+
+    .journey-steps {
+      list-style: none;
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .journey-steps li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      color: #ccdaf0;
+    }
+
+    .journey-num {
+      min-width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--color-accent), #38db87);
+      color: #042014;
+      font-weight: 800;
+      font-size: 0.82rem;
+      display: inline-grid;
+      place-items: center;
+    }
+
+    @media (min-width: 760px) {
+      .journey-steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .data-warning {
+      margin-top: 0.85rem;
+      padding: 0.75rem;
+      border-radius: var(--radius-sm);
+      background-color: rgba(31, 202, 115, 0.12);
+      border: 1px solid rgba(31, 202, 115, 0.34);
+      color: #ddffe7;
+    }
+
+    .site-footer {
+      border-top: 1px solid rgba(96, 126, 171, 0.3);
+      background: rgba(3, 9, 19, 0.95);
+      margin-top: 2.5rem;
+      padding: 1.5rem 0 2rem;
+      color: #9db0d0;
+    }
+
+    .footer-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem 1.1rem;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+    }
+
+    .footer-link {
+      color: #cfe2ff;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 180ms ease, color 180ms ease;
+    }
+
+    .footer-link:hover {
+      color: #ffffff;
+      border-color: rgba(207, 226, 255, 0.7);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 460ms ease, transform 460ms ease;
+    }
+
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (min-width: 760px) {
+      .section {
+        padding: 4.5rem 0;
+      }
+
+      .header-nav {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .header-link {
+        color: #d2dcf2;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.92rem;
+        transition: color 180ms ease;
+      }
+
+      .header-link:hover {
+        color: #ffffff;
+      }
+
+      .hero {
+        padding-top: 5.1rem;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 2.2rem;
+      }
+
+      .card-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .persona-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .social-proof {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .pricing-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        align-items: stretch;
+      }
+
+      .plan-mid {
+        transform: translateY(-12px);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-row">
+      <a href="#inicio" class="brand" aria-label="Ir para o inicio">
+        <span class="brand-dot" aria-hidden="true"></span>
+        Motorista Pro
+      </a>
+      <nav class="header-nav" aria-label="Navegacao principal">
+        <a class="header-link" href="#problema">Problema</a>
+        <a class="header-link" href="#solucao">Solucao</a>
+        <a class="header-link" href="#planos">Planos</a>
+      </nav>
+      <a href="#planos" class="cta">Comecar agora</a>
+    </div>
+  </header>
+
+  <main id="inicio">
+    <!-- HERO: proposta principal com foco em clareza e acao -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-content reveal">
+          <span class="hero-badge">Curso digital para motoristas e entregadores</span>
+          <h1 class="hero-title">Pare de trabalhar sem saber quanto realmente ganha</h1>
+          <p class="hero-subtitle">Aprenda a controlar seu dinheiro como motorista ou entregador de forma simples e pratica.</p>
+          <a href="#planos" class="cta">Comecar agora</a>
+          <p class="hero-proof">Metodo educacional com foco em organizacao financeira e decisoes melhores no dia a dia.</p>
+          <div class="hero-audience" aria-label="Publico indicado">
+            <span class="audience-chip">Motorista de app</span>
+            <span class="audience-chip">Entregador</span>
+            <span class="audience-chip">Autonomo que roda diario</span>
+          </div>
+        </div>
+
+        <aside class="hero-illustration reveal" aria-label="Painel ilustrativo de controle financeiro">
+          <div class="illustration-grid">
+            <article class="mini-card">
+              <strong>Entradas</strong>
+              <span>Registre corridas e entregas</span>
+            </article>
+            <article class="mini-card">
+              <strong>Custos</strong>
+              <span>Combustivel, manutencao e taxas</span>
+            </article>
+            <article class="mini-card">
+              <strong>Resumo</strong>
+              <span>Veja lucro real por periodo</span>
+            </article>
+            <article class="mini-card">
+              <strong>Acao</strong>
+              <span>Decida com base em dados</span>
+            </article>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="problema" class="section">
+      <div class="container">
+        <h2 class="section-title reveal">Os desafios de quem roda todos os dias</h2>
+        <p class="section-subtitle reveal">Sem controle financeiro, o esforco aumenta, mas a sensacao de aperto continua.</p>
+        <ul class="problem-list">
+          <li class="problem-item reveal">
+            <span class="item-icon" aria-hidden="true">!</span>
+            <p>Trabalha muito e nao ve dinheiro no fim do mes.</p>
+          </li>
+          <li class="problem-item reveal">
+            <span class="item-icon" aria-hidden="true">$</span>
+            <p>Nao sabe com clareza qual e o lucro real das corridas.</p>
+          </li>
+          <li class="problem-item reveal">
+            <span class="item-icon" aria-hidden="true">~</span>
+            <p>Falta de controle financeiro para planejar melhor.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="solucao" class="section">
+      <div class="container">
+        <h2 class="section-title reveal">Motorista Pro: metodo pratico para organizar sua renda</h2>
+        <p class="section-subtitle reveal">Um treinamento direto ao ponto para ajudar voce a registrar, entender e agir com mais seguranca sobre seu dinheiro.</p>
+        <div class="card-grid">
+          <article class="solution-card reveal">
+            <h3>Controle financeiro completo</h3>
+            <p>Organize entradas e custos para visualizar sua operacao com transparencia.</p>
+          </article>
+          <article class="solution-card reveal">
+            <h3>Organizacao simples</h3>
+            <p>Passo a passo claro para manter rotina financeira sem complicacao.</p>
+          </article>
+          <article class="solution-card reveal">
+            <h3>Melhor tomada de decisao</h3>
+            <p>Use dados do seu dia para ajustar metas e priorizar corridas mais vantajosas.</p>
+          </article>
+        </div>
+
+        <div class="social-proof">
+          <article class="proof-item reveal">
+            <strong>Transparencia no foco:</strong> voce aprende a organizar melhor o que ja ganha, sem promessa de lucro garantido.
+          </article>
+          <article class="proof-item reveal">
+            <strong>Aplicacao real:</strong> conteudo criado para rotina corrida de quem dirige ou entrega todos os dias.
+          </article>
+          <article class="proof-item reveal">
+            <strong>Decisao com dados:</strong> acompanhe custos e receitas para ajustar sua estrategia semanal.
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="publico">
+      <div class="container">
+        <h2 class="section-title reveal">Para quem o Motorista Pro foi feito</h2>
+        <p class="section-subtitle reveal">Mensagem certa para o publico certo: cada perfil tem dor e objetivo diferentes.</p>
+        <div class="persona-grid">
+          <article class="persona-card reveal">
+            <h3>Motorista de app em tempo integral</h3>
+            <p>Quer sair da sensacao de trabalhar muito e fechar o mes sem clareza de lucro real.</p>
+          </article>
+          <article class="persona-card reveal">
+            <h3>Entregador que precisa de controle diario</h3>
+            <p>Precisa separar ganhos e custos de forma simples para nao perder margem no dia a dia.</p>
+          </article>
+          <article class="persona-card reveal">
+            <h3>Autonomo que busca estabilidade</h3>
+            <p>Quer organizar rotina financeira e tomar decisoes melhores para manter renda consistente.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="beneficios">
+      <div class="container">
+        <h2 class="section-title reveal">Beneficios que voce percebe na pratica</h2>
+        <ul class="benefit-list">
+          <li class="benefit-item reveal">
+            <span class="item-icon" aria-hidden="true">C</span>
+            <p><strong>Clareza financeira:</strong> saiba para onde vai seu dinheiro e o que pode melhorar.</p>
+          </li>
+          <li class="benefit-item reveal">
+            <span class="item-icon" aria-hidden="true">O</span>
+            <p><strong>Organizacao:</strong> rotina objetiva para evitar perdas por falta de controle.</p>
+          </li>
+          <li class="benefit-item reveal">
+            <span class="item-icon" aria-hidden="true">D</span>
+            <p><strong>Decisao:</strong> escolha com mais criterio onde e quando rodar.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="recebe">
+      <div class="container">
+        <h2 class="section-title reveal">O que voce recebe</h2>
+        <p class="section-subtitle reveal">Conteudo essencial para aplicar no dia a dia e construir consistencia financeira.</p>
+        <ul class="receive-list">
+          <li class="receive-item reveal">
+            <span class="item-icon" aria-hidden="true">1</span>
+            <div>
+              <p><strong>Aulas em video curtas e diretas</strong></p>
+              <p>Modulos gravados para assistir no celular, no seu ritmo, quando quiser.</p>
+            </div>
+          </li>
+          <li class="receive-item reveal">
+            <span class="item-icon" aria-hidden="true">2</span>
+            <div>
+              <p><strong>Planilha de controle financeiro</strong></p>
+              <p>Pronta para usar no Google Sheets, sem precisar instalar nada.</p>
+            </div>
+          </li>
+          <li class="receive-item reveal">
+            <span class="item-icon" aria-hidden="true">3</span>
+            <div>
+              <p><strong>Acesso imediato apos o pagamento</strong></p>
+              <p>Voce recebe um e-mail com login e acessa tudo pelo celular ou computador.</p>
+            </div>
+          </li>
+          <li class="receive-item reveal">
+            <span class="item-icon" aria-hidden="true">4</span>
+            <div>
+              <p><strong>Acesso vitalicio ao conteudo</strong></p>
+              <p>Paga uma vez e assiste quantas vezes quiser, incluindo atualizacoes futuras.</p>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Jornada do cliente: como funciona o acesso apos a compra -->
+        <div class="journey-box reveal">
+          <h3 class="journey-title">Como funciona depois que voce compra</h3>
+          <ol class="journey-steps">
+            <li>
+              <span class="journey-num">1</span>
+              <p><strong>Escolha o plano</strong> e clique em Comprar agora</p>
+            </li>
+            <li>
+              <span class="journey-num">2</span>
+              <p><strong>Pague com Pix ou cartao</strong> direto na pagina de checkout</p>
+            </li>
+            <li>
+              <span class="journey-num">3</span>
+              <p><strong>Receba o e-mail</strong> com seus dados de acesso em minutos</p>
+            </li>
+            <li>
+              <span class="journey-num">4</span>
+              <p><strong>Acesse a area de membros</strong> pelo celular ou computador e comece</p>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- PLANOS: foco principal de conversao com destaque visual no intermediario -->
+    <section id="planos" class="section pricing">
+      <div class="container">
+        <h2 class="section-title reveal">Escolha o plano ideal para seu momento</h2>
+        <p class="section-subtitle reveal">Pagamento unico. Acesso imediato. Sem mensalidade.</p>
+
+        <div class="pricing-urgency reveal">
+          Todos os planos incluem <strong>garantia de 7 dias</strong>. Se nao gostar, devolvemos o valor.
+        </div>
+
+        <div class="pricing-grid">
+          <article class="plan-card plan-basic reveal" aria-label="Plano Basico">
+            <span class="plan-tag">Basico</span>
+            <h3>Plano Basico</h3>
+            <p class="plan-desc">Para quem quer parar de trabalhar no escuro e entender para onde vai o dinheiro.</p>
+            <p class="plan-price">
+              <span class="plan-price-anchor">de R$47,00</span>
+              R$27,90 <small>pagamento unico &bull; acesso vitalicio</small>
+              <span class="plan-price-savings">Economize 40%</span>
+            </p>
+            <p class="plan-step-label">O que voce recebe passo a passo:</p>
+            <ul class="plan-features">
+              <li><strong>Passo 1</strong> &mdash; Como registrar cada corrida e entrega do dia (PDF guiado)</li>
+              <li><strong>Passo 2</strong> &mdash; Como calcular o lucro real descontando combustivel e taxas (planilha pronta)</li>
+              <li><strong>Passo 3</strong> &mdash; Rotina simples de 5 minutos por dia para manter o controle</li>
+              <li>Planilha de controle financeiro no Google Sheets (pronta para usar)</li>
+              <li>Acesso vitalicio &mdash; voce nao paga nada depois</li>
+            </ul>
+            <button class="plan-btn" type="button" data-plan="basico">Quero o Plano Basico</button>
+          </article>
+
+          <article class="plan-card plan-mid reveal" aria-label="Plano Intermediario, mais vendido">
+            <span class="plan-tag">Intermediario</span>
+            <h3>Plano Intermediario</h3>
+            <p class="plan-desc">Para quem quer alem do basico: saber exatamente onde cortar gastos e aumentar margem.</p>
+            <p class="plan-price">
+              <span class="plan-price-anchor">de R$97,00</span>
+              R$47,90 <small>pagamento unico &bull; acesso vitalicio</small>
+              <span class="plan-price-savings">Economize 50%</span>
+            </p>
+            <p class="plan-step-label">Tudo do Basico, mais:</p>
+            <ul class="plan-features">
+              <li><strong>Passo 4</strong> &mdash; Como identificar e cortar os 3 principais custos que comem sua margem</li>
+              <li><strong>Passo 5</strong> &mdash; Como definir metas semanais realistas para sair do aperto</li>
+              <li>Planilha automatica com dashboard &mdash; ela calcula tudo sozinha, voce so preenche</li>
+              <li>Checklist diario em PDF &mdash; o que conferir antes e depois de cada dia rodando</li>
+              <li>Acesso vitalicio &mdash; voce nao paga nada depois</li>
+            </ul>
+            <button class="plan-btn" type="button" data-plan="intermediario">Quero o Plano Intermediario</button>
+          </article>
+
+          <article class="plan-card plan-premium reveal" aria-label="Plano Premium">
+            <span class="plan-tag">Premium</span>
+            <h3>Plano Premium</h3>
+            <p class="plan-desc">Para quem quer o pacote completo: controle, planejamento e suporte para nao travar sozinho.</p>
+            <p class="plan-price">
+              <span class="plan-price-anchor">de R$147,00</span>
+              R$67,90 <small>pagamento unico &bull; acesso vitalicio</small>
+              <span class="plan-price-savings">Economize 53%</span>
+            </p>
+            <p class="plan-step-label">Tudo do Intermediario, mais:</p>
+            <ul class="plan-features">
+              <li><strong>Passo 6</strong> &mdash; Como montar um planejamento financeiro de 3 meses sem complicacao</li>
+              <li><strong>Passo 7</strong> &mdash; Como comecar uma reserva de emergencia mesmo ganhando pouco</li>
+              <li>Calculadora de ponto de equilibrio &mdash; descubra o minimo que precisa ganhar por dia (bonus)</li>
+              <li>Grupo exclusivo no WhatsApp para tirar duvidas diretamente</li>
+              <li>Suporte por mensagem durante 30 dias apos a compra</li>
+              <li>Acesso vitalicio &mdash; voce nao paga nada depois</li>
+            </ul>
+            <button class="plan-btn" type="button" data-plan="premium">Quero o Plano Premium</button>
+          </article>
+        </div>
+
+        <!-- Resumo da compra para validar o plano selecionado antes do pagamento -->
+        <article class="checkout-box reveal" id="checkout-box" aria-live="polite" hidden>
+          <div class="checkout-head">
+            <div>
+              <p>Resumo da compra</p>
+              <h3 class="checkout-plan" id="checkout-plan-name">Plano</h3>
+            </div>
+            <p class="checkout-price" id="checkout-plan-price">R$0,00</p>
+          </div>
+          <ul class="checkout-list" id="checkout-plan-features"></ul>
+          <label class="checkout-terms" for="accept-terms">
+            <input id="accept-terms" type="checkbox" />
+            <span>Li e concordo com os Termos de Uso, Politica de Privacidade e Politica de Reembolso.</span>
+          </label>
+          <button class="checkout-pay-btn" id="checkout-pay-btn" type="button" disabled>Ir para pagamento</button>
+          <p class="checkout-note">Voce esta contratando uma assinatura mensal. O acesso e liberado apos confirmacao do pagamento.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="garantia">
+      <div class="container">
+        <div class="guarantee reveal">
+          <p>Voce pode solicitar reembolso em ate 7 dias apos a compra, conforme o Codigo de Defesa do Consumidor.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="cta-final">
+      <div class="container">
+        <div class="final-box reveal">
+          <h2 class="section-title">Comece hoje a ter controle do seu dinheiro</h2>
+          <p>Entre no Motorista Pro e aplique um metodo pratico para organizar sua renda com mais clareza.</p>
+          <a class="final-cta" href="#planos">Quero comecar agora</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Aviso legal para transparencia e conformidade -->
+    <section class="section" id="aviso-legal">
+      <div class="container">
+        <h2 class="section-title reveal">Aviso legal e transparencia</h2>
+        <article class="legal-note reveal" aria-label="Avisos legais do produto digital">
+          <p>Este produto tem finalidade educacional e foco em organizacao financeira pessoal.</p>
+          <ul>
+            <li>Resultados dependem do esforco individual, contexto e aplicacao pratica de cada aluno.</li>
+            <li>Nao ha promessa de ganhos garantidos.</li>
+            <li>As orientacoes nao substituem consultoria contabil, juridica ou financeira individual.</li>
+          </ul>
+          <p class="data-warning">LGPD: Seus dados sao utilizados apenas para acesso ao conteudo, suporte e comunicacoes relacionadas ao produto.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-row">
+      <small>Motorista Pro: Controle Total + Renda Inteligente</small>
+      <nav class="footer-links" aria-label="Politicas e documentos legais">
+        <a class="footer-link" href="#" aria-label="Termos de Uso">Termos de Uso</a>
+        <a class="footer-link" href="#" aria-label="Politica de Privacidade">Politica de Privacidade</a>
+        <a class="footer-link" href="#" aria-label="Politica de Reembolso">Politica de Reembolso</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    // Animacao de entrada progressiva para reforcar leitura da pagina.
+    (function setupRevealAnimation() {
+      const revealItems = document.querySelectorAll('.reveal');
+
+      if (!('IntersectionObserver' in window)) {
+        revealItems.forEach((item) => item.classList.add('show'));
+        return;
+      }
+
+      const observer = new IntersectionObserver(
+        (entries, obs) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('show');
+              obs.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.18 }
+      );
+
+      revealItems.forEach((item) => observer.observe(item));
+    })();
+
+    // Suporte de scroll suave para navegadores sem CSS scroll-behavior.
+    (function setupSmoothAnchorNavigation() {
+      const links = document.querySelectorAll('a[href^="#"]');
+
+      links.forEach((link) => {
+        link.addEventListener('click', (event) => {
+          const targetId = link.getAttribute('href');
+          if (!targetId || targetId === '#') return;
+
+          const target = document.querySelector(targetId);
+          if (!target) return;
+
+          event.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+    })();
+
+    // Valida e explica o plano escolhido antes de seguir para pagamento.
+    (function setupPlanValidation() {
+      const planData = {
+        basico: {
+          name: 'Plano Basico',
+          price: 'R$27,90 — pagamento unico, acesso vitalicio',
+          features: [
+            'Passo 1: Como registrar cada corrida e entrega do dia (PDF guiado)',
+            'Passo 2: Como calcular o lucro real descontando combustivel e taxas',
+            'Passo 3: Rotina simples de 5 minutos por dia para manter o controle',
+            'Planilha de controle financeiro pronta (Google Sheets)',
+            'Acesso vitalicio — sem mensalidade'
+          ]
+        },
+        intermediario: {
+          name: 'Plano Intermediario',
+          price: 'R$47,90 — pagamento unico, acesso vitalicio',
+          features: [
+            'Tudo do Plano Basico (Passos 1 ao 3)',
+            'Passo 4: Como identificar e cortar os 3 principais custos que comem sua margem',
+            'Passo 5: Como definir metas semanais realistas para sair do aperto',
+            'Planilha automatica com dashboard (calcula tudo sozinha)',
+            'Checklist diario em PDF para antes e depois de rodar',
+            'Acesso vitalicio — sem mensalidade'
+          ]
+        },
+        premium: {
+          name: 'Plano Premium',
+          price: 'R$67,90 — pagamento unico, acesso vitalicio',
+          features: [
+            'Tudo do Plano Intermediario (Passos 1 ao 5)',
+            'Passo 6: Como montar planejamento financeiro de 3 meses',
+            'Passo 7: Como comecar uma reserva de emergencia ganhando pouco',
+            'Calculadora de ponto de equilibrio — bonus exclusivo',
+            'Grupo exclusivo no WhatsApp para tirar duvidas',
+            'Suporte por mensagem durante 30 dias',
+            'Acesso vitalicio — sem mensalidade'
+          ]
+        }
+      };
+
+      const planButtons = document.querySelectorAll('.plan-btn[data-plan]');
+      const planCards = document.querySelectorAll('.plan-card');
+      const checkoutBox = document.getElementById('checkout-box');
+      const checkoutPlanName = document.getElementById('checkout-plan-name');
+      const checkoutPlanPrice = document.getElementById('checkout-plan-price');
+      const checkoutPlanFeatures = document.getElementById('checkout-plan-features');
+      const acceptTerms = document.getElementById('accept-terms');
+      const checkoutPayBtn = document.getElementById('checkout-pay-btn');
+
+      let selectedPlanKey = '';
+
+      function clearSelection() {
+        planCards.forEach((card) => card.classList.remove('is-selected'));
+      }
+
+      function renderCheckout(planKey) {
+        const selectedPlan = planData[planKey];
+        if (!selectedPlan) return;
+
+        checkoutPlanName.textContent = 'Plano ' + selectedPlan.name;
+        checkoutPlanPrice.textContent = selectedPlan.price;
+        checkoutPlanFeatures.innerHTML = selectedPlan.features.map((feature) => '<li>' + feature + '</li>').join('');
+
+        acceptTerms.checked = false;
+        checkoutPayBtn.disabled = true;
+        checkoutBox.hidden = false;
+        checkoutBox.classList.add('show');
+      }
+
+      planButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const planKey = button.dataset.plan;
+          selectedPlanKey = planKey || '';
+
+          clearSelection();
+          const parentCard = button.closest('.plan-card');
+          if (parentCard) {
+            parentCard.classList.add('is-selected');
+          }
+
+          renderCheckout(selectedPlanKey);
+          checkoutBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+      });
+
+      acceptTerms.addEventListener('change', () => {
+        checkoutPayBtn.disabled = !acceptTerms.checked || !selectedPlanKey;
+      });
+
+      const checkoutUrls = {
+        basico:        'https://pay.herospark.com/motorista-pro-controle-total-renda-inteligente-521376',
+        intermediario: 'https://pay.herospark.com/plano-intermediario-521383',
+        premium:       'https://pay.herospark.com/plano-premium-521385'
+      };
+
+      checkoutPayBtn.addEventListener('click', () => {
+        const selectedPlan = planData[selectedPlanKey];
+        if (!selectedPlan || checkoutPayBtn.disabled) return;
+
+        const url = checkoutUrls[selectedPlanKey];
+        if (url) {
+          window.location.href = url;
+        } else {
+          alert('Este plano ainda nao esta disponivel. Tente o Plano Basico ou aguarde a abertura dos demais planos em breve.');
+        }
+      });
+    })();
+
+    // Ajusta texto de acordo com campanha das redes sociais via URL (?publico=entregador, motorista, autonomo).
+    (function setupCampaignAudienceCopy() {
+      const params = new URLSearchParams(window.location.search);
+      const publico = (params.get('publico') || '').toLowerCase();
+      const heroSubtitle = document.querySelector('.hero-subtitle');
+      const heroBadge = document.querySelector('.hero-badge');
+
+      const audienceCopy = {
+        entregador: {
+          badge: 'Conteudo para entregadores de app',
+          subtitle: 'Organize ganhos e custos das entregas com metodo simples para sobrar mais no fim do mes.'
+        },
+        motorista: {
+          badge: 'Conteudo para motoristas de app',
+          subtitle: 'Tenha clareza do lucro por corrida e tome decisoes melhores sem depender de achismo.'
+        },
+        autonomo: {
+          badge: 'Conteudo para autonomos da mobilidade',
+          subtitle: 'Crie uma rotina financeira pratica para transformar seu esforco em renda mais previsivel.'
+        }
+      };
+
+      if (!audienceCopy[publico] || !heroSubtitle || !heroBadge) return;
+
+      heroBadge.textContent = audienceCopy[publico].badge;
+      heroSubtitle.textContent = audienceCopy[publico].subtitle;
+    })();
+  </script>
+</body>
+</html>

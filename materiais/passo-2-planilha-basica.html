@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Planilha de Controle Financeiro — Motorista Pro</title>
+  <style>
+    :root{--verde:#1fca73;--azul:#2698ff;--bg:#f8fafc;--surface:#fff;--border:#d1dce9;--text:#1a2638;--muted:#6b7e97;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text);font-size:14px;}
+    .page{max-width:900px;margin:0 auto;padding:1.5rem;}
+    header{background:linear-gradient(135deg,#061126,#0c1c38);color:#fff;border-radius:12px;padding:1.2rem 1.5rem;margin-bottom:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;}
+    header h1{font-size:1.2rem;font-weight:800;}
+    header span{font-size:.8rem;color:#7baad4;}
+    .badge{background:rgba(31,202,115,.2);border:1px solid rgba(31,202,115,.5);border-radius:999px;padding:.25rem .7rem;font-size:.75rem;color:#1fca73;font-weight:700;}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+    @media(max-width:600px){.grid{grid-template-columns:1fr;}}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem;}
+    .card h2{font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:.8rem;}
+    .result-big{font-size:1.8rem;font-weight:800;color:var(--verde);}
+    .result-neg{color:#e55;}
+    label{display:block;font-size:.82rem;font-weight:600;color:var(--muted);margin-bottom:.25rem;margin-top:.6rem;}
+    input[type=number]{width:100%;padding:.5rem .7rem;border:1px solid var(--border);border-radius:7px;font-size:.95rem;color:var(--text);background:#f5f8fc;transition:border-color 180ms;}
+    input[type=number]:focus{outline:none;border-color:var(--azul);}
+    table{width:100%;border-collapse:collapse;font-size:.85rem;}
+    thead tr{background:#f0f4f9;}
+    th,td{padding:.5rem .6rem;border:1px solid var(--border);text-align:left;}
+    th{font-weight:700;color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;}
+    tr:nth-child(even){background:#f8fafc;}
+    .add-btn,button{background:var(--verde);color:#042014;border:none;border-radius:7px;padding:.5rem 1rem;font-weight:700;cursor:pointer;font-size:.88rem;transition:background 180ms;}
+    .add-btn:hover,button:hover{background:#19ad62;}
+    .del-btn{background:#fee2e2;color:#c53030;padding:.3rem .6rem;font-size:.78rem;}
+    .del-btn:hover{background:#fca5a5;}
+    .summary-row{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;}
+    .summary-item{flex:1;min-width:140px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.9rem;text-align:center;}
+    .summary-item .label{font-size:.75rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em;}
+    .summary-item .value{font-size:1.3rem;font-weight:800;margin-top:.2rem;}
+    .green{color:var(--verde);}
+    .red{color:#e55;}
+    .blue{color:var(--azul);}
+    .print-btn{background:#0c1c38;color:#fff;margin-left:.5rem;}
+    .print-btn:hover{background:#1a3460;}
+    @media print{.no-print{display:none!important;}.page{padding:0;}.card{break-inside:avoid;}}
+  </style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div>
+      <h1>Planilha de Controle Financeiro</h1>
+      <span>Motorista Pro: Controle Total + Renda Inteligente</span>
+    </div>
+    <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;">
+      <span class="badge">Plano Basico</span>
+      <button class="print-btn no-print" onclick="window.print()">Imprimir / Salvar PDF</button>
+    </div>
+  </header>
+
+  <!-- Resumo do dia -->
+  <div class="summary-row" id="summary-row">
+    <div class="summary-item"><div class="label">Total Receitas</div><div class="value green" id="s-receita">R$ 0,00</div></div>
+    <div class="summary-item"><div class="label">Total Custos</div><div class="value red" id="s-custo">R$ 0,00</div></div>
+    <div class="summary-item"><div class="label">Lucro Real</div><div class="value green" id="s-lucro">R$ 0,00</div></div>
+    <div class="summary-item"><div class="label">Corridas/Entregas</div><div class="value blue" id="s-corridas">0</div></div>
+    <div class="summary-item"><div class="label">Ticket Medio</div><div class="value" id="s-ticket">R$ 0,00</div></div>
+  </div>
+
+  <div class="grid">
+    <!-- Calculadora rapida de lucro por corrida -->
+    <div class="card">
+      <h2>Calculadora Rapida — Lucro por Corrida</h2>
+      <label>Valor recebido na corrida (R$)</label>
+      <input type="number" id="c-valor" placeholder="Ex: 18,50" step="0.01" min="0" oninput="calcCorrida()"/>
+      <label>Combustivel estimado (R$)</label>
+      <input type="number" id="c-comb" placeholder="Ex: 3,20" step="0.01" min="0" oninput="calcCorrida()"/>
+      <label>Taxa da plataforma % (ex: 20)</label>
+      <input type="number" id="c-taxa" placeholder="Ex: 20" step="0.1" min="0" oninput="calcCorrida()"/>
+      <div style="margin-top:1rem;padding:.8rem;background:#f0fdf4;border-radius:8px;border:1px solid #a7f3d0;">
+        <div style="font-size:.8rem;color:var(--muted);">Lucro liquido desta corrida</div>
+        <div class="result-big" id="c-resultado">R$ 0,00</div>
+      </div>
+    </div>
+
+    <!-- Custos fixos do dia -->
+    <div class="card">
+      <h2>Custos Fixos do Dia</h2>
+      <label>Combustivel total do dia (R$)</label>
+      <input type="number" id="cf-comb" placeholder="Ex: 45,00" step="0.01" min="0" oninput="calcTotal()"/>
+      <label>Alimentacao (R$)</label>
+      <input type="number" id="cf-alim" placeholder="Ex: 15,00" step="0.01" min="0" oninput="calcTotal()"/>
+      <label>Outros custos (R$)</label>
+      <input type="number" id="cf-outros" placeholder="Ex: 5,00" step="0.01" min="0" oninput="calcTotal()"/>
+      <div style="margin-top:1rem;padding:.8rem;background:#fff7f7;border-radius:8px;border:1px solid #fca5a5;">
+        <div style="font-size:.8rem;color:var(--muted);">Total de custos do dia</div>
+        <div class="result-big result-neg" id="cf-total">R$ 0,00</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Registro de corridas do dia -->
+  <div class="card" style="margin-bottom:1rem;">
+    <h2>Registro de Corridas / Entregas do Dia</h2>
+    <div class="no-print" style="display:flex;gap:.5rem;align-items:flex-end;flex-wrap:wrap;margin-bottom:.8rem;">
+      <div>
+        <label>Data</label>
+        <input type="date" id="r-data" style="width:160px;"/>
+      </div>
+      <div>
+        <label>Plataforma (ex: Uber, iFood)</label>
+        <input type="text" id="r-plat" placeholder="Uber" style="width:130px;"/>
+      </div>
+      <div>
+        <label>Valor recebido (R$)</label>
+        <input type="number" id="r-valor" placeholder="0,00" step="0.01" min="0" style="width:120px;"/>
+      </div>
+      <div>
+        <label>Custo estimado (R$)</label>
+        <input type="number" id="r-custo" placeholder="0,00" step="0.01" min="0" style="width:120px;"/>
+      </div>
+      <button class="add-btn" onclick="addCorrida()">+ Adicionar</button>
+    </div>
+    <table>
+      <thead><tr><th>Data</th><th>Plataforma</th><th>Receita</th><th>Custo</th><th>Lucro</th><th class="no-print">Acao</th></tr></thead>
+      <tbody id="tabela-corridas"><tr><td colspan="6" style="text-align:center;color:var(--muted);padding:1rem;">Nenhuma corrida registrada ainda.</td></tr></tbody>
+    </table>
+  </div>
+
+  <div style="font-size:.78rem;color:var(--muted);text-align:center;padding:.5rem 0;">
+    Motorista Pro &mdash; Use este arquivo como referencia diaria. Para salvar permanentemente, imprima como PDF ou copie para o Google Sheets.
+  </div>
+</div>
+
+<script>
+  const corridas = [];
+
+  function fmt(v){ return 'R$ ' + v.toFixed(2).replace('.',','); }
+
+  function calcCorrida(){
+    const val = parseFloat(document.getElementById('c-valor').value)||0;
+    const comb = parseFloat(document.getElementById('c-comb').value)||0;
+    const taxa = parseFloat(document.getElementById('c-taxa').value)||0;
+    const taxaVal = val * (taxa/100);
+    const lucro = val - taxaVal - comb;
+    const el = document.getElementById('c-resultado');
+    el.textContent = fmt(lucro);
+    el.className = 'result-big' + (lucro < 0 ? ' result-neg' : '');
+  }
+
+  function calcTotal(){
+    const comb = parseFloat(document.getElementById('cf-comb').value)||0;
+    const alim = parseFloat(document.getElementById('cf-alim').value)||0;
+    const outros = parseFloat(document.getElementById('cf-outros').value)||0;
+    document.getElementById('cf-total').textContent = fmt(comb+alim+outros);
+    updateSummary();
+  }
+
+  function addCorrida(){
+    const data = document.getElementById('r-data').value || new Date().toLocaleDateString('pt-BR');
+    const plat = document.getElementById('r-plat').value || 'App';
+    const val  = parseFloat(document.getElementById('r-valor').value)||0;
+    const custo= parseFloat(document.getElementById('r-custo').value)||0;
+    if(val<=0){ alert('Informe o valor da corrida.'); return; }
+    corridas.push({data,plat,val,custo,lucro: val-custo});
+    document.getElementById('r-valor').value='';
+    document.getElementById('r-custo').value='';
+    renderTabela();
+    updateSummary();
+  }
+
+  function deleteCorrida(i){
+    corridas.splice(i,1);
+    renderTabela();
+    updateSummary();
+  }
+
+  function renderTabela(){
+    const tbody = document.getElementById('tabela-corridas');
+    if(corridas.length===0){
+      tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:1rem;">Nenhuma corrida registrada ainda.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = corridas.map((c,i)=>`
+      <tr>
+        <td>${c.data}</td>
+        <td>${c.plat}</td>
+        <td style="color:var(--verde);font-weight:600;">${fmt(c.val)}</td>
+        <td style="color:#e55;">${fmt(c.custo)}</td>
+        <td style="font-weight:700;color:${c.lucro>=0?'var(--verde)':'#e55'}">${fmt(c.lucro)}</td>
+        <td class="no-print"><button class="del-btn" onclick="deleteCorrida(${i})">Remover</button></td>
+      </tr>`).join('');
+  }
+
+  function updateSummary(){
+    const totalRec = corridas.reduce((a,c)=>a+c.val,0);
+    const totalCusto = corridas.reduce((a,c)=>a+c.custo,0);
+    const cfComb = parseFloat(document.getElementById('cf-comb').value)||0;
+    const cfAlim = parseFloat(document.getElementById('cf-alim').value)||0;
+    const cfOutros = parseFloat(document.getElementById('cf-outros').value)||0;
+    const custoTotal = totalCusto + cfComb + cfAlim + cfOutros;
+    const lucro = totalRec - custoTotal;
+    const ticket = corridas.length ? totalRec/corridas.length : 0;
+    document.getElementById('s-receita').textContent = fmt(totalRec);
+    document.getElementById('s-custo').textContent = fmt(custoTotal);
+    const sl = document.getElementById('s-lucro');
+    sl.textContent = fmt(lucro);
+    sl.className = 'value ' + (lucro>=0?'green':'red');
+    document.getElementById('s-corridas').textContent = corridas.length;
+    document.getElementById('s-ticket').textContent = fmt(ticket);
+  }
+
+  // Preenche data de hoje por padrao
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('r-data').value = today;
+</script>
+</body>
+</html>

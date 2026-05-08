@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Como Criar o Video VSL — Guia Pratico | Motorista Pro</title>
+  <style>
+    :root{--verde:#1fca73;--azul:#2698ff;--red:#f05050;--text:#1a2638;--muted:#6b7e97;--border:#d1dce9;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:"Segoe UI",Arial,sans-serif;background:#f8fafc;color:var(--text);font-size:14px;line-height:1.7;}
+    .page{max-width:860px;margin:0 auto;padding:2rem 1.5rem;}
+    header{background:linear-gradient(135deg,#061126,#0c1c38);color:#fff;border-radius:12px;padding:1.6rem;margin-bottom:1.5rem;text-align:center;}
+    header h1{font-size:1.4rem;font-weight:900;margin-bottom:.4rem;}
+    header p{color:#8aaac8;font-size:.9rem;}
+    .path-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;}
+    @media(max-width:600px){.path-grid{grid-template-columns:1fr;}}
+    .path{border-radius:12px;padding:1.1rem;border:2px solid var(--border);}
+    .path.recommended{border-color:var(--verde);background:#f0fdf4;}
+    .path .path-tag{display:inline-block;border-radius:999px;padding:.2rem .65rem;font-size:.71rem;font-weight:800;margin-bottom:.5rem;}
+    .path.recommended .path-tag{background:var(--verde);color:#042014;}
+    .path.alt .path-tag{background:#f0f4f9;color:var(--muted);}
+    .path h2{font-size:.95rem;font-weight:800;margin-bottom:.3rem;}
+    .path p{font-size:.84rem;color:var(--muted);}
+    .section{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.3rem;margin-bottom:1rem;}
+    .section h2{font-size:.95rem;font-weight:800;margin-bottom:.9rem;display:flex;align-items:center;gap:.5rem;}
+    .step-num{width:28px;height:28px;min-width:28px;border-radius:999px;background:linear-gradient(135deg,var(--azul),#61bcff);color:#fff;font-weight:900;font-size:.8rem;display:inline-grid;place-items:center;}
+    .step{display:flex;gap:.9rem;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid #f0f4f9;}
+    .step:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+    .step-body{flex:1;}
+    .step-body strong{display:block;font-size:.92rem;margin-bottom:.25rem;}
+    .step-body p{font-size:.86rem;color:var(--muted);margin-bottom:.35rem;}
+    .step-body .action{background:#f0f6ff;border:1px solid #bfdbfe;border-radius:7px;padding:.55rem .75rem;font-size:.84rem;color:var(--azul);font-weight:600;margin-top:.4rem;}
+    .tool-card{display:flex;align-items:flex-start;gap:.8rem;padding:.8rem;border:1px solid var(--border);border-radius:9px;margin-bottom:.6rem;}
+    .tool-icon{width:40px;height:40px;min-width:40px;border-radius:8px;display:grid;place-items:center;font-size:1.3rem;}
+    .tool-body strong{display:block;font-size:.9rem;}
+    .tool-body span{font-size:.8rem;color:var(--muted);}
+    .tool-body .tag{display:inline-block;border-radius:999px;padding:.12rem .5rem;font-size:.68rem;font-weight:700;margin-top:.3rem;margin-right:.25rem;}
+    .tag.free{background:#f0fdf4;color:#065f46;}
+    .tag.paid{background:#fffbeb;color:#92400e;}
+    .tag.ptbr{background:#eff6ff;color:#1d4ed8;}
+    .tag.best{background:var(--verde);color:#042014;}
+    .tip{background:#f0fdf4;border-left:3px solid var(--verde);padding:.7rem .9rem;border-radius:0 8px 8px 0;font-size:.86rem;color:#1a4a2e;margin:.7rem 0;}
+    .warn{background:#fffbeb;border-left:3px solid #f59e0b;padding:.7rem .9rem;border-radius:0 8px 8px 0;font-size:.86rem;color:#78350f;margin:.7rem 0;}
+    .script-sample{background:#0c1c38;color:#e2f0ff;border-radius:10px;padding:1rem;font-size:.85rem;line-height:1.8;margin:.8rem 0;}
+    .script-sample em{color:#1fca73;font-style:normal;font-weight:700;}
+    .script-sample .note{color:#6b9fd4;font-size:.75rem;}
+    table{width:100%;border-collapse:collapse;font-size:.84rem;margin:.6rem 0;}
+    th,td{padding:.48rem .6rem;border:1px solid var(--border);}
+    thead tr{background:#f0f4f9;}
+    th{font-weight:700;color:var(--muted);font-size:.73rem;text-transform:uppercase;}
+    button{background:var(--verde);color:#042014;border:none;border-radius:8px;padding:.52rem 1rem;font-weight:700;cursor:pointer;font-size:.84rem;}
+    footer{text-align:center;color:var(--muted);font-size:.73rem;margin-top:2rem;padding-top:.8rem;border-top:1px solid var(--border);}
+    @media print{button{display:none;}.page{padding:0;}.section{break-inside:avoid;}}
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <h1>Como Criar o Video VSL sem Aparecer e Soar 100% Humano</h1>
+    <p>Dois caminhos testados — voz de IA realista em PT-BR ou locucao propria. Sem camera. Sem estudio.</p>
+  </header>
+
+  <!-- Dois caminhos -->
+  <div class="path-grid">
+    <div class="path recommended">
+      <span class="path-tag">RECOMENDADO — Mais facil</span>
+      <h2>Caminho A: Voz de IA + Slides</h2>
+      <p>Voce usa uma ferramenta de texto-para-voz em PT-BR que soa como humano, junta com os slides no CapCut ou no Canva e exporta o video pronto. Custo: zero.</p>
+    </div>
+    <div class="path alt">
+      <span class="path-tag">ALTERNATIVA — Mais autentico</span>
+      <h2>Caminho B: Sua voz + Avatar de IA</h2>
+      <p>Voce grava so a voz (microfone do celular no banheiro para ter eco zero) e usa um avatar de IA visual para aparecer "falando" no video. Parece totalmente real.</p>
+    </div>
+  </div>
+
+  <!-- CAMINHO A -->
+  <div class="section">
+    <h2>CAMINHO A — Passo a passo completo (Voz de IA)</h2>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <strong>Gerar o audio com ElevenLabs (gratuito ate 10 min/mes)</strong>
+        <p>ElevenLabs e a ferramenta de voz de IA mais realista do mundo. Tem vozes masculinas e femininas em PT-BR que soam como locutor profissional.</p>
+        <div class="action">
+          1. Acesse: elevenlabs.io → crie conta gratuita<br/>
+          2. Va em "Text to Speech"<br/>
+          3. Escolha a voz <strong>"Joao"</strong> (masculina, PT-BR) ou <strong>"Valentina"</strong> (feminina, PT-BR)<br/>
+          4. Cole cada cena do roteiro e clique em "Generate"<br/>
+          5. Baixe o MP3 de cada cena separado
+        </div>
+        <div class="tip" style="margin-top:.5rem;">Dica: no campo de configuracao de voz, coloque <strong>Stability: 55%</strong> e <strong>Clarity: 75%</strong>. Isso deixa a voz mais natural, com pequenas variacoes como humano real.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <strong>Criar os slides no Canva (gratuito)</strong>
+        <p>Os slides sao o visual que aparece enquanto a voz fala. Nao precisa ser elaborado.</p>
+        <div class="action">
+          1. Acesse: canva.com → crie conta gratuita<br/>
+          2. Novo design → <strong>Apresentacao (16:9)</strong><br/>
+          3. Crie um slide por cena do roteiro (9 slides no total)<br/>
+          4. Use fundo escuro (#061126), texto branco, detalhes em verde (#1fca73)<br/>
+          5. Exporte como <strong>Video MP4</strong> (Compartilhar → Baixar → MP4)
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <strong>Juntar audio + video no CapCut (gratuito, pelo celular ou PC)</strong>
+        <p>CapCut e o editor mais simples para juntar os audios gerados com os slides.</p>
+        <div class="action">
+          1. Baixe o CapCut (capcut.com) — disponivel no PC e no celular<br/>
+          2. Novo projeto → Importe o video dos slides exportado do Canva<br/>
+          3. Adicione cada audio MP3 do ElevenLabs na trilha de audio correspondente<br/>
+          4. Ajuste o tempo de cada slide para combinar com a duracao do audio<br/>
+          5. Adicione musica de fundo leve (volume 8%) — CapCut tem biblioteca gratuita<br/>
+          6. Exporte em 1080p → MP4
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <strong>Fazer o upload no HeroSpark</strong>
+        <p>Agora voce tem um video MP4 pronto para subir na pagina do produto.</p>
+        <div class="action">
+          No HeroSpark: Produto → Pagina de vendas → Secao de video → Cole a URL do YouTube/Vimeo<br/>
+          <strong>Opcao mais simples:</strong> Faca upload do video no YouTube como <em>Nao listado</em> (nao aparece na busca) → cole o link no HeroSpark
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ferramentas de voz PT-BR -->
+  <div class="section">
+    <h2>Melhores ferramentas de voz de IA em PT-BR</h2>
+
+    <div class="tool-card">
+      <div class="tool-icon" style="background:#f0f4f9;">🎙️</div>
+      <div class="tool-body">
+        <strong>ElevenLabs — elevenlabs.io</strong>
+        <span>A voz mais realista disponivel. Praticamente impossivel distinguir de humano real. Vozes "Joao" e "Valentina" em PT-BR sao excepcionais.</span><br/>
+        <span class="tag free">Gratuito: 10 min/mes</span>
+        <span class="tag ptbr">PT-BR nativo</span>
+        <span class="tag best">Mais realista</span>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-icon" style="background:#f0f4f9;">✂️</div>
+      <div class="tool-body">
+        <strong>CapCut — capcut.com</strong>
+        <span>Tem voz de IA PT-BR integrada diretamente no editor de video. Voce cola o texto, escolhe a voz e o audio e gerado automaticamente junto com os slides.</span><br/>
+        <span class="tag free">100% gratuito</span>
+        <span class="tag ptbr">PT-BR disponivel</span>
+        <span class="tag best">Tudo em um lugar</span>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-icon" style="background:#f0f4f9;">🎨</div>
+      <div class="tool-body">
+        <strong>Canva — canva.com (com voz de IA)</strong>
+        <span>O Canva Pro tem funcao de narrar apresentacao com voz de IA. Voce cria os slides e gera o audio tudo dentro do Canva. Se ja tem conta Pro e a opcao mais integrada.</span><br/>
+        <span class="tag paid">Requer Canva Pro</span>
+        <span class="tag ptbr">PT-BR disponivel</span>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-icon" style="background:#f0f4f9;">🤖</div>
+      <div class="tool-body">
+        <strong>HeyGen — heygen.com (com avatar)</strong>
+        <span>Cria um avatar de IA que aparece falando no video. Voce cola o roteiro, o avatar lê em PT-BR com movimentos de boca e expressoes realistas. Parece um apresentador real.</span><br/>
+        <span class="tag free">Gratuito: 1 min/mes</span>
+        <span class="tag paid">Pago para mais tempo</span>
+        <span class="tag ptbr">PT-BR disponivel</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAMINHO B -->
+  <div class="section">
+    <h2>CAMINHO B — Avatar de IA com sua voz (mais autentico)</h2>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <strong>Gravar so a voz (sem aparecer na camera)</strong>
+        <p>Banheiro pequeno, janela fechada, celular a 15 cm da boca. Grave o roteiro completo em um unico arquivo MP3 ou WAV.</p>
+        <div class="action">
+          App gratuito para gravar no celular: <strong>RecForge II</strong> (Android) ou <strong>Gravador de Voz</strong> (iPhone nativo)<br/>
+          Exporte como WAV para melhor qualidade
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <strong>Criar avatar com sua voz no HeyGen</strong>
+        <p>O HeyGen permite criar um avatar de IA que sincroniza com a sua voz. O resultado parece uma pessoa real apresentando o produto.</p>
+        <div class="action">
+          1. Acesse: heygen.com → crie conta gratuita<br/>
+          2. Va em "Talking Avatar" → escolha um avatar pronto (homem ou mulher, varios estilos)<br/>
+          3. Faca upload do seu audio WAV<br/>
+          4. O HeyGen sincroniza automaticamente os movimentos de boca e expressoes<br/>
+          5. Exporte o video MP4
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <strong>Adicionar os slides por baixo do avatar no CapCut</strong>
+        <p>Coloque o avatar em formato de circulo ou retangulo no canto inferior esquerdo (estilo picture-in-picture) sobre os slides.</p>
+        <div class="action">
+          No CapCut: adicione o video dos slides como fundo → adicione o video do avatar como sobreposicao → redimensione o avatar para o canto → exporte
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Texto adaptado para voz de IA -->
+  <div class="section">
+    <h2>Como adaptar o roteiro para soar natural na voz de IA</h2>
+    <p style="font-size:.86rem;color:var(--muted);margin-bottom:.8rem;">Vozes de IA leem melhor quando o texto imita a fala oral. Evite frases longas e formais. Veja os exemplos:</p>
+
+    <div class="script-sample">
+      <span class="note">❌ VERSAO RUIM (muito formal, soa robo):</span><br/>
+      "A ausencia de controle financeiro representa um risco significativo para profissionais autonomos que dependem de renda variavel."<br/><br/>
+      <span class="note">✅ VERSAO CERTA (oral, soa humano):</span><br/>
+      <em>"Sem controle, voce nao sabe quanto ganhou. Simples assim. E isso custa caro."</em><br/><br/>
+      <span class="note">❌ VERSAO RUIM (virgulas no lugar errado):</span><br/>
+      "Voce pode, portanto, como muitos motoristas fazem, adotar um sistema de registro."<br/><br/>
+      <span class="note">✅ VERSAO CERTA (pausa natural com traco):</span><br/>
+      <em>"Voce pode fazer o que os melhores motoristas fazem — usar um sistema de registro."</em>
+    </div>
+
+    <table>
+      <thead><tr><th>Regra</th><th>Errado</th><th>Certo</th></tr></thead>
+      <tbody>
+        <tr><td>Pausa dramatica</td><td>use virgula</td><td>use traco — ou tres pontos...</td></tr>
+        <tr><td>Enfase</td><td>use maiuscula</td><td>repita a palavra: "muito, muito caro"</td></tr>
+        <tr><td>Numeros</td><td>R$27,90</td><td>"vinte e sete reais e noventa centavos"</td></tr>
+        <tr><td>Percentual</td><td>30%</td><td>"trinta por cento"</td></tr>
+        <tr><td>Frase longa</td><td>mais de 20 palavras</td><td>quebre em duas frases curtas</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Roteiro adaptado para voz de IA -->
+  <div class="section">
+    <h2>Hook do roteiro — versao adaptada para voz de IA</h2>
+    <p style="font-size:.85rem;color:var(--muted);margin-bottom:.7rem;">Copie este texto diretamente no ElevenLabs ou CapCut. Ja esta formatado para soar natural:</p>
+
+    <div class="script-sample">
+<em>Voce saiu pra trabalhar hoje...</em><br/>
+<br/>
+<em>rodou o dia inteiro...</em><br/>
+<br/>
+<em>e no final do dia... nao sabe se ganhou ou se teve prejuizo.</em><br/>
+<br/>
+<em>Se isso soa familiar...</em><br/>
+<br/>
+<em>esse video foi feito pra voce.</em><br/>
+<br/>
+<em>Nos proximos minutos, eu vou te mostrar por que isso acontece... e como voce pode mudar isso ainda essa semana.</em><br/>
+<br/>
+<em>Fica comigo.</em>
+    </div>
+
+    <div class="tip">No ElevenLabs: use o campo "Breaks" para adicionar silencio entre as linhas. Coloque uma pausa de 0.5 segundos entre cada linha separada. Isso cria o efeito dramatico natural.</div>
+    <div class="warn">Nao coloque o roteiro inteiro de uma vez no gerador de voz. Gere cena por cena. Fica mais facil ajustar o ritmo e regravar se alguma parte soar estranha.</div>
+  </div>
+
+  <!-- Checklist final -->
+  <div class="section">
+    <h2>Checklist antes de publicar o video</h2>
+    <table>
+      <thead><tr><th>Item</th><th>OK?</th></tr></thead>
+      <tbody>
+        <tr><td>Audio sem echo ou ruido de fundo</td><td>☐</td></tr>
+        <tr><td>Velocidade de fala confortavel (nao rapida demais)</td><td>☐</td></tr>
+        <tr><td>Slides com texto grande e legivel no celular</td><td>☐</td></tr>
+        <tr><td>Musica de fundo em volume baixo (nao abafa a voz)</td><td>☐</td></tr>
+        <tr><td>Botao de compra ou link aparece nos ultimos 30 segundos</td><td>☐</td></tr>
+        <tr><td>Video exportado em resolucao 1080p (Full HD)</td><td>☐</td></tr>
+        <tr><td>Duracao total entre 5 e 9 minutos</td><td>☐</td></tr>
+        <tr><td>Upload no YouTube como "Nao listado" antes de colocar no HeroSpark</td><td>☐</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="text-align:center;margin-top:1.5rem;">
+    <button onclick="window.print()">Imprimir este guia / Salvar PDF</button>
+  </div>
+
+  <footer>Motorista Pro: Controle Total + Renda Inteligente — Guia de producao de video exclusivo.</footer>
+</div>
+</body>
+</html>

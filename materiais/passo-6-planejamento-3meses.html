@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Passo 6 — Planejamento de 3 Meses | Motorista Pro</title>
+  <style>
+    :root{--verde:#1fca73;--azul:#2698ff;--text:#1a2638;--muted:#6b7e97;--border:#d1dce9;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:"Segoe UI",Arial,sans-serif;background:#f8fafc;color:var(--text);font-size:13px;line-height:1.5;}
+    .page{max-width:900px;margin:0 auto;padding:2rem 1.5rem;}
+    header{background:linear-gradient(135deg,#061126,#0c1c38);color:#fff;border-radius:12px;padding:1.3rem;margin-bottom:1.3rem;text-align:center;}
+    header .badge{display:inline-block;background:rgba(38,152,255,.22);border:1px solid rgba(38,152,255,.5);border-radius:999px;padding:.22rem .75rem;font-size:.73rem;font-weight:700;color:#61bcff;margin-bottom:.5rem;}
+    header h1{font-size:1.35rem;font-weight:900;margin-bottom:.25rem;}
+    header p{color:#8aaac8;font-size:.87rem;}
+    .card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.1rem;margin-bottom:1rem;}
+    h2{font-size:.9rem;font-weight:800;margin-bottom:.8rem;}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;}
+    @media(max-width:600px){.grid2{grid-template-columns:1fr;}}
+    label{display:block;font-size:.77rem;font-weight:600;color:var(--muted);margin-bottom:.2rem;margin-top:.5rem;}
+    input[type=number]{width:100%;padding:.4rem .55rem;border:1px solid var(--border);border-radius:6px;font-size:.9rem;}
+    table{width:100%;border-collapse:collapse;font-size:.83rem;margin:.5rem 0;}
+    th,td{padding:.5rem .55rem;border:1px solid var(--border);text-align:center;}
+    thead tr{background:#f0f4f9;}
+    th{font-weight:700;color:var(--muted);font-size:.74rem;text-transform:uppercase;}
+    td input{width:100%;border:none;background:transparent;text-align:center;font-size:.85rem;padding:.15rem;}
+    td input:focus{outline:1px solid var(--azul);border-radius:3px;}
+    .result{font-weight:700;}
+    .pos{color:var(--verde);} .neg{color:#e55;}
+    .tip{background:#f0fdf4;border-left:3px solid var(--verde);padding:.6rem .9rem;border-radius:0 8px 8px 0;font-size:.82rem;color:#1a4a2e;margin:.7rem 0;}
+    .objetivo-card{border:1px solid var(--border);border-radius:8px;padding:.8rem;margin:.5rem 0;}
+    .objetivo-card label{font-size:.77rem;}
+    .objetivo-card input[type=text]{width:100%;padding:.38rem .5rem;border:1px solid var(--border);border-radius:6px;font-size:.85rem;margin-top:.2rem;}
+    .progress-wrap{background:#e5f0ff;border-radius:999px;height:8px;margin:.4rem 0;}
+    .progress-fill{background:linear-gradient(90deg,var(--verde),var(--azul));height:8px;border-radius:999px;transition:width 300ms;}
+    button{background:var(--verde);color:#042014;border:none;border-radius:8px;padding:.5rem 1rem;font-weight:700;cursor:pointer;font-size:.83rem;}
+    footer{text-align:center;color:var(--muted);font-size:.73rem;margin-top:1.5rem;padding-top:.8rem;border-top:1px solid var(--border);}
+    @media print{button{display:none;}.page{padding:0;}}
+  </style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="badge">Passo 6 de 7 — Plano Premium</div>
+    <h1>Planejamento Financeiro de 3 Meses</h1>
+    <p>Sair do improviso e entrar no controle real. Mes a mes, com metas e acompanhamento.</p>
+  </header>
+
+  <!-- Objetivos -->
+  <div class="card">
+    <h2>Meus Objetivos para os Proximos 3 Meses</h2>
+    <div class="grid2">
+      <div class="objetivo-card">
+        <label>Objetivo financeiro principal (ex: quitar divida, poupar R$ X)</label>
+        <input type="text" placeholder="Ex: Poupar R$ 900 para fundo de emergencia"/>
+        <label style="margin-top:.7rem;">Valor total necessario (R$)</label>
+        <input type="number" id="obj-total" placeholder="Ex: 900" oninput="calcObj()"/>
+        <label>Quanto ja tenho guardado (R$)</label>
+        <input type="number" id="obj-atual" placeholder="Ex: 0" oninput="calcObj()"/>
+        <div class="progress-wrap"><div class="progress-fill" id="obj-prog" style="width:0%"></div></div>
+        <div id="obj-label" style="font-size:.76rem;color:var(--muted);">0% atingido</div>
+      </div>
+      <div class="objetivo-card">
+        <label>Segundo objetivo (ex: manutencao preventiva, curso)</label>
+        <input type="text" placeholder="Ex: Revisao completa do carro"/>
+        <label style="margin-top:.7rem;">Valor estimado (R$)</label>
+        <input type="number" placeholder="Ex: 450"/>
+        <label>Prazo desejado</label>
+        <input type="text" placeholder="Ex: Mes 2 (Junho)"/>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabela 3 meses -->
+  <div class="card">
+    <h2>Planejamento Mes a Mes</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Mes 1</th><th>Real M1</th>
+          <th>Mes 2</th><th>Real M2</th>
+          <th>Mes 3</th><th>Real M3</th>
+          <th>Total Planejado</th>
+        </tr>
+      </thead>
+      <tbody id="plan-tbody"></tbody>
+      <tfoot id="plan-tfoot"></tfoot>
+    </table>
+    <div class="tip">Preencha primeiro as colunas "Mes X" com o que planeja. Conforme o mes passa, preencha "Real MX" com o que realmente aconteceu.</div>
+  </div>
+
+  <!-- Resumo trimestral -->
+  <div class="card">
+    <h2>Resumo do Trimestre</h2>
+    <div class="grid2">
+      <div>
+        <label>Faturamento total planejado (R$)</label>
+        <div id="sum-fat-plan" style="font-size:1.1rem;font-weight:800;color:var(--azul);margin:.3rem 0;">R$ 0,00</div>
+        <label>Faturamento total realizado (R$)</label>
+        <div id="sum-fat-real" style="font-size:1.1rem;font-weight:800;color:var(--verde);margin:.3rem 0;">R$ 0,00</div>
+      </div>
+      <div>
+        <label>Total custos planejados (R$)</label>
+        <div id="sum-cus-plan" style="font-size:1.1rem;font-weight:800;color:#f59e0b;margin:.3rem 0;">R$ 0,00</div>
+        <label>Lucro liquido estimado no trimestre (R$)</label>
+        <div id="sum-lucro" style="font-size:1.3rem;font-weight:900;color:var(--verde);margin:.3rem 0;">R$ 0,00</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:1.2rem;">
+    <button onclick="window.print()">Imprimir / Salvar PDF</button>
+  </div>
+  <footer>Motorista Pro: Controle Total + Renda Inteligente — Material exclusivo para alunos.</footer>
+</div>
+<script>
+  const linhas=[
+    {label:'Faturamento bruto',type:'receita'},
+    {label:'Combustivel',type:'custo'},
+    {label:'Manutencao',type:'custo'},
+    {label:'Alimentacao',type:'custo'},
+    {label:'Outros custos',type:'custo'},
+    {label:'LUCRO LIQUIDO',type:'total'},
+  ];
+  function fmt(v){return 'R$ '+v.toFixed(2).replace('.',',');}
+  function buildTable(){
+    const tbody=document.getElementById('plan-tbody');
+    tbody.innerHTML=linhas.filter(l=>l.type!=='total').map((l,i)=>`
+      <tr>
+        <td style="text-align:left;font-weight:600;">${l.label}</td>
+        <td><input type="number" placeholder="0" oninput="recalc()"/></td>
+        <td><input type="number" placeholder="0" oninput="recalc()"/></td>
+        <td><input type="number" placeholder="0" oninput="recalc()"/></td>
+        <td><input type="number" placeholder="0" oninput="recalc()"/></td>
+        <td><input type="number" placeholder="0" oninput="recalc()"/></td>
+        <td><input type="number" placeholder="0" oninput="recalc()"/></td>
+        <td class="result" id="tp-${i}">R$ 0,00</td>
+      </tr>`).join('');
+    const tfoot=document.getElementById('plan-tfoot');
+    tfoot.innerHTML=`<tr style="background:#f0fdf4;font-weight:800;">
+      <td style="text-align:left;">LUCRO LIQUIDO</td>
+      <td class="result pos" id="luc-m1p">R$ 0</td>
+      <td class="result pos" id="luc-m1r">R$ 0</td>
+      <td class="result pos" id="luc-m2p">R$ 0</td>
+      <td class="result pos" id="luc-m2r">R$ 0</td>
+      <td class="result pos" id="luc-m3p">R$ 0</td>
+      <td class="result pos" id="luc-m3r">R$ 0</td>
+      <td class="result pos" id="luc-tot">R$ 0,00</td>
+    </tr>`;
+  }
+  function recalc(){
+    const rows=document.querySelectorAll('#plan-tbody tr');
+    const vals=[];
+    rows.forEach((r,ri)=>{
+      const inputs=r.querySelectorAll('input');
+      vals[ri]=Array.from(inputs).map(i=>parseFloat(i.value)||0);
+      const sum=vals[ri].filter((_,j)=>j%2===0).reduce((a,v)=>a+v,0);
+      document.getElementById('tp-'+ri).textContent=fmt(sum);
+    });
+    // rows: 0=fat, 1=comb, 2=manut, 3=alim, 4=outros
+    const custos=[1,2,3,4];
+    for(let m=0;m<3;m++){
+      const fatP=vals[0]?vals[0][m*2]||0:0;
+      const fatR=vals[0]?vals[0][m*2+1]||0:0;
+      let cusP=0,cusR=0;
+      custos.forEach(c=>{cusP+=(vals[c]?vals[c][m*2]||0:0);cusR+=(vals[c]?vals[c][m*2+1]||0:0);});
+      const lucP=fatP-cusP, lucR=fatR-cusR;
+      document.getElementById('luc-m'+(m+1)+'p').textContent=fmt(lucP);
+      document.getElementById('luc-m'+(m+1)+'r').textContent=fmt(lucR);
+    }
+    const totalFatPlan=(vals[0]||[]).filter((_,j)=>j%2===0).reduce((a,v)=>a+v,0);
+    const totalFatReal=(vals[0]||[]).filter((_,j)=>j%2===1).reduce((a,v)=>a+v,0);
+    let totalCusPlan=0;
+    custos.forEach(c=>{totalCusPlan+=(vals[c]||[]).filter((_,j)=>j%2===0).reduce((a,v)=>a+v,0);});
+    document.getElementById('sum-fat-plan').textContent=fmt(totalFatPlan);
+    document.getElementById('sum-fat-real').textContent=fmt(totalFatReal);
+    document.getElementById('sum-cus-plan').textContent=fmt(totalCusPlan);
+    document.getElementById('sum-lucro').textContent=fmt(totalFatPlan-totalCusPlan);
+    document.getElementById('luc-tot').textContent=fmt(totalFatPlan-totalCusPlan);
+  }
+  function calcObj(){
+    const total=parseFloat(document.getElementById('obj-total').value)||0;
+    const atual=parseFloat(document.getElementById('obj-atual').value)||0;
+    const pct=total>0?Math.min(100,atual/total*100):0;
+    document.getElementById('obj-prog').style.width=pct+'%';
+    document.getElementById('obj-label').textContent=pct.toFixed(0)+'% atingido';
+  }
+  buildTable();
+</script>
+</body>
+</html>

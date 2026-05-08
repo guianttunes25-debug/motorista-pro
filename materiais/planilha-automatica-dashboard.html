@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Planilha Automatica Dashboard | Motorista Pro</title>
+  <style>
+    :root{--verde:#1fca73;--azul:#2698ff;--text:#1a2638;--muted:#6b7e97;--border:#d1dce9;--bg:#f8fafc;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text);font-size:13px;line-height:1.5;}
+    .page{max-width:950px;margin:0 auto;padding:1.5rem;}
+    header{background:linear-gradient(135deg,#061126,#0c1c38);color:#fff;border-radius:12px;padding:1.3rem;margin-bottom:1.2rem;text-align:center;}
+    header .badge{display:inline-block;background:rgba(31,202,115,.22);border:1px solid rgba(31,202,115,.5);border-radius:999px;padding:.22rem .75rem;font-size:.73rem;font-weight:700;color:#1fca73;margin-bottom:.5rem;}
+    header h1{font-size:1.35rem;font-weight:900;margin-bottom:.2rem;}
+    header p{color:#8aaac8;font-size:.87rem;}
+    .dash{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin-bottom:1.2rem;}
+    @media(max-width:700px){.dash{grid-template-columns:repeat(2,1fr);}}
+    .kpi{background:#fff;border:1px solid var(--border);border-radius:10px;padding:.9rem;text-align:center;}
+    .kpi .kpi-label{font-size:.71rem;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:.2rem;}
+    .kpi .kpi-val{font-size:1.3rem;font-weight:900;}
+    .kpi.green .kpi-val{color:var(--verde);}
+    .kpi.blue .kpi-val{color:var(--azul);}
+    .kpi.warn .kpi-val{color:#f59e0b;}
+    .section{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.1rem;margin-bottom:1rem;}
+    h2{font-size:.9rem;font-weight:800;margin-bottom:.7rem;color:var(--text);}
+    .input-row{display:grid;grid-template-columns:repeat(5,1fr) 80px 26px;gap:.4rem;align-items:center;margin-bottom:.35rem;}
+    .input-row input{padding:.38rem .5rem;border:1px solid var(--border);border-radius:6px;font-size:.83rem;width:100%;}
+    .input-row .auto{background:#f5f8ff;font-size:.83rem;font-weight:700;padding:.38rem .5rem;border-radius:6px;border:1px solid #c7d9f7;text-align:center;color:var(--azul);}
+    .del-btn{background:#fee2e2;color:#b91c1c;border:none;border-radius:6px;padding:.3rem .45rem;cursor:pointer;font-weight:700;font-size:.85rem;}
+    .add-btn{background:var(--verde);color:#042014;border:none;border-radius:7px;padding:.45rem .85rem;cursor:pointer;font-weight:700;font-size:.82rem;margin-top:.4rem;}
+    .col-header{display:grid;grid-template-columns:repeat(5,1fr) 80px 26px;gap:.4rem;margin-bottom:.3rem;}
+    .col-header span{font-size:.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;padding:0 .2rem;}
+    /* Mini bar chart */
+    .chart-wrap{display:flex;align-items:flex-end;gap:4px;height:80px;padding:.5rem 0;}
+    .bar-g{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;}
+    .bar{width:100%;border-radius:4px 4px 0 0;transition:height 300ms;}
+    .bar-label{font-size:.63rem;color:var(--muted);}
+    .bar-val{font-size:.63rem;font-weight:700;}
+    .tab-row{display:flex;gap:.5rem;margin-bottom:.8rem;}
+    .tab{background:#f0f4f9;border:none;border-radius:7px;padding:.35rem .75rem;cursor:pointer;font-size:.8rem;font-weight:600;color:var(--muted);}
+    .tab.active{background:var(--azul);color:#fff;}
+    .week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:.4rem;}
+    .week-cell{background:#f0f4f9;border-radius:8px;padding:.5rem;text-align:center;font-size:.75rem;}
+    .week-cell .day{font-weight:700;color:var(--muted);margin-bottom:.2rem;}
+    .week-cell input{width:100%;border:none;background:transparent;text-align:center;font-size:.82rem;font-weight:700;color:var(--azul);padding:.1rem;}
+    @media(max-width:600px){.week-grid{grid-template-columns:repeat(3,1fr);}}
+    footer{text-align:center;color:var(--muted);font-size:.74rem;margin-top:1.5rem;padding-top:.8rem;border-top:1px solid var(--border);}
+    button.print-btn{background:#0c1c38;color:#fff;border:none;border-radius:8px;padding:.5rem 1rem;font-weight:700;cursor:pointer;font-size:.84rem;}
+    @media print{.add-btn,.del-btn,.print-btn,.tab-row{display:none;}.page{padding:0;}}
+  </style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="badge">Plano Intermediario — Dashboard Automatico</div>
+    <h1>Planilha Inteligente com Dashboard</h1>
+    <p>Registro de corridas com calculos automaticos, resumo semanal e grafico de desempenho.</p>
+  </header>
+
+  <!-- KPIs -->
+  <div class="dash">
+    <div class="kpi green"><div class="kpi-label">Lucro total</div><div class="kpi-val" id="kpi-lucro">R$ 0,00</div></div>
+    <div class="kpi blue"><div class="kpi-label">Faturamento bruto</div><div class="kpi-val" id="kpi-bruto">R$ 0,00</div></div>
+    <div class="kpi warn"><div class="kpi-label">Total custos</div><div class="kpi-val" id="kpi-custo">R$ 0,00</div></div>
+    <div class="kpi"><div class="kpi-label">Ticket medio</div><div class="kpi-val" id="kpi-ticket">R$ 0,00</div></div>
+  </div>
+
+  <!-- Registro de corridas -->
+  <div class="section">
+    <h2>Registro de Corridas</h2>
+    <div class="col-header">
+      <span>Data</span><span>Plataforma</span><span>Valor (R$)</span><span>Taxa %</span><span>Comb. (R$)</span><span>Lucro</span><span></span>
+    </div>
+    <div id="corridas-wrap"></div>
+    <button class="add-btn" onclick="addRow()">+ Adicionar corrida</button>
+  </div>
+
+  <!-- Resumo semanal -->
+  <div class="section">
+    <h2>Faturamento por Dia da Semana</h2>
+    <div class="week-grid" id="week-grid"></div>
+    <div class="chart-wrap" id="week-chart"></div>
+  </div>
+
+  <div style="text-align:center;margin-top:1rem;">
+    <button class="print-btn" onclick="window.print()">Imprimir / Salvar PDF</button>
+  </div>
+  <footer>Motorista Pro: Controle Total + Renda Inteligente — Material exclusivo para alunos.</footer>
+</div>
+<script>
+  const dias7=['Seg','Ter','Qua','Qui','Sex','Sab','Dom'];
+  let rowId=0;
+  const corridas=[];
+
+  function addRow(){
+    rowId++;
+    const id='r'+rowId;
+    corridas.push({id});
+    const wrap=document.getElementById('corridas-wrap');
+    const div=document.createElement('div');
+    div.className='input-row'; div.id=id;
+    div.innerHTML=`
+      <input type="date" oninput="updateRow('${id}')"/>
+      <input type="text" placeholder="Uber/99/iFood" oninput="updateRow('${id}')"/>
+      <input type="number" placeholder="0.00" step="0.01" oninput="updateRow('${id}')"/>
+      <input type="number" placeholder="25" step="1" oninput="updateRow('${id}')" value="25"/>
+      <input type="number" placeholder="0.00" step="0.01" oninput="updateRow('${id}')"/>
+      <div class="auto" id="luc-${id}">R$ 0,00</div>
+      <button class="del-btn" onclick="delRow('${id}')">✕</button>`;
+    wrap.appendChild(div);
+  }
+
+  function delRow(id){
+    const idx=corridas.findIndex(c=>c.id===id);
+    if(idx>=0)corridas.splice(idx,1);
+    document.getElementById(id).remove();
+    recalc();
+  }
+
+  function updateRow(id){
+    const div=document.getElementById(id);
+    const inputs=div.querySelectorAll('input');
+    const valor=parseFloat(inputs[2].value)||0;
+    const taxa=parseFloat(inputs[3].value)||0;
+    const comb=parseFloat(inputs[4].value)||0;
+    const lucro=valor*(1-taxa/100)-comb;
+    document.getElementById('luc-'+id).textContent='R$ '+lucro.toFixed(2).replace('.',',');
+    const c=corridas.find(c=>c.id===id);
+    if(c){c.valor=valor;c.taxa=taxa;c.comb=comb;c.lucro=lucro;c.data=inputs[0].value;}
+    recalc();
+  }
+
+  function recalc(){
+    const total=corridas.reduce((a,c)=>a+(c.valor||0),0);
+    const totalCusto=corridas.reduce((a,c)=>a+(c.comb||0)+(((c.valor||0)*(c.taxa||0)/100)),0);
+    const totalLucro=corridas.reduce((a,c)=>a+(c.lucro||0),0);
+    const n=corridas.length||1;
+    document.getElementById('kpi-bruto').textContent='R$ '+total.toFixed(2).replace('.',',');
+    document.getElementById('kpi-custo').textContent='R$ '+totalCusto.toFixed(2).replace('.',',');
+    document.getElementById('kpi-lucro').textContent='R$ '+totalLucro.toFixed(2).replace('.',',');
+    document.getElementById('kpi-ticket').textContent='R$ '+(total/n).toFixed(2).replace('.',',');
+    updateWeekChart();
+  }
+
+  function updateWeekChart(){
+    const totals=Array(7).fill(0);
+    corridas.forEach(c=>{
+      if(!c.data)return;
+      const d=new Date(c.data);
+      const dow=(d.getDay()+6)%7; // Mon=0
+      totals[dow]+=(c.lucro||0);
+    });
+    const max=Math.max(...totals,1);
+    const wrap=document.getElementById('week-chart');
+    wrap.innerHTML=totals.map((v,i)=>`
+      <div class="bar-g">
+        <div class="bar-val">${v>0?'R$'+v.toFixed(0):''}</div>
+        <div class="bar" style="height:${(v/max*60)+4}px;background:${v>0?'linear-gradient(180deg,var(--verde),var(--azul))':'#e5edf5'}"></div>
+        <div class="bar-label">${dias7[i]}</div>
+      </div>`).join('');
+  }
+
+  // Build week input grid
+  function buildWeekGrid(){
+    const grid=document.getElementById('week-grid');
+    grid.innerHTML=dias7.map(d=>`<div class="week-cell"><div class="day">${d}</div><input type="number" placeholder="R$ 0" step="0.01" oninput="updateWeekChart()"/></div>`).join('');
+  }
+  buildWeekGrid();
+  addRow();
+</script>
+</body>
+</html>

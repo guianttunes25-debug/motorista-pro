@@ -1,0 +1,9 @@
+PyQt6>=6.6
+ccxt>=4.3
+pandas>=2.2
+numpy>=1.26
+ta>=0.11
+requests>=2.32
+pyqtgraph>=0.13
+pyinstaller>=6.6
+Pillow>=10.0

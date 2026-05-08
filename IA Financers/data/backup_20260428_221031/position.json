@@ -1,0 +1,11 @@
+{
+  "symbol": "BTC/USDT",
+  "amount": 2.0,
+  "entry_price": 150.0,
+  "stop_loss": 0.0,
+  "take_profit": 0.0,
+  "opened_at": 1777392313.6936073,
+  "high_watermark": 200.0,
+  "trailing_active": false,
+  "extra": {}
+}

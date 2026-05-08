@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# PyInstaller
+build/
+dist/
+*.spec
+
+# Config com segredos
+config.json
+
+# Dados
+data/*.csv
+data/*.parquet
+data/*.json
+
+# IDE
+.vscode/
+.idea/
