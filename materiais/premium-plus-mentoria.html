@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentoria 1:1 - Motorista Pro Premium Plus</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; color: #e2e8f0; line-height: 1.6; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); padding: 40px 20px; border-radius: 10px; margin-bottom: 30px; text-align: center; }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header p { font-size: 1.1em; opacity: 0.9; }
+        .section { background: #1e293b; padding: 30px; margin-bottom: 25px; border-radius: 8px; border-left: 4px solid #8b5cf6; }
+        .section h2 { color: #8b5cf6; margin-bottom: 20px; font-size: 1.8em; }
+        .section h3 { color: #94a3b8; margin: 20px 0 10px; font-size: 1.3em; }
+        .mentor-card { background: #0f172a; padding: 25px; border-radius: 8px; border: 2px solid #8b5cf6; margin-bottom: 20px; }
+        .mentor-name { color: #8b5cf6; font-size: 1.3em; font-weight: bold; margin-bottom: 5px; }
+        .mentor-title { color: #94a3b8; font-size: 0.95em; margin-bottom: 15px; }
+        .mentor-bio { color: #cbd5e1; margin-bottom: 15px; line-height: 1.8; }
+        .expertise { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
+        .badge { background: #8b5cf6; color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.85em; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; color: #cbd5e1; font-weight: 500; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; color: #e2e8f0; border-radius: 5px; font-size: 1em; font-family: inherit; }
+        .form-group textarea { resize: vertical; min-height: 100px; }
+        .btn { background: #8b5cf6; color: white; border: none; padding: 14px 30px; border-radius: 5px; cursor: pointer; font-size: 1em; transition: 0.3s; }
+        .btn:hover { background: #7c3aed; }
+        .alert { background: #1e3a08; border-left: 4px solid #22c55e; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        .alert strong { color: #4ade80; }
+        .format-list { background: #0f172a; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 3px solid #8b5cf6; }
+        .format-list h4 { color: #8b5cf6; margin-bottom: 15px; }
+        .format-list ul { margin-left: 20px; }
+        .format-list li { margin: 10px 0; color: #cbd5e1; }
+        .faq { margin: 20px 0; }
+        .faq-item { background: #0f172a; padding: 20px; border-radius: 8px; margin-bottom: 15px; cursor: pointer; border-left: 3px solid #8b5cf6; }
+        .faq-item h4 { color: #8b5cf6; margin-bottom: 10px; }
+        .faq-item p { color: #cbd5e1; display: none; }
+        .faq-item.active p { display: block; }
+        .success-msg { display: none; background: #1e3a08; border: 1px solid #22c55e; color: #4ade80; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        .timeline { margin: 20px 0; }
+        .timeline-step { display: flex; margin-bottom: 20px; }
+        .timeline-step::before { content: attr(data-step); background: #8b5cf6; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 20px; font-weight: bold; flex-shrink: 0; }
+        .timeline-step div { flex-grow: 1; }
+        .timeline-step h4 { color: #8b5cf6; margin-bottom: 5px; }
+        .timeline-step p { color: #cbd5e1; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Mentoria Premium 1:1</h1>
+            <p>Sessão Personalizada com Especialista em Motoristas Profissionais</p>
+        </div>
+
+        <div class="section">
+            <h2>O Que é a Mentoria 1:1?</h2>
+            <p>Uma sessão de 60 minutos com especialista em gestão de renda para motoristas. Você tira dúvidas específicas, planeja estratégias e recebe recomendações personalizadas.</p>
+            
+            <div class="alert">
+                <strong>✅ Incluso no Premium Plus:</strong>
+                <ul style="margin: 10px 0 0 20px;">
+                    <li>1 sessão de 60 minutos por mês</li>
+                    <li>Via Zoom ou WhatsApp (você escolhe)</li>
+                    <li>Análise personalizada de seus dados</li>
+                    <li>Plano de ação customizado</li>
+                    <li>Acesso a grupo exclusivo de alunos</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>👨‍💼 Seu Mentor</h2>
+            
+            <div class="mentor-card">
+                <div class="mentor-name">Jhonatan Guilherme</div>
+                <div class="mentor-title">Especialista em Monetização para Motoristas</div>
+                <div class="expertise">
+                    <span class="badge">Dashboard de Renda</span>
+                    <span class="badge">Escalabilidade</span>
+                    <span class="badge">Planejamento Fiscal</span>
+                    <span class="badge">Estratégia de Negócio</span>
+                </div>
+                <div class="mentor-bio">
+                    Começou como motorista em 2018, com ganho médio de R$ 3.500/mês. Implementou sistema de análise de dados e em 12 meses alcançou R$ 10.000/mês. 
+                    <br><br>
+                    Após dominar a renda individual, escalou para gestor de frota com 12 motoristas (R$ 25k/mês passivo). Agora dedica-se a mentoria para ajudar outros motoristas a replicar este modelo.
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📋 Agendamento de Sessão</h2>
+            
+            <div class="success-msg" id="successMsg">
+                ✅ Solicitação enviada com sucesso! Você receberá um email de confirmação com link de Zoom em até 24 horas.
+            </div>
+
+            <form id="mentorForm" onsubmit="handleFormSubmit(event)">
+                <div class="form-group">
+                    <label>Seu Nome Completo *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Email *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label>WhatsApp/Celular *</label>
+                    <input type="tel" id="phone" name="phone" placeholder="(11) 98765-4321" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Ganho mensal atual (aproximado) *</label>
+                    <select id="income" name="income" required>
+                        <option value="">-- Selecione --</option>
+                        <option value="3-5k">R$ 3.000 - R$ 5.000</option>
+                        <option value="5-8k">R$ 5.000 - R$ 8.000</option>
+                        <option value="8-12k">R$ 8.000 - R$ 12.000</option>
+                        <option value="12k+">Acima de R$ 12.000</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Principal desafio/dúvida *</label>
+                    <textarea id="challenge" name="challenge" placeholder="Ex: Não sei como escalar renda... Como começar a ser gestor de frota? Como reduzir impostos?" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Disponibilidade para Zoom (prefira 2-3 opções) *</label>
+                    <div style="background: #0f172a; padding: 15px; border-radius: 5px;">
+                        <label style="display: flex; align-items: center; margin-bottom: 10px; cursor: pointer; font-weight: normal;">
+                            <input type="checkbox" name="availability" value="seg-qua-noite" style="margin-right: 10px; width: auto;">
+                            Segunda/Quarta, 20:00-21:00
+                        </label>
+                        <label style="display: flex; align-items: center; margin-bottom: 10px; cursor: pointer; font-weight: normal;">
+                            <input type="checkbox" name="availability" value="ter-qui-noite" style="margin-right: 10px; width: auto;">
+                            Terça/Quinta, 20:00-21:00
+                        </label>
+                        <label style="display: flex; align-items: center; margin-bottom: 10px; cursor: pointer; font-weight: normal;">
+                            <input type="checkbox" name="availability" value="sab-manha" style="margin-right: 10px; width: auto;">
+                            Sábado, 09:00-10:00
+                        </label>
+                        <label style="display: flex; align-items: center; cursor: pointer; font-weight: normal;">
+                            <input type="checkbox" name="availability" value="dom-manha" style="margin-right: 10px; width: auto;">
+                            Domingo, 09:00-10:00
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn">Agendar Mentoria</button>
+            </form>
+        </div>
+
+        <div class="section">
+            <h2>📅 Formato da Sessão</h2>
+            
+            <div class="timeline">
+                <div class="timeline-step" data-step="1">
+                    <div>
+                        <h4>Minutos 1-5: Aquecimento</h4>
+                        <p>Boas-vindas, conversa casual, entender seu contexto</p>
+                    </div>
+                </div>
+                <div class="timeline-step" data-step="2">
+                    <div>
+                        <h4>Minutos 5-20: Análise</h4>
+                        <p>Você compartilha dados (ganhos, despesas, apps usados) e falamos sobre os gaps</p>
+                    </div>
+                </div>
+                <div class="timeline-step" data-step="3">
+                    <div>
+                        <h4>Minutos 20-45: Estratégia</h4>
+                        <p>Definimos 2-3 ações práticas que você pode fazer nesta semana</p>
+                    </div>
+                </div>
+                <div class="timeline-step" data-step="4">
+                    <div>
+                        <h4>Minutos 45-60: Acompanhamento</h4>
+                        <p>Resumo, próximos passos, e agendamento da próxima sessão</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🎯 Exemplos de Tópicos</h2>
+            
+            <h3>Tópico 1: Aumentar Ganho Individual</h3>
+            <ul>
+                <li>"Como escolher corridas mais lucrativas?"</li>
+                <li>"Qual melhor hora/zona para trabalhar?"</li>
+                <li>"Como usar 2-3 apps simultaneamente?"</li>
+            </ul>
+
+            <h3>Tópico 2: Escalabilidade</h3>
+            <ul>
+                <li>"Como recrutar motoristas?"</li>
+                <li>"Como funciona comissão?"</li>
+                <li>"Preciso de contrato? Como fazer?"</li>
+            </ul>
+
+            <h3>Tópico 3: Planejamento Financeiro</h3>
+            <ul>
+                <li>"Virar PJ compensa?"</li>
+                <li>"Que deduções posso fazer?"</li>
+                <li>"Como separar PF de PJ?"</li>
+            </ul>
+
+            <h3>Tópico 4: Mindset & Manutenção</h3>
+            <ul>
+                <li>"Como manter disciplina?"</li>
+                <li>"Como evitar queimação?"</li>
+                <li>"Qual é o próximo passo para meu negócio?"</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>❓ Dúvidas Frequentes</h2>
+            
+            <div class="faq">
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <h4>Quanto custa a mentoria?</h4>
+                    <p>É incluída no plano Premium Plus. Você tem direito a 1 sessão por mês, sem custo adicional.</p>
+                </div>
+
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <h4>Posso fazer por WhatsApp ao invés de Zoom?</h4>
+                    <p>Sim! Se preferir, podemos fazer a sessão por videochamada do WhatsApp. Apenas avise na hora do agendamento.</p>
+                </div>
+
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <h4>E se não puder na hora agendada?</h4>
+                    <p>Sem problema. Você pode remarcar com até 24h de antecedência. Se não comparecer, a sessão é contabilizada.</p>
+                </div>
+
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <h4>Posso pedir aumento de sessões?</h4>
+                    <p>Sim! Se quiser mais de 1 sessão por mês, podemos discutir um upgrade. Consulte valores com o mentor.</p>
+                </div>
+
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <h4>Preciso preparar algo antes?</h4>
+                    <p>Ideal trazer dados recentes: quanto você faturou no mês, quais despesas teve, e qual é sua dúvida principal. Mas se não tiver, resolvemos durante a sessão.</p>
+                </div>
+
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <h4>A sessão é confidencial?</h4>
+                    <p>100% confidencial. Tudo que você compartilhar fica entre você e o mentor. Não divulgamos dados de ninguém.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="alert">
+            <strong>🚀 Bônus Exclusivo:</strong> Primeiros 10 alunos Premium Plus que agendarem mentoria neste mês recebem análise gratuita de ROI por plataforma (Uber vs 99 vs Loggi) + recomendação de otimização.
+        </div>
+    </div>
+
+    <script>
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const availabilities = Array.from(document.querySelectorAll('input[name="availability"]:checked')).map(c => c.value);
+            
+            if (availabilities.length === 0) {
+                alert('Por favor, selecione pelo menos uma disponibilidade');
+                return;
+            }
+            
+            // Simular envio
+            console.log('Form submitted:', {
+                name,
+                email,
+                availabilities
+            });
+            
+            // Mostrar mensagem de sucesso
+            document.getElementById('successMsg').style.display = 'block';
+            document.getElementById('mentorForm').style.display = 'none';
+            
+            // Scroll para mensagem
+            document.getElementById('successMsg').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function toggleFaq(element) {
+            element.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Avançado - Motorista Pro Premium Plus</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; color: #e2e8f0; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #1e40af 0%, #7c3aed 100%); padding: 40px 20px; border-radius: 10px; margin-bottom: 30px; text-align: center; }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header p { font-size: 1.1em; opacity: 0.9; }
+        .section { background: #1e293b; padding: 30px; margin-bottom: 25px; border-radius: 8px; border-left: 4px solid #7c3aed; }
+        .section h2 { color: #7c3aed; margin-bottom: 20px; font-size: 1.8em; }
+        .section h3 { color: #94a3b8; margin: 20px 0 10px; font-size: 1.3em; }
+        .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 20px 0; }
+        .metric-card { background: #0f172a; padding: 20px; border-radius: 8px; border: 1px solid #334155; }
+        .metric-card .label { color: #94a3b8; font-size: 0.9em; margin-bottom: 5px; }
+        .metric-card .value { font-size: 2em; color: #22c55e; font-weight: bold; }
+        .metric-card .trend { font-size: 0.85em; color: #22c55e; margin-top: 5px; }
+        .input-group { margin: 15px 0; }
+        .input-group label { display: block; margin-bottom: 5px; color: #cbd5e1; font-weight: 500; }
+        .input-group input, .input-group select { width: 100%; padding: 10px; background: #0f172a; border: 1px solid #334155; color: #e2e8f0; border-radius: 5px; font-size: 1em; }
+        .btn { background: #7c3aed; color: white; border: none; padding: 12px 30px; border-radius: 5px; cursor: pointer; font-size: 1em; margin-top: 10px; transition: 0.3s; }
+        .btn:hover { background: #6d28d9; }
+        .alert { background: #1e3a8a; border-left: 4px solid #60a5fa; padding: 15px; margin: 15px 0; border-radius: 5px; }
+        .alert strong { color: #60a5fa; }
+        ul { margin-left: 20px; }
+        li { margin: 8px 0; }
+        .chart-container { background: #0f172a; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #334155; }
+        th { background: #0f172a; color: #7c3aed; font-weight: bold; }
+        tr:hover { background: #1e293b; }
+        .formula-box { background: #0f172a; padding: 15px; margin: 15px 0; border-left: 3px solid #22c55e; border-radius: 5px; font-family: 'Courier New', monospace; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Dashboard Avançado</h1>
+            <p>Análise Profissional de Ganhos e Rentabilidade</p>
+        </div>
+
+        <div class="section">
+            <h2>🎯 Visão Geral do Seu Negócio</h2>
+            <p>Um dashboard verdadeiro coleta dados de <strong>todas as plataformas</strong> para você ver onde está ganhando mais.</p>
+            <div class="metric-grid">
+                <div class="metric-card">
+                    <div class="label">Receita Total (30 dias)</div>
+                    <div class="value" id="totalRevenue">R$ 0</div>
+                    <div class="trend">↑ +15% vs período anterior</div>
+                </div>
+                <div class="metric-card">
+                    <div class="label">Ganho Líquido</div>
+                    <div class="value" id="netGain">R$ 0</div>
+                    <div class="trend">após despesas e impostos</div>
+                </div>
+                <div class="metric-card">
+                    <div class="label">ROI por Hora</div>
+                    <div class="value" id="roiPerHour">R$ 0</div>
+                    <div class="trend">Seu verdadeiro rendimento</div>
+                </div>
+                <div class="metric-card">
+                    <div class="label">Taxa de Conversão</div>
+                    <div class="value" id="conversionRate">0%</div>
+                    <div class="trend">Aceitas vs. ofertas recebidas</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📈 Calculadora de ROI por Tipo de Corrida</h2>
+            <p>Analise qual tipo de corrida traz maior rentabilidade.</p>
+            
+            <div class="input-group">
+                <label>Distância (km)</label>
+                <input type="number" id="distance" placeholder="Ex: 15" min="1" value="15">
+            </div>
+            
+            <div class="input-group">
+                <label>Tempo estimado (min)</label>
+                <input type="number" id="time" placeholder="Ex: 25" min="1" value="25">
+            </div>
+            
+            <div class="input-group">
+                <label>Tarifa recebida (R$)</label>
+                <input type="number" id="fare" placeholder="Ex: 45.50" min="0" step="0.01" value="45.50">
+            </div>
+            
+            <div class="input-group">
+                <label>Despesas (combustível, manutenção, etc)</label>
+                <input type="number" id="expenses" placeholder="Ex: 12" min="0" step="0.01" value="12">
+            </div>
+            
+            <button class="btn" onclick="calculateROI()">Calcular ROI</button>
+            
+            <div id="roiResult" style="margin-top: 20px;"></div>
+        </div>
+
+        <div class="section">
+            <h2>💡 Análise Inteligente de Dados</h2>
+            <h3>1️⃣ Segmentação por Horário</h3>
+            <table>
+                <tr>
+                    <th>Período</th>
+                    <th>Média por Corrida</th>
+                    <th>Taxa de Aceitação</th>
+                    <th>Recomendação</th>
+                </tr>
+                <tr>
+                    <td>06:00 - 09:00 (Madrugada)</td>
+                    <td>R$ 38-55</td>
+                    <td>60%</td>
+                    <td>🔥 Máximo potencial</td>
+                </tr>
+                <tr>
+                    <td>09:00 - 12:00 (Manhã)</td>
+                    <td>R$ 25-35</td>
+                    <td>80%</td>
+                    <td>⚠️ Moderado</td>
+                </tr>
+                <tr>
+                    <td>12:00 - 18:00 (Tarde)</td>
+                    <td>R$ 20-30</td>
+                    <td>85%</td>
+                    <td>❌ Baixa margem</td>
+                </tr>
+                <tr>
+                    <td>18:00 - 23:00 (Noite)</td>
+                    <td>R$ 35-50</td>
+                    <td>70%</td>
+                    <td>🔥 Bom potencial</td>
+                </tr>
+                <tr>
+                    <td>23:00 - 06:00 (Madrugada)</td>
+                    <td>R$ 50-80</td>
+                    <td>40%</td>
+                    <td>🚀 Alto risco/retorno</td>
+                </tr>
+            </table>
+
+            <h3>2️⃣ Zona Geográfica x Rentabilidade</h3>
+            <p><strong>Concentre esforços em zonas com maior ROI:</strong></p>
+            <ul>
+                <li><strong>Centro:</strong> R$ 3,50/km - alta demanda, concorrência intensa</li>
+                <li><strong>Zona Sul:</strong> R$ 4,20/km - clientela premium, melhor retorno</li>
+                <li><strong>Zona Norte:</strong> R$ 2,80/km - baixo retorno, evitar</li>
+                <li><strong>Aeroporto/Estação:</strong> R$ 5,00/km - mas esperas longas (incluir no cálculo)</li>
+            </ul>
+
+            <h3>3️⃣ Múltiplas Plataformas = Múltiplos Ganhos</h3>
+            <p><strong>Estratégia: Use 2-3 apps simultâneos</strong></p>
+            <div class="formula-box">
+                Ganho Total = App A + App B + App C (menos sobreposição)
+                <br>Economia de tempo: aceite a melhor oferta entre apps
+            </div>
+            <p>Exemplo de ganho cruzado:</p>
+            <ul>
+                <li>Uber: R$ 1.200/mês</li>
+                <li>99: R$ 900/mês</li>
+                <li>Loggi: R$ 600/mês</li>
+                <li><strong>Total: R$ 2.700/mês (vs. R$ 1.200 com 1 app)</strong></li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>🎓 Como Usar Este Dashboard</h2>
+            <ol style="margin-left: 20px;">
+                <li><strong>Coleta de Dados:</strong> Registre todas as corridas diárias (app ou planilha)</li>
+                <li><strong>Análise:</strong> Veja quais períodos/zonas geram mais lucro</li>
+                <li><strong>Otimização:</strong> Trabalhe apenas nas faixas mais rentáveis</li>
+                <li><strong>Diversificação:</strong> Teste múltiplas plataformas</li>
+                <li><strong>Manutenção:</strong> Acompanhe tendências semanais/mensais</li>
+            </ol>
+        </div>
+
+        <div class="alert">
+            <strong>💡 Dica Ouro:</strong> Motoristas que usam dashboard avançado ganham 30-40% mais porque focam apenas em corridas rentáveis. Não faça corrida por fazer.
+        </div>
+    </div>
+
+    <script>
+        function calculateROI() {
+            const distance = parseFloat(document.getElementById('distance').value) || 0;
+            const time = parseFloat(document.getElementById('time').value) || 1;
+            const fare = parseFloat(document.getElementById('fare').value) || 0;
+            const expenses = parseFloat(document.getElementById('expenses').value) || 0;
+            
+            const netGain = fare - expenses;
+            const gainPerHour = (netGain / time) * 60;
+            const gainPerKm = netGain / distance;
+            
+            let recommendation = "✅ Corrida aceitável";
+            if (gainPerHour < 30) recommendation = "❌ Rejeitar - baixo retorno";
+            else if (gainPerHour < 50) recommendation = "⚠️ Considerar apenas se em fila";
+            else if (gainPerHour >= 70) recommendation = "🔥 Excelente - ACEITAR!";
+            
+            const result = `
+                <div style="background: #0f172a; padding: 20px; border-radius: 8px; border-left: 4px solid #22c55e;">
+                    <h3 style="color: #22c55e; margin-bottom: 15px;">📊 Resultado da Análise</h3>
+                    <p><strong>Ganho Líquido:</strong> R$ ${netGain.toFixed(2)}</p>
+                    <p><strong>Ganho por Hora:</strong> R$ ${gainPerHour.toFixed(2)}/h</p>
+                    <p><strong>Ganho por km:</strong> R$ ${gainPerKm.toFixed(2)}/km</p>
+                    <p style="font-size: 1.2em; margin-top: 10px; color: #60a5fa;"><strong>Recomendação: ${recommendation}</strong></p>
+                </div>
+            `;
+            document.getElementById('roiResult').innerHTML = result;
+        }
+        
+        // Simular dados do dashboard
+        document.getElementById('totalRevenue').textContent = 'R$ 5.200';
+        document.getElementById('netGain').textContent = 'R$ 3.840';
+        document.getElementById('roiPerHour').textContent = 'R$ 64';
+        document.getElementById('conversionRate').textContent = '72%';
+    </script>
+</body>
+</html>
