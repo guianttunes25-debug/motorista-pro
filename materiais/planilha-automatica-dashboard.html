@@ -30,18 +30,18 @@
     .col-header{display:grid;grid-template-columns:repeat(5,1fr) 80px 26px;gap:.4rem;margin-bottom:.3rem;}
     .col-header span{font-size:.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;padding:0 .2rem;}
     /* Mini bar chart */
-    .chart-wrap{display:flex;align-items:flex-end;gap:4px;height:80px;padding:.5rem 0;}
-    .bar-g{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;}
+    .chart-wrap{display:flex;align-items:stretch;gap:6px;height:120px;padding:.5rem 0 0;}
+    .bar-g{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:3px;height:100%;}
     .bar{width:100%;border-radius:4px 4px 0 0;transition:height 300ms;}
     .bar-label{font-size:.63rem;color:var(--muted);}
-    .bar-val{font-size:.63rem;font-weight:700;}
+    .bar-val{font-size:.63rem;font-weight:700;min-height:14px;line-height:1.1;}
     .tab-row{display:flex;gap:.5rem;margin-bottom:.8rem;}
     .tab{background:#f0f4f9;border:none;border-radius:7px;padding:.35rem .75rem;cursor:pointer;font-size:.8rem;font-weight:600;color:var(--muted);}
     .tab.active{background:var(--azul);color:#fff;}
     .week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:.4rem;}
     .week-cell{background:#f0f4f9;border-radius:8px;padding:.5rem;text-align:center;font-size:.75rem;}
     .week-cell .day{font-weight:700;color:var(--muted);margin-bottom:.2rem;}
-    .week-cell input{width:100%;border:none;background:transparent;text-align:center;font-size:.82rem;font-weight:700;color:var(--azul);padding:.1rem;}
+    .week-cell .val{font-size:.95rem;font-weight:800;color:var(--azul);line-height:1.2;}
     @media(max-width:600px){.week-grid{grid-template-columns:repeat(3,1fr);}}
     footer{text-align:center;color:var(--muted);font-size:.74rem;margin-top:1.5rem;padding-top:.8rem;border-top:1px solid var(--border);}
     button.print-btn{background:#0c1c38;color:#fff;border:none;border-radius:8px;padding:.5rem 1rem;font-weight:700;cursor:pointer;font-size:.84rem;}
@@ -149,12 +149,19 @@
       const dow=(d.getDay()+6)%7; // Mon=0
       totals[dow]+=(c.lucro||0);
     });
+
+    // Atualiza os cards por dia para manter o mesmo valor do grafico.
+    totals.forEach((v,i)=>{
+      const el=document.getElementById('day-val-'+i);
+      if(el) el.textContent='R$ '+v.toFixed(2).replace('.',',');
+    });
+
     const max=Math.max(...totals,1);
     const wrap=document.getElementById('week-chart');
     wrap.innerHTML=totals.map((v,i)=>`
       <div class="bar-g">
-        <div class="bar-val">${v>0?'R$'+v.toFixed(0):''}</div>
-        <div class="bar" style="height:${(v/max*60)+4}px;background:${v>0?'linear-gradient(180deg,var(--verde),var(--azul))':'#e5edf5'}"></div>
+        <div class="bar-val">${v>0?'R$ '+v.toFixed(0):''}</div>
+        <div class="bar" style="height:${(v/max*72)+6}px;background:${v>0?'linear-gradient(180deg,var(--verde),var(--azul))':'#e5edf5'}"></div>
         <div class="bar-label">${dias7[i]}</div>
       </div>`).join('');
   }
@@ -162,7 +169,7 @@
   // Build week input grid
   function buildWeekGrid(){
     const grid=document.getElementById('week-grid');
-    grid.innerHTML=dias7.map(d=>`<div class="week-cell"><div class="day">${d}</div><input type="number" placeholder="R$ 0" step="0.01" oninput="updateWeekChart()"/></div>`).join('');
+    grid.innerHTML=dias7.map((d,i)=>`<div class="week-cell"><div class="day">${d}</div><div class="val" id="day-val-${i}">R$ 0,00</div></div>`).join('');
   }
   buildWeekGrid();
   addRow();
