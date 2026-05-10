@@ -5,6 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Motorista Pro: Controle Total + Renda Inteligente</title>
   <meta name="description" content="Controle financeiro para motoristas e entregadores com curso prático, planilhas e estrategias para decisoes melhores." />
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '965446039466205');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=965446039466205&ev=PageView&noscript=1"/></noscript>
+  <!-- End Meta Pixel Code -->
   <style>
     :root {
       --color-bg: #061126;
@@ -1358,6 +1371,10 @@
         const selectedPlan = planData[selectedPlanKey];
         if (!selectedPlan || checkoutPayBtn.disabled) return;
 
+        if (typeof fbq === 'function') {
+          fbq('track', 'InitiateCheckout', { content_name: selectedPlan.name });
+        }
+
         const url = checkoutUrls[selectedPlanKey];
         if (url) {
           window.location.href = url;
@@ -1393,6 +1410,22 @@
 
       heroBadge.textContent = audienceCopy[publico].badge;
       heroSubtitle.textContent = audienceCopy[publico].subtitle;
+    })();
+
+    // Dispara ViewContent quando o usuario visualiza a secao de planos.
+    (function setupPixelViewContent() {
+      if (typeof fbq !== 'function') return;
+      const planosSection = document.getElementById('planos');
+      if (!planosSection) return;
+      const obs = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            fbq('track', 'ViewContent', { content_name: 'Planos Motorista Pro' });
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+      obs.observe(planosSection);
     })();
   </script>
 </body>
