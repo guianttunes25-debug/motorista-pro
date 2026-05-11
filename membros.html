@@ -673,7 +673,9 @@
     // ── SUPABASE AUTH ──────────────────────────────────────────────
     const SUPA_URL  = 'https://ugeqfnmrkfcgpifdicgh.supabase.co';
     const SUPA_ANON = 'sb_publishable_UOwGwQCoEMZZPgiM0fYuKw_OnKJbPd2';
-    const sb = supabase.createClient(SUPA_URL, SUPA_ANON);
+    const sb = supabase.createClient(SUPA_URL, SUPA_ANON, {
+      auth: { flowType: 'pkce', detectSessionInUrl: true }
+    });
 
     async function enviarMagicLink() {
       const email = document.getElementById('auth-email').value.trim();
@@ -730,7 +732,13 @@
         return;
       }
 
-      // Deixa o Supabase processar o hash do magic link na URL
+      // Troca o code PKCE pela sessão (fluxo de convite/magic link)
+      const urlCode = new URLSearchParams(window.location.search).get('code');
+      if (urlCode) {
+        await sb.auth.exchangeCodeForSession(urlCode);
+        history.replaceState(null, '', window.location.pathname);
+      }
+
       const { data: { session } } = await sb.auth.getSession();
 
       if (!session) {
