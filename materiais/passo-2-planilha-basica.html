@@ -53,6 +53,7 @@
     <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;">
       <span class="badge">Plano Basico</span>
       <button class="print-btn no-print" onclick="window.print()">Imprimir / Salvar PDF</button>
+      <button class="print-btn no-print" style="background:#7f1d1d;color:#fff;" onclick="limparTudo()">Limpar tudo</button>
     </div>
   </header>
 
@@ -131,7 +132,45 @@
 </div>
 
 <script>
+  const STORAGE_KEY = 'mp_planilha_basica_v1';
   const corridas = [];
+
+  function salvar(){
+    const custos = {
+      comb: document.getElementById('cf-comb').value,
+      alim: document.getElementById('cf-alim').value,
+      outros: document.getElementById('cf-outros').value
+    };
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify({corridas, custos})); } catch(e){}
+  }
+
+  function carregar(){
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(!raw) return;
+      const dados = JSON.parse(raw);
+      if(Array.isArray(dados.corridas)) corridas.push(...dados.corridas);
+      if(dados.custos){
+        if(dados.custos.comb) document.getElementById('cf-comb').value = dados.custos.comb;
+        if(dados.custos.alim) document.getElementById('cf-alim').value = dados.custos.alim;
+        if(dados.custos.outros) document.getElementById('cf-outros').value = dados.custos.outros;
+      }
+      renderTabela();
+      updateSummary();
+    } catch(e){}
+  }
+
+  function limparTudo(){
+    if(!confirm('Apagar todos os registros salvos? Esta ação não pode ser desfeita.')) return;
+    corridas.length = 0;
+    document.getElementById('cf-comb').value = '';
+    document.getElementById('cf-alim').value = '';
+    document.getElementById('cf-outros').value = '';
+    try { localStorage.removeItem(STORAGE_KEY); } catch(e){}
+    renderTabela();
+    updateSummary();
+    calcTotal();
+  }
 
   function fmt(v){ return 'R$ ' + v.toFixed(2).replace('.',','); }
 
@@ -165,12 +204,14 @@
     document.getElementById('r-custo').value='';
     renderTabela();
     updateSummary();
+    salvar();
   }
 
   function deleteCorrida(i){
     corridas.splice(i,1);
     renderTabela();
     updateSummary();
+    salvar();
   }
 
   function renderTabela(){
@@ -206,11 +247,13 @@
     sl.className = 'value ' + (lucro>=0?'green':'red');
     document.getElementById('s-corridas').textContent = corridas.length;
     document.getElementById('s-ticket').textContent = fmt(ticket);
+    salvar();
   }
 
   // Preenche data de hoje por padrao
   const today = new Date().toISOString().split('T')[0];
   document.getElementById('r-data').value = today;
+  carregar();
 </script>
 </body>
 </html>

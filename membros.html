@@ -1,0 +1,624 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Área de Membros — Motorista Pro</title>
+  <style>
+    :root {
+      --verde: #1fca73;
+      --azul: #2698ff;
+      --bg: #07111f;
+      --surface: #0c1b35;
+      --surface-2: #0f2040;
+      --border: rgba(107, 139, 187, 0.22);
+      --text: #e5eefb;
+      --muted: #7aa8d8;
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: linear-gradient(135deg, #061126, #0c1c38);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .header-brand { font-size: 1.05rem; font-weight: 800; color: var(--verde); letter-spacing: -0.01em; }
+    .header-brand span { color: var(--text); font-weight: 400; }
+    .plan-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: rgba(31,202,115,0.12);
+      border: 1px solid rgba(31,202,115,0.35);
+      border-radius: 999px;
+      padding: 0.28rem 0.75rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--verde);
+      white-space: nowrap;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(180deg, #091930 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 1.25rem 1.5rem;
+      text-align: center;
+    }
+    .hero h1 { font-size: clamp(1.4rem, 4vw, 2rem); font-weight: 900; margin-bottom: 0.5rem; }
+    .hero p { color: var(--muted); font-size: 0.95rem; max-width: 480px; margin: 0 auto; }
+
+    /* ── SELECTOR (quando não há param) ── */
+    .selector-wrap {
+      max-width: 520px;
+      margin: 2rem auto;
+      padding: 0 1.25rem;
+      text-align: center;
+      display: none;
+    }
+    .selector-wrap h2 { font-size: 1.1rem; margin-bottom: 1rem; color: var(--muted); }
+    .selector-grid { display: grid; gap: 0.7rem; }
+    .sel-btn {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: left;
+      transition: border-color 150ms, background 150ms;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .sel-btn:hover { border-color: var(--verde); background: var(--surface-2); }
+    .sel-btn .sel-price { font-size: 0.8rem; font-weight: 500; color: var(--muted); }
+
+    /* ── CONTAINER ── */
+    .container { max-width: 760px; margin: 0 auto; padding: 2rem 1.25rem 3rem; }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin: 2rem 0 0.75rem;
+      padding-bottom: 0.45rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-label:first-child { margin-top: 0; }
+
+    /* ── MATERIAL CARD ── */
+    .material-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.2rem;
+      margin-bottom: 0.65rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: border-color 150ms;
+    }
+    .material-card:hover { border-color: rgba(107,139,187,0.5); }
+    .material-icon {
+      flex-shrink: 0;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      background: rgba(38,152,255,0.1);
+    }
+    .material-icon.verde { background: rgba(31,202,115,0.12); }
+    .material-icon.azul  { background: rgba(38,152,255,0.12); }
+    .material-icon.roxo  { background: rgba(139,92,246,0.12); }
+    .material-icon.laranja { background: rgba(245,158,11,0.12); }
+    .material-icon.vermelho { background: rgba(240,80,80,0.12); }
+
+    .material-info { flex: 1; min-width: 0; }
+    .material-info strong {
+      display: block;
+      font-size: 0.97rem;
+      font-weight: 700;
+      margin-bottom: 0.15rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .material-info p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+    .badge-bonus {
+      display: inline-block;
+      background: rgba(245,158,11,0.15);
+      border: 1px solid rgba(245,158,11,0.4);
+      border-radius: 999px;
+      color: #fcd34d;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.1rem 0.5rem;
+      margin-left: 0.4rem;
+      vertical-align: middle;
+    }
+
+    .btn-acessar {
+      flex-shrink: 0;
+      background: var(--verde);
+      color: #042014;
+      border: none;
+      border-radius: 8px;
+      padding: 0.52rem 1.1rem;
+      font-size: 0.83rem;
+      font-weight: 800;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: background 150ms;
+      white-space: nowrap;
+    }
+    .btn-acessar:hover { background: #19ad62; }
+    .btn-acessar svg { width: 13px; height: 13px; }
+
+    /* ── INFO BOX ── */
+    .info-box {
+      background: rgba(38,152,255,0.07);
+      border: 1px solid rgba(38,152,255,0.2);
+      border-radius: var(--radius);
+      padding: 1rem 1.2rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.87rem;
+      color: #c8dcf8;
+      line-height: 1.55;
+    }
+    .info-box strong { color: var(--azul); }
+
+    /* ── NOT FOUND ── */
+    .not-found {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      color: var(--muted);
+    }
+    .not-found h2 { font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--text); }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 1.5rem 1.25rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.78rem;
+      color: #3a5070;
+    }
+
+    @media (max-width: 480px) {
+      .material-card { flex-wrap: wrap; }
+      .btn-acessar { width: 100%; justify-content: center; }
+      .material-icon { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-brand">Motorista <span>Pro</span></div>
+    <span class="plan-badge" id="header-badge">Área de Membros</span>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1 id="hero-title">Seus materiais</h1>
+    <p id="hero-desc">Acesse abaixo os conteúdos incluídos no seu plano.</p>
+  </section>
+
+  <!-- SELETOR (aparece quando não há param de plano) -->
+  <div class="selector-wrap" id="selector-wrap">
+    <h2>Qual é o seu plano?</h2>
+    <div class="selector-grid">
+      <button class="sel-btn" onclick="selectPlan('basico')">
+        Plano Básico <span class="sel-price">R$27,90</span>
+      </button>
+      <button class="sel-btn" onclick="selectPlan('intermediario')">
+        Plano Intermediário <span class="sel-price">R$47,90</span>
+      </button>
+      <button class="sel-btn" onclick="selectPlan('premium')">
+        Plano Premium <span class="sel-price">R$67,90</span>
+      </button>
+      <button class="sel-btn" onclick="selectPlan('premium-plus')">
+        Plano Premium Plus <span class="sel-price">R$97,90</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- CONTEÚDO DOS MATERIAIS -->
+  <main class="container" id="materiais-wrap" style="display:none">
+    <div class="info-box">
+      <strong>Como usar:</strong> Clique em <em>Acessar</em> para abrir o material. Dentro de cada página, use o botão <em>Imprimir / Salvar PDF</em> para baixar uma cópia permanente no seu celular ou computador.
+    </div>
+    <div id="materiais-list"></div>
+  </main>
+
+  <footer>
+    Motorista Pro: Controle Total + Renda Inteligente &mdash; Conteúdo exclusivo para alunos.
+  </footer>
+
+  <script>
+    const planos = {
+      basico: {
+        nome: 'Plano Básico',
+        preco: 'R$27,90',
+        descricao: 'Bem-vindo! Aqui estão os 3 passos e a planilha do seu plano.',
+        secoes: [
+          {
+            label: 'Passo a passo — Plano Básico',
+            materiais: [
+              {
+                icone: '📋', cor: 'verde',
+                titulo: 'Passo 1 — Como registrar corridas e entregas',
+                desc: 'Guia para anotar cada corrida do dia e calcular quanto entrou.',
+                url: 'materiais/passo-1-guia-registro.html'
+              },
+              {
+                icone: '📊', cor: 'azul',
+                titulo: 'Passo 2 — Planilha de controle financeiro',
+                desc: 'Calculadora de lucro por corrida + registro diário de receitas e custos.',
+                url: 'materiais/passo-2-planilha-basica.html'
+              },
+              {
+                icone: '✅', cor: 'verde',
+                titulo: 'Passo 3 — Rotina de 5 minutos por dia',
+                desc: 'Checklist interativo com barra de progresso para manter o controle diário.',
+                url: 'materiais/passo-3-checklist-5min.html'
+              }
+            ]
+          }
+        ]
+      },
+
+      intermediario: {
+        nome: 'Plano Intermediário',
+        preco: 'R$47,90',
+        descricao: 'Seu plano inclui tudo do Básico mais ferramentas de análise e meta.',
+        secoes: [
+          {
+            label: 'Passo a passo — Plano Básico',
+            materiais: [
+              {
+                icone: '📋', cor: 'verde',
+                titulo: 'Passo 1 — Como registrar corridas e entregas',
+                desc: 'Guia para anotar cada corrida do dia e calcular quanto entrou.',
+                url: 'materiais/passo-1-guia-registro.html'
+              },
+              {
+                icone: '📊', cor: 'azul',
+                titulo: 'Passo 2 — Planilha de controle financeiro',
+                desc: 'Calculadora de lucro por corrida + registro diário de receitas e custos.',
+                url: 'materiais/passo-2-planilha-basica.html'
+              },
+              {
+                icone: '✅', cor: 'verde',
+                titulo: 'Passo 3 — Rotina de 5 minutos por dia',
+                desc: 'Checklist interativo com barra de progresso para manter o controle diário.',
+                url: 'materiais/passo-3-checklist-5min.html'
+              }
+            ]
+          },
+          {
+            label: 'Avançado — Plano Intermediário',
+            materiais: [
+              {
+                icone: '✂️', cor: 'azul',
+                titulo: 'Passo 4 — Como cortar os 3 principais custos',
+                desc: 'Identificar e reduzir combustível, manutenção e alimentação para aumentar margem.',
+                url: 'materiais/passo-4-cortar-custos.html'
+              },
+              {
+                icone: '🎯', cor: 'azul',
+                titulo: 'Passo 5 — Metas semanais realistas',
+                desc: 'Calculadora de meta semanal com acompanhamento dia a dia.',
+                url: 'materiais/passo-5-metas-semanais.html'
+              },
+              {
+                icone: '⚡', cor: 'azul',
+                titulo: 'Planilha automática com dashboard',
+                desc: 'Registre corridas e veja KPIs, gráfico de desempenho e resumo semanal automaticamente.',
+                url: 'materiais/planilha-automatica-dashboard.html'
+              },
+              {
+                icone: '📝', cor: 'verde',
+                titulo: 'Checklist diário do motorista',
+                desc: 'Lista completa de verificação antes e depois de cada dia rodando.',
+                url: 'materiais/checklist-diario.html'
+              }
+            ]
+          }
+        ]
+      },
+
+      premium: {
+        nome: 'Plano Premium',
+        preco: 'R$67,90',
+        descricao: 'Pacote completo: controle, planejamento e suporte para crescer com segurança.',
+        secoes: [
+          {
+            label: 'Passo a passo — Plano Básico',
+            materiais: [
+              {
+                icone: '📋', cor: 'verde',
+                titulo: 'Passo 1 — Como registrar corridas e entregas',
+                desc: 'Guia para anotar cada corrida do dia e calcular quanto entrou.',
+                url: 'materiais/passo-1-guia-registro.html'
+              },
+              {
+                icone: '📊', cor: 'azul',
+                titulo: 'Passo 2 — Planilha de controle financeiro',
+                desc: 'Calculadora de lucro por corrida + registro diário de receitas e custos.',
+                url: 'materiais/passo-2-planilha-basica.html'
+              },
+              {
+                icone: '✅', cor: 'verde',
+                titulo: 'Passo 3 — Rotina de 5 minutos por dia',
+                desc: 'Checklist interativo com barra de progresso para manter o controle diário.',
+                url: 'materiais/passo-3-checklist-5min.html'
+              }
+            ]
+          },
+          {
+            label: 'Avançado — Plano Intermediário',
+            materiais: [
+              {
+                icone: '✂️', cor: 'azul',
+                titulo: 'Passo 4 — Como cortar os 3 principais custos',
+                desc: 'Identificar e reduzir combustível, manutenção e alimentação para aumentar margem.',
+                url: 'materiais/passo-4-cortar-custos.html'
+              },
+              {
+                icone: '🎯', cor: 'azul',
+                titulo: 'Passo 5 — Metas semanais realistas',
+                desc: 'Calculadora de meta semanal com acompanhamento dia a dia.',
+                url: 'materiais/passo-5-metas-semanais.html'
+              },
+              {
+                icone: '⚡', cor: 'azul',
+                titulo: 'Planilha automática com dashboard',
+                desc: 'Registre corridas e veja KPIs, gráfico de desempenho e resumo semanal automaticamente.',
+                url: 'materiais/planilha-automatica-dashboard.html'
+              },
+              {
+                icone: '📝', cor: 'verde',
+                titulo: 'Checklist diário do motorista',
+                desc: 'Lista completa de verificação antes e depois de cada dia rodando.',
+                url: 'materiais/checklist-diario.html'
+              }
+            ]
+          },
+          {
+            label: 'Planejamento — Plano Premium',
+            materiais: [
+              {
+                icone: '📅', cor: 'vermelho',
+                titulo: 'Passo 6 — Planejamento financeiro de 3 meses',
+                desc: 'Tabela por mês com receitas, custos, metas e resumo trimestral.',
+                url: 'materiais/passo-6-planejamento-3meses.html'
+              },
+              {
+                icone: '🛡️', cor: 'vermelho',
+                titulo: 'Passo 7 — Calculadora de reserva de emergência',
+                desc: 'Descubra quanto guardar por mês e em quanto tempo você chega lá.',
+                url: 'materiais/passo-7-reserva-emergencia.html'
+              },
+              {
+                icone: '⚖️', cor: 'laranja',
+                titulo: 'Calculadora do ponto de equilíbrio',
+                desc: 'Descubra o mínimo que precisa ganhar por dia para não ficar no prejuízo.',
+                url: 'materiais/calculadora-ponto-equilibrio.html',
+                bonus: true
+              }
+            ]
+          }
+        ]
+      },
+
+      'premium-plus': {
+        nome: 'Plano Premium Plus',
+        preco: 'R$97,90',
+        descricao: 'Acesso a todo o conteúdo mais ferramentas avançadas de escala e gestão.',
+        secoes: [
+          {
+            label: 'Passo a passo — Plano Básico',
+            materiais: [
+              {
+                icone: '📋', cor: 'verde',
+                titulo: 'Passo 1 — Como registrar corridas e entregas',
+                desc: 'Guia para anotar cada corrida do dia e calcular quanto entrou.',
+                url: 'materiais/passo-1-guia-registro.html'
+              },
+              {
+                icone: '📊', cor: 'azul',
+                titulo: 'Passo 2 — Planilha de controle financeiro',
+                desc: 'Calculadora de lucro por corrida + registro diário de receitas e custos.',
+                url: 'materiais/passo-2-planilha-basica.html'
+              },
+              {
+                icone: '✅', cor: 'verde',
+                titulo: 'Passo 3 — Rotina de 5 minutos por dia',
+                desc: 'Checklist interativo com barra de progresso para manter o controle diário.',
+                url: 'materiais/passo-3-checklist-5min.html'
+              }
+            ]
+          },
+          {
+            label: 'Avançado — Plano Intermediário',
+            materiais: [
+              {
+                icone: '✂️', cor: 'azul',
+                titulo: 'Passo 4 — Como cortar os 3 principais custos',
+                desc: 'Identificar e reduzir combustível, manutenção e alimentação para aumentar margem.',
+                url: 'materiais/passo-4-cortar-custos.html'
+              },
+              {
+                icone: '🎯', cor: 'azul',
+                titulo: 'Passo 5 — Metas semanais realistas',
+                desc: 'Calculadora de meta semanal com acompanhamento dia a dia.',
+                url: 'materiais/passo-5-metas-semanais.html'
+              },
+              {
+                icone: '⚡', cor: 'azul',
+                titulo: 'Planilha automática com dashboard',
+                desc: 'Registre corridas e veja KPIs, gráfico de desempenho e resumo semanal automaticamente.',
+                url: 'materiais/planilha-automatica-dashboard.html'
+              },
+              {
+                icone: '📝', cor: 'verde',
+                titulo: 'Checklist diário do motorista',
+                desc: 'Lista completa de verificação antes e depois de cada dia rodando.',
+                url: 'materiais/checklist-diario.html'
+              }
+            ]
+          },
+          {
+            label: 'Planejamento — Plano Premium',
+            materiais: [
+              {
+                icone: '📅', cor: 'vermelho',
+                titulo: 'Passo 6 — Planejamento financeiro de 3 meses',
+                desc: 'Tabela por mês com receitas, custos, metas e resumo trimestral.',
+                url: 'materiais/passo-6-planejamento-3meses.html'
+              },
+              {
+                icone: '🛡️', cor: 'vermelho',
+                titulo: 'Passo 7 — Calculadora de reserva de emergência',
+                desc: 'Descubra quanto guardar por mês e em quanto tempo você chega lá.',
+                url: 'materiais/passo-7-reserva-emergencia.html'
+              },
+              {
+                icone: '⚖️', cor: 'laranja',
+                titulo: 'Calculadora do ponto de equilíbrio',
+                desc: 'Descubra o mínimo que precisa ganhar por dia para não ficar no prejuízo.',
+                url: 'materiais/calculadora-ponto-equilibrio.html',
+                bonus: true
+              }
+            ]
+          },
+          {
+            label: 'Exclusivo — Plano Premium Plus',
+            materiais: [
+              {
+                icone: '🗺️', cor: 'roxo',
+                titulo: 'Roadmap do cliente',
+                desc: 'Trilhas de avanço personalizadas e roteiro diário para evoluir de forma consistente.',
+                url: 'materiais/premium-plus-mentoria.html'
+              },
+              {
+                icone: '📈', cor: 'roxo',
+                titulo: 'Dashboard avançado',
+                desc: 'Análise profissional de ganhos, ROI por corrida e segmentação por horário e plataforma.',
+                url: 'materiais/premium-plus-dashboard-avancado.html'
+              },
+              {
+                icone: '💰', cor: 'roxo',
+                titulo: 'Planejamento fiscal & legal — MEI vs PJ',
+                desc: 'Como estruturar seu negócio para pagar menos imposto e proteger seu patrimônio.',
+                url: 'materiais/premium-plus-fiscal-legal.html'
+              },
+              {
+                icone: '🚀', cor: 'roxo',
+                titulo: 'Escalabilidade de renda',
+                desc: 'De motorista autônomo a gestor de frota: estratégias para multiplicar seus ganhos.',
+                url: 'materiais/premium-plus-escalabilidade.html'
+              }
+            ]
+          }
+        ]
+      }
+    };
+
+    function renderMaterial(m) {
+      const tituloHtml = m.bonus
+        ? `${m.titulo}<span class="badge-bonus">Bônus</span>`
+        : m.titulo;
+      return `
+        <div class="material-card">
+          <div class="material-icon ${m.cor}">${m.icone}</div>
+          <div class="material-info">
+            <strong>${tituloHtml}</strong>
+            <p>${m.desc}</p>
+          </div>
+          <a class="btn-acessar" href="${m.url}" target="_blank" rel="noopener">
+            Acessar
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 8h10M9 4l4 4-4 4"/>
+            </svg>
+          </a>
+        </div>`;
+    }
+
+    function renderPlano(planoKey) {
+      const plano = planos[planoKey];
+      if (!plano) {
+        document.getElementById('materiais-wrap').style.display = 'none';
+        document.getElementById('selector-wrap').style.display = 'block';
+        return;
+      }
+
+      document.getElementById('header-badge').textContent = plano.nome;
+      document.getElementById('hero-title').textContent = 'Bem-vindo ao ' + plano.nome;
+      document.getElementById('hero-desc').textContent = plano.descricao;
+      document.getElementById('materiais-wrap').style.display = 'block';
+      document.getElementById('selector-wrap').style.display = 'none';
+
+      const lista = document.getElementById('materiais-list');
+      lista.innerHTML = plano.secoes.map(secao => `
+        <p class="section-label">${secao.label}</p>
+        ${secao.materiais.map(renderMaterial).join('')}
+      `).join('');
+    }
+
+    function selectPlan(key) {
+      const url = new URL(window.location.href);
+      url.searchParams.set('plano', key);
+      window.history.replaceState(null, '', url.toString());
+      renderPlano(key);
+    }
+
+    (function init() {
+      const params = new URLSearchParams(window.location.search);
+      const plano = (params.get('plano') || '').toLowerCase().trim();
+      if (plano && planos[plano]) {
+        renderPlano(plano);
+      } else {
+        document.getElementById('selector-wrap').style.display = 'block';
+        document.getElementById('hero-title').textContent = 'Área de Membros';
+        document.getElementById('hero-desc').textContent = 'Selecione seu plano para acessar os materiais.';
+      }
+    })();
+  </script>
+</body>
+</html>

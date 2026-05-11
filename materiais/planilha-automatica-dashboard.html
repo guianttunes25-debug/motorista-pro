@@ -81,15 +81,56 @@
     <div class="chart-wrap" id="week-chart"></div>
   </div>
 
-  <div style="text-align:center;margin-top:1rem;">
+  <div style="text-align:center;margin-top:1rem;display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;">
     <button class="print-btn" onclick="window.print()">Imprimir / Salvar PDF</button>
+    <button class="print-btn" style="background:#7f1d1d;color:#fff;" onclick="limparTudo()">Limpar tudo</button>
   </div>
   <footer>Motorista Pro: Controle Total + Renda Inteligente — Material exclusivo para alunos.</footer>
 </div>
 <script>
+  const STORAGE_KEY = 'mp_dashboard_v1';
   const dias7=['Seg','Ter','Qua','Qui','Sex','Sab','Dom'];
   let rowId=0;
   const corridas=[];
+
+  function salvar(){
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify({corridas, rowId})); } catch(e){}
+  }
+
+  function carregar(){
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(!raw) return;
+      const dados = JSON.parse(raw);
+      if(dados.rowId) rowId = dados.rowId;
+      if(Array.isArray(dados.corridas)){
+        dados.corridas.forEach(c => {
+          corridas.push(c);
+          const wrap = document.getElementById('corridas-wrap');
+          const div = document.createElement('div');
+          div.className = 'input-row'; div.id = c.id;
+          div.innerHTML = `
+            <input type="date" oninput="updateRow('${c.id}')" value="${c.data||''}"/>
+            <input type="text" placeholder="Uber/99/iFood" oninput="updateRow('${c.id}')" value="${c.plat||''}"/>
+            <input type="number" placeholder="0.00" step="0.01" oninput="updateRow('${c.id}')" value="${c.valor||''}"/>
+            <input type="number" placeholder="25" step="1" oninput="updateRow('${c.id}')" value="${c.taxa!==undefined?c.taxa:25}"/>
+            <input type="number" placeholder="0.00" step="0.01" oninput="updateRow('${c.id}')" value="${c.comb||''}"/>
+            <div class="auto" id="luc-${c.id}">R$ ${(c.lucro||0).toFixed(2).replace('.',',')}</div>
+            <button class="del-btn" onclick="delRow('${c.id}')">&#x2715;</button>`;
+          wrap.appendChild(div);
+        });
+        recalc();
+      }
+    } catch(e){}
+  }
+
+  function limparTudo(){
+    if(!confirm('Apagar todos os registros salvos? Esta ação não pode ser desfeita.')) return;
+    corridas.length = 0;
+    document.getElementById('corridas-wrap').innerHTML = '';
+    try { localStorage.removeItem(STORAGE_KEY); } catch(e){}
+    recalc();
+  }
 
   function addRow(){
     rowId++;
@@ -107,6 +148,7 @@
       <div class="auto" id="luc-${id}">R$ 0,00</div>
       <button class="del-btn" onclick="delRow('${id}')">✕</button>`;
     wrap.appendChild(div);
+    salvar();
   }
 
   function delRow(id){
@@ -114,6 +156,7 @@
     if(idx>=0)corridas.splice(idx,1);
     document.getElementById(id).remove();
     recalc();
+    salvar();
   }
 
   function updateRow(id){
@@ -125,8 +168,9 @@
     const lucro=valor*(1-taxa/100)-comb;
     document.getElementById('luc-'+id).textContent='R$ '+lucro.toFixed(2).replace('.',',');
     const c=corridas.find(c=>c.id===id);
-    if(c){c.valor=valor;c.taxa=taxa;c.comb=comb;c.lucro=lucro;c.data=inputs[0].value;}
+    if(c){c.valor=valor;c.taxa=taxa;c.comb=comb;c.lucro=lucro;c.data=inputs[0].value;c.plat=inputs[1].value;}
     recalc();
+    salvar();
   }
 
   function recalc(){
@@ -172,7 +216,8 @@
     grid.innerHTML=dias7.map((d,i)=>`<div class="week-cell"><div class="day">${d}</div><div class="val" id="day-val-${i}">R$ 0,00</div></div>`).join('');
   }
   buildWeekGrid();
-  addRow();
+  carregar();
+  if(corridas.length===0) addRow();
 </script>
 </body>
 </html>
