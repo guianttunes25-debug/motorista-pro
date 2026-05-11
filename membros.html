@@ -711,6 +711,25 @@
     }
 
     async function init() {
+      // Verifica se há erro no hash da URL (ex: link expirado)
+      const hash = window.location.hash;
+      const params = new URLSearchParams(hash.replace(/^#/, '').split('#')[0]);
+      const urlError = params.get('error_code');
+      if (urlError) {
+        document.getElementById('auth-wrap').style.display = 'block';
+        document.getElementById('hero-title').textContent = 'Área de Membros';
+        document.getElementById('hero-desc').textContent  = 'Faça login para acessar seus materiais.';
+        const msg = document.getElementById('auth-msg');
+        if (urlError === 'otp_expired') {
+          msg.textContent = 'Seu link de acesso expirou. Digite seu e-mail abaixo para receber um novo link.';
+        } else {
+          msg.textContent = 'Link inválido. Solicite um novo link de acesso abaixo.';
+        }
+        msg.className = 'auth-msg error';
+        history.replaceState(null, '', window.location.pathname);
+        return;
+      }
+
       // Deixa o Supabase processar o hash do magic link na URL
       const { data: { session } } = await sb.auth.getSession();
 
