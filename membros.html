@@ -222,7 +222,59 @@
       .btn-acessar { width: 100%; justify-content: center; }
       .material-icon { display: none; }
     }
+    /* ── LOGIN FORM ── */
+    .auth-wrap {
+      max-width: 420px;
+      margin: 3rem auto;
+      padding: 2rem 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      text-align: center;
+    }
+    .auth-wrap h2 { margin-bottom: 0.5rem; font-size: 1.25rem; }
+    .auth-wrap p  { color: var(--muted); margin-bottom: 1.5rem; font-size: 0.9rem; }
+    .auth-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text);
+      font-size: 1rem;
+      margin-bottom: 0.75rem;
+    }
+    .auth-input:focus { outline: 2px solid var(--verde); border-color: transparent; }
+    .auth-btn {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: 8px;
+      border: none;
+      background: var(--verde);
+      color: #04200f;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .auth-btn:hover { opacity: 0.88; }
+    .auth-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .auth-msg { margin-top: 1rem; font-size: 0.88rem; color: var(--muted); }
+    .auth-msg.success { color: var(--verde); }
+    .auth-msg.error   { color: #f87171; }
+    .logout-btn {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 8px;
+      padding: 0.3rem 0.75rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+      display: none;
+    }
+    .logout-btn:hover { color: var(--text); border-color: var(--muted); }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
 
@@ -230,6 +282,7 @@
   <header class="header">
     <div class="header-brand">Motorista <span>Pro</span></div>
     <span class="plan-badge" id="header-badge">Área de Membros</span>
+    <button class="logout-btn" id="logout-btn" onclick="sair()">Sair</button>
   </header>
 
   <!-- HERO -->
@@ -237,6 +290,15 @@
     <h1 id="hero-title">Seus materiais</h1>
     <p id="hero-desc">Acesse abaixo os conteúdos incluídos no seu plano.</p>
   </section>
+
+  <!-- LOGIN FORM (exibido quando não autenticado) -->
+  <div class="auth-wrap" id="auth-wrap" style="display:none">
+    <h2>Acesse sua Área de Membros</h2>
+    <p>Digite o e-mail usado na compra. Vamos enviar um link de acesso instantâneo.</p>
+    <input class="auth-input" id="auth-email" type="email" placeholder="seu@email.com" />
+    <button class="auth-btn" id="auth-btn" onclick="enviarMagicLink()">Enviar link de acesso</button>
+    <p class="auth-msg" id="auth-msg"></p>
+  </div>
 
   <!-- SELETOR (aparece quando não há param de plano) -->
   <div class="selector-wrap" id="selector-wrap">
@@ -608,17 +670,73 @@
       renderPlano(key);
     }
 
-    (function init() {
-      const params = new URLSearchParams(window.location.search);
-      const plano = (params.get('plano') || '').toLowerCase().trim();
+    // ── SUPABASE AUTH ──────────────────────────────────────────────
+    const SUPA_URL  = 'https://ugeqfnmrkfcgpifdicgh.supabase.co';
+    const SUPA_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVnZXFmbm1ya2ZjZ3BpZmRpY2doIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzMzAzNTIsImV4cCI6MjA5MzkwNjM1Mn0.SfN1mzqOzPOwHhWchsmX6M95jZ7utxBOl6ANNzRUJEE';
+    const sb = supabase.createClient(SUPA_URL, SUPA_ANON);
+
+    async function enviarMagicLink() {
+      const email = document.getElementById('auth-email').value.trim();
+      const btn   = document.getElementById('auth-btn');
+      const msg   = document.getElementById('auth-msg');
+      if (!email) { msg.textContent = 'Informe seu e-mail.'; msg.className = 'auth-msg error'; return; }
+      btn.disabled = true;
+      btn.textContent = 'Enviando…';
+      const { error } = await sb.auth.signInWithOtp({
+        email,
+        options: { emailRedirectTo: window.location.href }
+      });
+      if (error) {
+        msg.textContent = 'Erro: ' + error.message;
+        msg.className = 'auth-msg error';
+        btn.disabled = false;
+        btn.textContent = 'Enviar link de acesso';
+      } else {
+        msg.textContent = '✓ Link enviado! Verifique sua caixa de entrada (e o spam).';
+        msg.className = 'auth-msg success';
+        btn.textContent = 'Enviado';
+      }
+    }
+
+    async function sair() {
+      await sb.auth.signOut();
+      window.location.reload();
+    }
+
+    async function init() {
+      // Deixa o Supabase processar o hash do magic link na URL
+      const { data: { session } } = await sb.auth.getSession();
+
+      if (!session) {
+        // Não autenticado: mostra formulário de login
+        document.getElementById('auth-wrap').style.display = 'block';
+        document.getElementById('hero-title').textContent = 'Área de Membros';
+        document.getElementById('hero-desc').textContent  = 'Faça login para acessar seus materiais.';
+        return;
+      }
+
+      // Autenticado: exibe botão de sair
+      document.getElementById('logout-btn').style.display = 'inline-block';
+
+      // Busca plano na tabela profiles
+      const { data: profile } = await sb
+        .from('profiles')
+        .select('plano')
+        .eq('id', session.user.id)
+        .single();
+
+      const plano = profile?.plano ?? null;
       if (plano && planos[plano]) {
         renderPlano(plano);
       } else {
+        // Plano não encontrado — mostra seletor como fallback
         document.getElementById('selector-wrap').style.display = 'block';
         document.getElementById('hero-title').textContent = 'Área de Membros';
-        document.getElementById('hero-desc').textContent = 'Selecione seu plano para acessar os materiais.';
+        document.getElementById('hero-desc').textContent  = 'Selecione seu plano para continuar.';
       }
-    })();
+    }
+
+    init();
   </script>
 </body>
 </html>
